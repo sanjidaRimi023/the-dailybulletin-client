@@ -4,7 +4,7 @@ const Register = () => {
     return (
         <div>
             register page 
-            register page
+           
         </div>
     );
 };
