@@ -14,7 +14,7 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log("Login data:", data);
-    // Handle actual login logic (Firebase/Auth API)
+    
   };
 
   return (
