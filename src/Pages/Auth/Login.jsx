@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
-
+import logo from "../../assets/logoimage-removebg-preview.png"
+import sideImage from "../../assets/newspaper-background-concept.jpg"
 const Login = () => {
   return (
     <>
@@ -9,15 +10,15 @@ const Login = () => {
           className="hidden bg-cover lg:block lg:w-1/2"
           style={{
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1606660265514-358ebbadc80d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1575&q=80')",
+              `url(${sideImage})`,
           }}
         ></div>
 
         <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
           <div className="flex justify-center mx-auto">
             <img
-              className="w-auto h-7 sm:h-8"
-              src="https://merakiui.com/images/logo.svg"
+              className="w-auto"
+              src={logo}
               alt=""
             />
           </div>
