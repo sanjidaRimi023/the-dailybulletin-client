@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { Link, NavLink } from "react-router";
 import logo from "../../assets/logoimage-removebg-preview.png";
 
-
 const Navbar = ({ user, userRole, darkMode, toggleTheme, handleLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const navItemClass = "hover:text-blue-500 transition";
+  const navItemClass = "hover:underline transition";
 
   const renderLinks = () => {
     const baseLinks = [
@@ -22,8 +21,10 @@ const Navbar = ({ user, userRole, darkMode, toggleTheme, handleLogout }) => {
       : [{ path: "/subscription", label: "Subscription" }];
 
     const roleLinks = [];
-    if (userRole === "admin") roleLinks.push({ path: "/dashboard", label: "Dashboard" });
-    if (userRole === "premium") roleLinks.push({ path: "/premium-articles", label: "Premium Articles" });
+    if (userRole === "admin")
+      roleLinks.push({ path: "/dashboard", label: "Dashboard" });
+    if (userRole === "premium")
+      roleLinks.push({ path: "/premium-articles", label: "Premium Articles" });
 
     return [...baseLinks, ...privateLinks, ...roleLinks];
   };
@@ -46,25 +47,44 @@ const Navbar = ({ user, userRole, darkMode, toggleTheme, handleLogout }) => {
         </nav>
 
         {/* Auth + Theme (Desktop) */}
-        <div className="hidden lg:flex items-center gap-4">
+        <div className="hidden lg:flex items-center">
           {!user ? (
             <>
-              <NavLink to="/login" className={navItemClass}>Login</NavLink>
-              <NavLink to="/register" className={navItemClass}>Register</NavLink>
+              <button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">
+               
+              <NavLink to="/login" className={navItemClass}>
+                Login
+              </NavLink>
+           </button>
+              
+
+            <button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">
+               
+              <NavLink to="/register" className={navItemClass}>
+              Register
+              </NavLink>
+           </button>
             </>
           ) : (
             <>
-              <button onClick={handleLogout} className="hover:text-red-500 transition">Logout</button>
+              <button
+                onClick={handleLogout}
+                className="hover:text-red-500 transition"
+              >
+                Logout
+              </button>
               <Link to="/profile">
                 <img
-                  src={user?.photoURL || "https://i.ibb.co/LNTP7fy/default-user.png"}
+                  src={
+                    user?.photoURL ||
+                    "https://i.ibb.co/LNTP7fy/default-user.png"
+                  }
                   className="w-10 h-10 rounded-full border-2"
                   alt="User"
                 />
               </Link>
             </>
           )}
-         
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -77,7 +97,12 @@ const Navbar = ({ user, userRole, darkMode, toggleTheme, handleLogout }) => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
           </button>
         </div>
@@ -99,8 +124,20 @@ const Navbar = ({ user, userRole, darkMode, toggleTheme, handleLogout }) => {
 
           {!user ? (
             <>
-              <NavLink to="/login" className="block px-2 py-1" onClick={() => setIsMenuOpen(false)}>Login</NavLink>
-              <NavLink to="/register" className="block px-2 py-1" onClick={() => setIsMenuOpen(false)}>Register</NavLink>
+              <NavLink
+                to="/login"
+                className="block px-2 py-1"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Login
+              </NavLink>
+              <NavLink
+                to="/register"
+                className="block px-2 py-1"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Register
+              </NavLink>
             </>
           ) : (
             <>
@@ -116,7 +153,10 @@ const Navbar = ({ user, userRole, darkMode, toggleTheme, handleLogout }) => {
               <NavLink to="/profile" onClick={() => setIsMenuOpen(false)}>
                 <div className="flex items-center gap-2 mt-2">
                   <img
-                    src={user?.photoURL || "https://i.ibb.co/LNTP7fy/default-user.png"}
+                    src={
+                      user?.photoURL ||
+                      "https://i.ibb.co/LNTP7fy/default-user.png"
+                    }
                     className="w-8 h-8 rounded-full border"
                     alt="User"
                   />
