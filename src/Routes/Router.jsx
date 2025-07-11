@@ -4,6 +4,7 @@ import ErrorPage from "../Pages/ErrorPage";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
+import AddArticle from "../Pages/AddArticle";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,12 @@ const router = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register/>
-            }
+            },
+            {
+                path: '/add-article',
+                element: <AddArticle/>
+            },
+
         ]
       
   },

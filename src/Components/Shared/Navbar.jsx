@@ -1,11 +1,23 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router";
 import logo from "../../assets/logoimage-removebg-preview.png";
+import useAuth from "../../Hooks/useAuth";
+import { auth } from "../../Firebase/firebase.config";
+import { toast } from "react-toastify";
 
-const Navbar = ({ user, userRole, darkMode, toggleTheme, handleLogout }) => {
+const Navbar = ({ userRole, darkMode, toggleTheme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const navItemClass = "hover:underline transition";
+  const navItemClass = "hover:underline transition ";
+  const { user, logOutUser } = useAuth();
+
+
+  const handleLogout = () => {
+    logOutUser(auth)
+      .then(() => {
+      toast.success("logout successfully")
+    })
+  }
 
   const renderLinks = () => {
     const baseLinks = [
@@ -50,33 +62,30 @@ const Navbar = ({ user, userRole, darkMode, toggleTheme, handleLogout }) => {
         <div className="hidden lg:flex items-center">
           {!user ? (
             <>
-             
-               
-              <NavLink to="/login" className={navItemClass}>
-                <button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">Login</button>
+              <div className="flex gap-2">
+                <NavLink to="/login" className={navItemClass}>
+                <button
+                  type="button"
+                  className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                >
+                  Login
+                </button>
               </NavLink>
-          
-              
 
-            
-               
               <NavLink to="/register" className={navItemClass}>
-                
-                <button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">
+                <button
+                  type="button"
+                  className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                >
                   Register
                 </button>
               </NavLink>
-      
+              </div>
             </>
           ) : (
-            <>
-              <button
-                onClick={handleLogout}
-                className="hover:text-red-500 transition"
-              >
-                Logout
-              </button>
-              <Link to="/profile">
+              <>
+                <div className="flex items-center gap-2">
+                  <Link to="/profile">
                 <img
                   src={
                     user?.photoURL ||
@@ -86,6 +95,14 @@ const Navbar = ({ user, userRole, darkMode, toggleTheme, handleLogout }) => {
                   alt="User"
                 />
               </Link>
+              <button
+                onClick={handleLogout}
+               className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              >
+                Logout
+              </button>
+                </div>
+              
             </>
           )}
         </div>
