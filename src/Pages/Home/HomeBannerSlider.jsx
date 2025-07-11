@@ -64,7 +64,7 @@ const banners = [
 
 const HomeBannerSlider = () => {
   return (
-    <div className="my-4 rounded-full">
+    <div className="container mx-auto my-4 rounded-full">
       <Swiper
      
         loop
