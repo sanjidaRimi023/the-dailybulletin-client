@@ -6,9 +6,12 @@ import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
 import AddArticle from "../Pages/AddArticle";
 import SubscriptionPage from "../Pages/Subscription.jsx/SubscriptionPage";
+import DashboardLayout from "../Layouts/dashboard-layout";
+import UserOverView from "../Pages/Dashboard/User/user-overview";
+
 
 const router = createBrowserRouter([
-  {
+    {
         path: "/",
         element: <MainLayout />,
         errorElement: <ErrorPage />,
@@ -16,31 +19,43 @@ const router = createBrowserRouter([
             {
                 index: true,
                 path: "/",
-                element:<Home/>
+                element: <Home />
             },
             {
                 path: '/login',
-                element: <Login/>
+                element: <Login />
             },
             {
                 path: '/register',
-                element: <Register/>
+                element: <Register />
             },
             {
                 path: '/add-article',
-                element: <AddArticle/>
+                element: <AddArticle />
             },
             {
                 path: '/subscription',
-                element: <SubscriptionPage/>
+                element: <SubscriptionPage />
             },
             {
                 path: '/payment',
-                element: <SubscriptionPage/>
+                element: <SubscriptionPage />
             },
 
+
         ]
-      
-  },
+
+    },
+    {
+        path: "/dashboard",
+        element: <DashboardLayout />,
+        errorElement: <ErrorPage />,
+        children: [
+            {
+                path: "user",
+                element: <UserOverView />
+            }
+        ]
+    }
 ]);
 export default router;

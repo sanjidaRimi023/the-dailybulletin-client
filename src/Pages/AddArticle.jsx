@@ -6,7 +6,8 @@ import Swal from "sweetalert2";
 import useAxios from "../Hooks/useAxios";
 import useAuth from "../Hooks/useAuth";
 import { FaCameraRetro } from "react-icons/fa";
-import Sharebtn from "../Components/Ui/sharebtn";
+import Sharebtn from "../Components/Ui/Sharebtn";
+
 
 const tagOptions = [
   { value: "Politics", label: "Politics" },
@@ -71,6 +72,7 @@ const AddArticle = () => {
         image: imageUrl,
         publisher: data.publisher,
         description: data.description,
+        content: data.content,
         tags: data.tags.map((tag) => tag.value),
         status: "pending",
         isPremium: false,
@@ -82,7 +84,13 @@ const AddArticle = () => {
 
       const res = await axiosInstance.post("/article", articleData);
       if (res.data.insertedId) {
-        Swal.fire("Success!", "Article submitted successfully!", "success");
+        // my article page
+        Swal.fire({
+          title: "Article submitted successfully!",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton:false,
+        });
         reset();
       }
     } catch (error) {
@@ -93,8 +101,8 @@ const AddArticle = () => {
 
   return (
     <div className="max-w-3xl mx-auto my-10 p-8 bg-base-200 rounded-2xl shadow-xl">
-      <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
-        📝 Submit a New Article
+      <h2 className="text-3xl font-bold text-center mb-8">
+        Submit a New Article
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -126,7 +134,7 @@ const AddArticle = () => {
                 {...field}
                 options={categoryOptions}
                 placeholder="Select Category"
-                styles={customSelectStyles} // যদি আগের মতো look মেলাতে চাও
+                styles={customSelectStyles} 
               />
             )}
           />
