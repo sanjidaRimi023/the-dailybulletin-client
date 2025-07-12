@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 import { Typewriter } from "react-simple-typewriter";
+import Sharebtn from "../../Components/Ui/Sharebtn";
 
 const plans = [
   {
@@ -57,32 +58,32 @@ const SubscriptionPage = () => {
       <div data-aos="fade-right" className="w-full lg:w-1/2">
         <div className="lg:max-w-lg">
           <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-3">
-            <Typewriter
-              words={[
-                "Unlock Premium Access",
-                "Read Articles Without Limits",
-                "Support Quality Journalism",
-              ]}
-              loop={0}
-              cursor
-              cursorStyle="_"
-              typeSpeed={70}
-              deleteSpeed={50}
-              delaySpeed={1000}
-            />
-          </h1>
-          <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-2">
-            Subscribe Now & Enjoy the Benefits
-          </h2>
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Choose a subscription plan that fits your needs. Instantly upgrade to premium and explore exclusive articles, features, and insights with no limitations.
-          </p>
-        </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-3">
+              <Typewriter
+                words={[
+                  "Unlock Premium Access",
+                  "Read Articles Without Limits",
+                  "Support Quality Journalism",
+                ]}
+                loop={0}
+                cursor
+                cursorStyle="_"
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={1000}
+              />
+            </h1>
+            <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-2">
+              Subscribe Now & Enjoy the Benefits
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Choose a subscription plan that fits your needs. Instantly upgrade
+              to premium and explore exclusive articles, features, and insights
+              with no limitations.
+            </p>
+          </div>
 
           <div className="mt-8 space-y-5">
-           
-
             {/* Dropdown */}
             <div className="mt-6">
               <label className="block text-gray-700 font-semibold mb-2">
@@ -107,18 +108,18 @@ const SubscriptionPage = () => {
             </p>
 
             {/* Subscribe Button */}
-            <button
-              onClick={handleSubscribe}
-              className="mt-4 bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition duration-300"
-            >
-              Subscribe Now
+            <button onClick={handleSubscribe}>
+              <Sharebtn text="Get Access" />
             </button>
           </div>
         </div>
       </div>
 
       {/* Right Side (Image) */}
-      <div data-aos="fade-left" className="flex items-center justify-center w-full h-96 lg:w-1/2">
+      <div
+        data-aos="fade-left"
+        className="flex items-center justify-center w-full h-96 lg:w-1/2"
+      >
         <img
           className="object-cover w-full h-full mx-auto rounded-md lg:max-w-2xl"
           src="https://i.ibb.co/20tnXmMj/old-texture-newspapers-stack-arrangement.jpg"
