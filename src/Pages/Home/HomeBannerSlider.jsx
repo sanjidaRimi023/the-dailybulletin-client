@@ -20,16 +20,6 @@ const banners = [
   },
   {
     id: 2,
-    title: "Global Elections 2025: The Shifting Power",
-    description:
-      "From Asia to Europe, citizens are heading to the polls in what experts call the most transformative election year in decades.",
-    date: "2 Days ago",
-    comments: 23,
-    category: "Politics",
-    image: "https://i.ibb.co/MD7bM3W6/download.jpg",
-  },
-  {
-    id: 3,
     title: "AI Revolution: What ChatGPT-6 Means for the Tech World",
     description:
       "OpenAI's latest release is transforming the way we communicate, learn, and build software. Here's what it means for you.",
@@ -40,7 +30,7 @@ const banners = [
       "https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=1170&q=80",
   },
   {
-    id: 4,
+    id: 3,
     title: "Olympics 2025: Records Broken, Legends Born",
     description:
       "From underdog victories to historic performances, the global stage witnessed breathtaking moments that will be remembered for decades.",
@@ -50,7 +40,7 @@ const banners = [
     image: "https://i.ibb.co/Xxc23Fv5/pd-09897.jpg",
   },
   {
-    id: 5,
+    id: 4,
     title: "Mental Health Crisis: Why Gen Z is Struggling",
     description:
       "More young people than ever are seeking help for anxiety, depression, and burnout. Experts warn of a growing global crisis.",
@@ -101,8 +91,8 @@ const HomeBannerSlider = () => {
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-snug max-w-4xl group cursor-pointer w-fit">
                   <span className="relative inline-block">
                     <span
-                      className="after:absolute after:left-0 after:-bottom-1 after:h-[4px] after:w-0 
-                      after:bg-blue-400 after:transition-all after:duration-500 group-hover:after:w-full"
+                      className="after:absolute after:left-0 after:-bottom-1 after:h-[3px] after:w-0 
+                      after:bg-blue-600 after:transition-all after:duration-500 group-hover:after:w-full"
                     >
                       {item.title}
                     </span>
