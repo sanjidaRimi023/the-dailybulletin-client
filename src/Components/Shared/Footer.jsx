@@ -1,69 +1,114 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { FaFacebookF, FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
-import logoimage from "../../assets/logoimage-removebg-preview.png";
+import logo from "../../assets/nav-logo.png";
+import { Typewriter } from "react-simple-typewriter";
 
 const Footer = () => {
+  const { pathname: path } = useLocation();
   return (
-    <footer className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">
-      <div className="container mx-auto p-6">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Newsletter Section */}
-          <div className="sm:col-span-2">
-            <h2 className="text-2xl font-bold">Stay Updated</h2>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">
-              Subscribe to our newsletter to get the latest news & updates.
-            </p>
-            <div className="mt-6 flex flex-col gap-4 sm:flex-row">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="px-4 py-2 text-gray-800 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700"
+    <footer class="bg-gray-800">
+      <div class="container px-6 py-8 mx-auto">
+        <div class="flex flex-col lg:flex-row justify-between items-center gap-10">
+          <div className="flex items-center gap-2">
+            <img src={logo} alt="Logo" className="w-10" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              <Typewriter
+                words={["The_Daily_Bulletin"]}
+                loop={5}
+                cursor
+                cursorStyle="_"
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={1000}
               />
-              <button className="rounded px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-md">
-                Subscribe
-              </button>
-            </div>
+            </span>
+            
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-semibold">Quick Links</h3>
-            <ul className="mt-4 space-y-2">
-              <li><Link to="/" className="hover:underline hover:text-blue-500">Home</Link></li>
-              <li><Link to="/about" className="hover:underline hover:text-blue-500">About Us</Link></li>
-              <li><Link to="/contact" className="hover:underline hover:text-blue-500">Contact</Link></li>
-              <li><Link to="/privacy" className="hover:underline hover:text-blue-500">Privacy Policy</Link></li>
-            </ul>
-          </div>
+          <div class="flex flex-wrap justify-center mt-6 -mx-4">
+            <Link
+              to="/"
+              className={`block px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative overflow-hidden group ${
+                path === "/" ? "text-blue-500" : "text-white"
+              }`}
+            >
+              <span className="relative z-10">Home</span>
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+            </Link>
 
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-lg font-semibold">Contact</h3>
-            <ul className="mt-4 space-y-2 text-sm">
-              <li>📍 Dhaka, Bangladesh</li>
-              <li>📞 +880 1234-567890</li>
-              <li>✉️ contact@dailybulletin.com</li>
-            </ul>
+            <Link
+              to="/all-article"
+              className={`block px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative overflow-hidden group ${
+                path === "/all-article" ? "text-blue-500" : "text-white"
+              }`}
+            >
+              All Article
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+
+            <Link
+              to="/subscription"
+              className={`block px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative overflow-hidden group ${
+                path === "/subscription" ? "text-blue-500" : "text-white"
+              }`}
+            >
+              Subscriptions
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+            <Link
+              to="/contact-us"
+              className={`block px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative overflow-hidden group ${
+                path === "/contact-us" ? "text-blue-500" : "text-white"
+              }`}
+            >
+              Contact Us
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+            <Link
+              to="/about-us"
+              className={`block px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative overflow-hidden group ${
+                path === "/about-us" ? "text-blue-500" : "text-white"
+              }`}
+            >
+              About Us
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+            </Link>
           </div>
         </div>
 
-        <hr className="my-10 border-gray-300 dark:border-gray-700" />
+        <hr class="my-6 border-gray-200 md:my-10 dark:border-gray-700" />
 
-        {/* Footer Bottom */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <img src={logoimage} alt="The Daily Bulletin Logo" className="w-40" />
-
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            &copy; {new Date().getFullYear()} The Daily Bulletin. All rights reserved.
+        <div class="flex flex-col items-center sm:flex-row sm:justify-between gap-10">
+          <p class="text-lg text-gray-300">
+            Copyright: Any unauthorized use or reproduction of{" "}
+            <span className="font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">The Daily Bulletin</span> content for commercial purposes{" "}
+            <br /> is strictly prohibited and constitutes copyright infringement
+            liable to legal action.
           </p>
 
-          {/* Social Media Icons */}
-          <div className="flex gap-4 text-xl text-gray-600 dark:text-gray-300">
-            <Link to="#"><FaFacebookF className="hover:text-blue-600 transition" size={30} /></Link>
-            <Link to="#"><FaTwitter className="hover:text-sky-500 transition" size={30}  /></Link>
-            <Link to="#"><FaInstagram className="hover:text-pink-500 transition"  size={30} /></Link>
-            <Link to="#"><FaGithub className="hover:text-gray-900 dark:hover:text-white transition"  size={30} /></Link>
+          <div className="flex gap-4 text-xl text-gray-300">
+            <Link to="#">
+              <FaFacebookF
+                className="hover:text-blue-600 transition"
+                size={30}
+              />
+            </Link>
+            <Link to="#">
+              <FaTwitter className="hover:text-sky-500 transition" size={30} />
+            </Link>
+            <Link to="#">
+              <FaInstagram
+                className="hover:text-pink-500 transition"
+                size={30}
+              />
+            </Link>
+            <Link to="#">
+              <FaGithub
+                className="hover:text-gray-900 dark:hover:text-white transition"
+                size={30}
+              />
+            </Link>
           </div>
         </div>
       </div>

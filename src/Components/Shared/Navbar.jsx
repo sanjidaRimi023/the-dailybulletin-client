@@ -3,16 +3,19 @@ import logo from "../../assets/nav-logo.png";
 import useAuth from "../../Hooks/useAuth";
 import NavUserDropdown from "../Customs/nav-user-dropdown";
 import { Typewriter } from "react-simple-typewriter";
+import { useState } from "react";
+import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
+
 const Navbar = () => {
   const { pathname: path } = useLocation();
   const { user } = useAuth();
-  console.log(user);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="flex justify-between items-center lg:px-20 py-2 sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70 shadow-sm">
-      {/* logo part */}
-      <div className="w-10 flex items-center gap-2">
-        <img src={logo} alt="" />
+    <nav className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70 shadow-sm px-4 py-2 lg:px-20 flex items-center justify-between">
+      {/* Logo */}
+      <div className="flex items-center gap-2">
+        <img src={logo} alt="Logo" className="w-10" />
         <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
           <Typewriter
             words={["The_Daily_Bulletin"]}
@@ -26,14 +29,25 @@ const Navbar = () => {
         </span>
       </div>
 
-      {/* nav item part */}
-      <div className="space-x-5">
+      {/* Mobile Toggle */}
+      <button
+        className="lg:hidden text-3xl text-blue-600"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {isOpen ? <HiOutlineX /> : <HiOutlineMenuAlt3 />}
+      </button>
+
+      {/* Nav Links */}
+      <div
+        className={`${
+          isOpen ? "block" : "hidden"
+        } lg:flex lg:items-center lg:space-x-5 absolute lg:static top-full left-0 w-full lg:w-auto bg-white dark:bg-gray-900 lg:bg-transparent lg:dark:bg-transparent px-4 py-4 lg:p-0`}
+      >
         <Link
           to="/"
-          className={`px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative        overflow-hidden
-               ${path === "/" ? " text-blue-500" : "text-gray-700"}
-           group
-          `}
+          className={`block px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative overflow-hidden group ${
+            path === "/" ? "text-blue-500" : "text-gray-700"
+          }`}
         >
           <span className="relative z-10">Home</span>
           <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
@@ -41,43 +55,46 @@ const Navbar = () => {
 
         <Link
           to="/all-article"
-          className={`px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative        overflow-hidden
-               ${path === "/all-article" ? " text-blue-500" : "text-gray-700"}
-           group
-          `}
+          className={`block px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative overflow-hidden group ${
+            path === "/all-article" ? "text-blue-500" : "text-gray-700"
+          }`}
         >
           All Article
           <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
         </Link>
+
         <Link
           to="/subscription"
-          className={`px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative        overflow-hidden
-               ${path === "/subscription" ? " text-blue-500" : "text-gray-700"}
-           group
-          `}
+          className={`block px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative overflow-hidden group ${
+            path === "/subscription" ? "text-blue-500" : "text-gray-700"
+          }`}
         >
           Subscriptions
           <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
         </Link>
-      </div>
 
-      {/* dropdown part */}
-      {user?.email ? (
-        <NavUserDropdown user={user} />
-      ) : (
-        <div className="space-x-4">
-          <Link to="/login">
-            <button className="px-4 py-2 rounded-md border border-blue-600 text-blue-600 shadow cursor-pointer">
-              Login
-            </button>
-          </Link>
-          <Link to="/register">
-            <button className="px-4 py-2 rounded-md bg-blue-500 text-white shadow cursor-pointer">
-              Register
-            </button>
-          </Link>
+        {/* Auth Buttons */}
+        <div>
+          {user?.email ? (
+            <div className="flex justify-end">
+              <NavUserDropdown user={user} />
+            </div>
+        ) : (
+          <div className="space-y-2 lg:space-y-0 lg:space-x-4 mt-4 lg:mt-0">
+            <Link to="/login">
+              <button className="w-full lg:w-auto px-4 py-2 rounded-md border border-blue-600 text-blue-600 shadow">
+                Login
+              </button>
+            </Link>
+            <Link to="/register">
+              <button className="w-full lg:w-auto px-4 py-2 rounded-md bg-blue-500 text-white shadow">
+                Register
+              </button>
+            </Link>
+          </div>
+        )}
         </div>
-      )}
+      </div>
     </nav>
   );
 };
