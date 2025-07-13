@@ -1,118 +1,109 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { FiXCircle } from "react-icons/fi";
-import { FaRegCheckCircle } from "react-icons/fa";
-import { useNavigate } from "react-router";
+import React from "react";
 import Sharebtn from "../../Components/Ui/Sharebtn";
+import AuthButton from "../../Components/Ui/auth-button";
+import { Link } from "react-router";
 
-const Plan = () => {
-  const [selectedPlan, setSelectedPlan] = useState("premium");
-  const navigate = useNavigate();
+const plans = [
+  {
+    name: "Starter",
+    price: "$1",
+    description: "Perfect for readers who want basic access.",
+    features: ["Limited access", "Daily newsletter", "Email support"],
+    highlighted: false,
+  },
+  {
+    name: "Popular",
+    price: "$10",
+    description: "Best for regular readers and casual news lovers.",
+    features: ["Unlimited articles", "Weekly magazine", "Priority support"],
+    highlighted: true,
+  },
+  {
+    name: "Enterprise",
+    price: "$5",
+    description: "Ideal for teams or commercial users.",
+    features: [
+      "Multi-user access",
+      "Downloadable reports",
+      "Dedicated manager",
+    ],
+    highlighted: false,
+  },
+];
 
-  const features = [
-    { label: "Access to all articles", free: true, premium: true },
-    { label: "No ads or popups", free: false, premium: true },
-    { label: "Daily newsletter", free: false, premium: true },
-    { label: "Comment & interact", free: true, premium: true },
-    { label: "Exclusive investigative reports", free: false, premium: true },
-    { label: "Save & Bookmark content", free: true, premium: true },
-  ];
-
-  const handleSubscribe = () => {
-    navigate("/subscription"); 
-  };
-
+export default function Plan() {
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 py-16 px-4">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-      
-        <div data-aos="fade-down" className="text-center md:text-left">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white relative inline-block group">
-            <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-[length:0%_3px] bg-left-bottom bg-no-repeat group-hover:bg-[length:100%_3px] transition-[background-size] duration-500">
-              Choose<span className="text-blue-500"> Your Plan</span>
-            </span>
-          </h2>
-          <p className="mt-4 text-gray-600 dark:text-gray-300 text-lg">
-            Whether you're a casual reader or a news addict, we've got a plan that fits your lifestyle.
-          </p>
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-            Compare plans and unlock features that matter to you most.
-          </p>
-        </div>
+    <section className="bg-white dark:bg-gray-900 py-12 px-6 md:px-10">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
+          Stay informed. Choose a plan that fits your curiosity.
+        </h2>
+        <p className="text-gray-500 dark:text-gray-300 mt-2">
+          Real news. Real value. Just the way you like it.
+        </p>
+      </div>
 
-     
-        <div data-aos="fade-up" className="space-y-6">
-        
-          <div className="flex justify-center md:justify-end mb-8">
-            <div className="bg-white dark:bg-gray-800 rounded-full p-1 flex shadow-lg">
-              {["free", "premium"].map((plan) => (
-                <button
-                  key={plan}
-                  onClick={() => setSelectedPlan(plan)}
-                  className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
-                    selectedPlan === plan
-                      ? "bg-blue-600 text-white scale-105"
-                      : "text-gray-700 dark:text-gray-200"
-                  }`}
-                >
-                  {plan.charAt(0).toUpperCase() + plan.slice(1)}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          
-          <motion.div
-            key={selectedPlan}
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1.05, opacity: 1 }}
-            transition={{ duration: 0.4 }}
-            whileHover={{ scale: 1.08 }}
-            className={`w-full max-w-md mx-auto p-6 rounded-lg shadow-xl transition-transform duration-300 ${
-              selectedPlan === "premium"
-                ? "bg-yellow-300 dark:bg-yellow-400"
-                : "bg-white dark:bg-gray-800"
-            }`}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+        {plans.map((plan, idx) => (
+          <div
+            key={idx}
+            className={`relative px-6 py-8 rounded-3xl transition-all duration-300
+              ${
+                plan.highlighted
+                  ? "scale-105 z-10 shadow-2xl bg-blue-100 dark:bg-gray-800 border-2 border-blue-500 transition duration-300 ease-in-out hover:scale-110"
+                  : " h-auto relative z-0 rounded-3xl scale-90 duration-300 hover:scale-100 transition-shadow cursor-pointer hover:shadow-lg hover:shadow-blue-400 bg-gray-50 dark:bg-gray-800"
+              }
+            `}
           >
-            <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-800 group relative inline-block">
-              <span className="bg-gradient-to-r from-blue-600 to-blue-900 bg-[length:0%_2px] bg-left-bottom bg-no-repeat group-hover:bg-[length:100%_2px] transition-[background-size] duration-500">
-                {selectedPlan === "free" ? "Free Plan" : "Premium Plan"}
+            {plan.highlighted && (
+              <span className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-sm px-4 py-1 rounded-full shadow-md">
+                Most Popular
+              </span>
+            )}
+
+            <p className="text-xl font-semibold text-gray-800 dark:text-white">
+              {plan.name}
+            </p>
+            <h3 className="mt-2 text-4xl font-bold text-gray-900 dark:text-white">
+              {plan.price}
+              <span className="text-base font-medium text-gray-500 dark:text-gray-400">
+                {" "}
+                /mo
               </span>
             </h3>
+            <p className="mt-4 text-gray-600 dark:text-gray-300">
+              {plan.description}
+            </p>
 
-            <ul className="space-y-3">
-              {features.map((feature, i) => {
-                const available = selectedPlan === "free" ? feature.free : feature.premium;
-                return (
-                  <li
-                    key={i}
-                    className="flex items-center gap-3 text-gray-800 dark:text-gray-900"
+            <ul className="mt-6 space-y-3">
+              {plan.features.map((feature, index) => (
+                <li
+                  key={index}
+                  className="flex items-center text-gray-700 dark:text-gray-300"
+                >
+                  <svg
+                    className="w-5 h-5 text-blue-500 mr-2"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
                   >
-                    {available ? (
-                      <FaRegCheckCircle
-                        className="text-green-600 animate-bounce-slow"
-                        size={20}
-                      />
-                    ) : (
-                      <FiXCircle className="text-red-600" size={20} />
-                    )}
-                    {feature.label}
-                  </li>
-                );
-              })}
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 
+                      7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 
+                      001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  {feature}
+                </li>
+              ))}
             </ul>
-
-            <div className="flex justify-center">
-              <button onClick={handleSubscribe} className="mt-10">
-                <Sharebtn text={selectedPlan === "free" ? "Get Started" : "Get Premium Access"} />
-              </button>
-            </div>
-          </motion.div>
-        </div>
+            <Link to="/subscription">
+              <AuthButton text="Subscribe Now" />
+            </Link>
+          </div>
+        ))}
       </div>
     </section>
   );
-};
-
-export default Plan;
+}

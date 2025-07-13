@@ -6,7 +6,8 @@ const Home = () => {
   return (
     <>
       <HomeBannerSlider />
-      <Plan/>
+      <Plan />
+     
     </>
   );
 };

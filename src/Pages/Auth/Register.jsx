@@ -1,16 +1,14 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import logo from "../../assets/logoimage-removebg-preview.png";
-import { FaCameraRetro, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import sideImage from "../../assets/newspaper-background-concept.jpg";
 import useAuth from "../../Hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
-import CreativeButton from "../../Components/Ui/CreativeButton";
 import { toast } from "react-toastify";
-import { motion } from "framer-motion";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import AuthButton from "../../Components/Ui/auth-button";
 
 const Register = () => {
   const {
@@ -24,9 +22,12 @@ const Register = () => {
   const location = useLocation();
   const from = location.state?.from || "/";
 
-  const [imagePreview, setImagePreview] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [profilePicture, setProfilePicture] = useState("");
-  const [upload, setUpload] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+
+const [showPassword, setShowPassword] = useState(false)
 
   const cloud_name = import.meta.env.VITE_CLOUD_NAME;
   const upload_preset = import.meta.env.VITE_CLOUD_PRESET;
@@ -36,28 +37,30 @@ const Register = () => {
     formData.append("file", imageFile);
     formData.append("upload_preset", upload_preset);
     formData.append("cloud_name", cloud_name);
-    setUpload(true);
+    setUploading(true);
 
-    try {
-      const res = await fetch(
-        `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const data = await res.json();
-      if (data.secure_url) {
-        setUpload(false);
-        return data.secure_url;
-      } else {
-        throw new Error("Cloudinary upload failed");
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
       }
-    } catch (error) {
-      toast.error("Image upload failed");
-      console.log(error);
-      setUpload(false);
-      return null;
+    );
+    const data = await res.json();
+    setUploading(false);
+    return data.secure_url;
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      setSelectedImage(URL.createObjectURL(file));
+      const url = await uploadImageToCloudinary(file);
+      console.log(url);
+
+      setProfilePicture(url);
+    } else {
+      console.log("Please upload a valid image file");
     }
   };
 
@@ -69,8 +72,11 @@ const Register = () => {
 
     try {
       const res = await createUser(data.email, data.password);
-      console.log(res);
-      await updateUserProfile(data.username, profilePicture);
+     console.log(res);
+      await updateUserProfile({
+      displayName: data.name, 
+      photoURL: profilePicture,
+    });
       toast.success("Profile updated successfully!");
       navigate(from);
     } catch (error) {
@@ -78,96 +84,76 @@ const Register = () => {
     }
   };
 
-  const handleImageChange = async (e) => {
-    const file = e.target.files?.[0];
-
-    if (!file) {
-      toast.error("No file selected.");
-      return;
-    }
-
-    if (!file.type.startsWith("image")) {
-      toast.error("Please upload a valid image file.");
-      return;
-    }
-
-    setImagePreview(URL.createObjectURL(file));
-    const url = await uploadImageToCloudinary(file);
-    if (url) {
-      setProfilePicture(url);
-    }
-  };
-
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -50 }}
-      transition={{ duration: 1, ease: "easeOut" }}
-      className="bg-white dark:bg-gray-900 min-h-screen flex items-center justify-center px-6 py-4"
-      style={{ backgroundImage: `url(${sideImage})` }}
+    <div
+       data-aos="zoom-in"
+      className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl my-10 bg-white/90 dark:bg-gray-800/90 hover:shadow-xl backdrop-blur-md transition-all duration-300"
     >
-      <motion.form
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.5 }}
+      {/* Left Side Image */}
+      <div
+        className="hidden bg-cover lg:block lg:w-1/2"
+        style={{
+          backgroundImage: `url(${sideImage})`,
+        }}
+      ></div>
+
+      {/* Right Side Form */}
+      <form
+       data-aos="zoom-in"
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-md bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+        className="w-full px-6 py-8 md:px-8 lg:w-1/2"
       >
-        {/* Logo */}
-        <div className="flex justify-center mb-6">
-          <img src={logo} alt="Logo" />
+        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
+          Create{" "}
+          <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+            Your Account
+          </span>{" "}
+          & Join the{" "}
+          <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+            Community
+          </span>
+          !
+        </h2>
+
+        {/* Profile Image Upload */}
+        <div className="flex justify-center my-5">
+          <label htmlFor="image-upload" className="cursor-pointer">
+            <img
+              src={
+                selectedImage ||
+                "https://i.ibb.co/xKJF9LBf/image-upload-icon.png"
+              }
+              alt="Profile"
+              className="w-20 h-20 object-cover rounded-full border-4 border-blue-600 hover:scale-105 transition-all duration-300"
+            />
+          </label>
+          <input
+            id="image-upload"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleImageChange}
+          />
+          {uploading && <p className="text-blue-500">Uploading image...</p>}
         </div>
 
         {/* Username */}
         <div className="mb-4 relative">
           <input
-            {...register("username", { required: "Username is required" })}
+            {...register("name", { required: "name is required" })}
             type="text"
-            placeholder="Username"
+            placeholder="name"
             className="w-full py-3 px-4 pl-11 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 border rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <span className="absolute top-4 left-3 text-gray-400">
             <FaUser />
           </span>
-          {errors.username && (
+          {errors.name && (
             <p className="text-red-500 text-sm mt-1">
-              {errors.username.message}
+              {errors.name.message}
             </p>
           )}
         </div>
-
-        {/* Profile Image Upload */}
-        <label
-          htmlFor="profilePhoto"
-          className="flex items-center justify-center px-4 py-3 mb-4 text-center bg-white border-2 border-dashed rounded-lg cursor-pointer dark:border-gray-600 dark:bg-gray-900"
-        >
-          <span className="text-gray-400 mr-2">
-            <FaCameraRetro />
-          </span>
-          <span className="text-gray-400">Upload Profile Photo</span>
-        </label>
-        <input
-          id="profilePhoto"
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleImageChange}
-        />
-        {imagePreview && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4 }}
-            className="mb-4"
-          >
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="w-full h-30 object-cover mx-auto"
-            />
-          </motion.div>
-        )}
 
         {/* Email */}
         <div className="mb-4 relative">
@@ -193,32 +179,46 @@ const Register = () => {
 
         {/* Password */}
         <div className="mb-4 relative">
-          <input
-            {...register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters",
-              },
-            })}
-            type="password"
-            placeholder="Password"
-            className="w-full py-3 px-4 pl-11 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 border rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-          <span className="absolute top-3 left-3 text-gray-400">
-            <RiLockPasswordFill />
-          </span>
-          {errors.password && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
+  <input
+    {...register("password", {
+      required: "Password is required",
+      minLength: {
+        value: 6,
+        message: "Password must be at least 6 characters",
+      },
+    })}
+    type={showPassword ? "text" : "password"}
+    placeholder="Password"
+    className="w-full py-3 px-4 pl-11 pr-11 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 border rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+  />
+
+  {/* Lock Icon on Left */}
+  <span className="absolute top-3 left-3 text-gray-400">
+    <RiLockPasswordFill />
+  </span>
+
+  {/* Eye Toggle Icon on Right */}
+  <span
+    className="absolute top-3 right-3 text-gray-400 cursor-pointer"
+    onClick={() => setShowPassword(!showPassword)}
+  >
+    {showPassword ? <FiEyeOff /> : <FiEye />}
+  </span>
+
+  {errors.password && (
+    <p className="text-red-500 text-sm mt-1">
+      {errors.password.message}
+    </p>
+  )}
+</div>
 
         {/* Submit Button */}
-        <button type="submit" className="w-full" disabled={upload}>
-          <CreativeButton text={upload ? "Uploading..." : "Register"} />
-        </button>
+        <AuthButton
+          text={uploading ? "Uploading..." : "Register"}
+          disabled={uploading}
+          type="submit"
+          className="w-full"
+        />
 
         {/* Login Redirect */}
         <p className="mt-4 text-center text-sm">
@@ -227,8 +227,8 @@ const Register = () => {
             Log in
           </Link>
         </p>
-      </motion.form>
-    </motion.section>
+      </form>
+    </div>
   );
 };
 

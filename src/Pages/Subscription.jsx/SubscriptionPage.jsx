@@ -108,9 +108,8 @@ const SubscriptionPage = () => {
             </p>
 
             {/* Subscribe Button */}
-            <button onClick={handleSubscribe}>
-              <Sharebtn text="Get Access" />
-            </button>
+
+            <Sharebtn onClick={handleSubscribe} text="Get Access" />
           </div>
         </div>
       </div>

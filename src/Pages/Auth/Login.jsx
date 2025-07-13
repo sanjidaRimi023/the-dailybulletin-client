@@ -1,15 +1,14 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
-import logo from "../../assets/logoimage-removebg-preview.png";
 import sideImage from "../../assets/newspaper-background-concept.jpg";
 import { FcGoogle } from "react-icons/fc";
-import CreativeButton from "../../Components/Ui/CreativeButton";
 import useAuth from "../../Hooks/useAuth";
 import { auth } from "../../Firebase/firebase.config";
 import { toast } from "react-toastify";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import AuthButton from "../../Components/Ui/auth-button";
 
 const Login = () => {
   const {
@@ -50,11 +49,7 @@ const Login = () => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -40 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+    <div data-aos="zoom-in"
       className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl my-10 bg-white/90 dark:bg-gray-800/90 hover:shadow-xl backdrop-blur-md transition-all duration-300"
     >
       <div
@@ -70,13 +65,19 @@ const Login = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <div className="flex justify-center mx-auto mb-4">
-            <img className="w-auto" src={logo} alt="Logo" />
-          </div>
+         
 
-          <p className="text-xl text-center text-gray-600 dark:text-gray-200 mb-4">
-            Welcome back!
-          </p>
+          <h2 className="text-3xl my-4 font-bold text-center text-gray-800 dark:text-white">
+          
+          <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+            Welcome 
+          </span> {" "}
+        back
+          </h2>
+          <p className="text-sm text-center my-2 text-gray-600 dark:text-gray-300">
+    Glad to see you again. Let's get you back in!
+    </p>
+
 
           <button
             onClick={handleGoogleBtn}
@@ -160,9 +161,11 @@ const Login = () => {
             </div>
 
             <div>
-              <button type="submit" className="w-full">
-                <CreativeButton text="Login" />
-              </button>
+              <AuthButton
+                type="submit"
+              
+                text="Login" />
+          
             </div>
           </form>
 
@@ -181,7 +184,7 @@ const Login = () => {
           </div>
         </motion.div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

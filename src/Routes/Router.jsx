@@ -7,7 +7,7 @@ import Register from "../Pages/Auth/Register";
 import AddArticle from "../Pages/AddArticle";
 import SubscriptionPage from "../Pages/Subscription.jsx/SubscriptionPage";
 import DashboardLayout from "../Layouts/dashboard-layout";
-import UserOverView from "../Pages/Dashboard/User/user-overview";
+import UserOverView from "../Pages/Dashboard/User/use-over-view";
 
 
 const router = createBrowserRouter([

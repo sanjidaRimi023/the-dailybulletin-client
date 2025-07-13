@@ -23,7 +23,7 @@ export default function NavUserDropdown({ user }) {
     return (
         <div class="relative inline-block ">
             <button onClick={() => setOpen(!open)} class="cursor-pointer">
-                <img class="flex-shrink-0 object-cover mx-1 rounded-full size-12" src={user?.photoURL || "https://imgs.search.brave.com/FJYFJtWbPjTkNkUiTXl2UH0N-zFAzi250TdKJjX0BZ0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cG5nYWxsLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMTIvQXZh/dGFyLVBORy1CYWNr/Z3JvdW5kLnBuZw"} alt="jane avatar" />
+                <img class="flex-shrink-0 object-cover  border-2 border-blue-600 mx-1 rounded-full size-12" src={user?.photoURL || "https://imgs.search.brave.com/FJYFJtWbPjTkNkUiTXl2UH0N-zFAzi250TdKJjX0BZ0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cG5nYWxsLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMTIvQXZh/dGFyLVBORy1CYWNr/Z3JvdW5kLnBuZw"} alt="jane avatar" />
             </button>
 
             <div class={`${open ? "absolute" : "hidden"} right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800`}

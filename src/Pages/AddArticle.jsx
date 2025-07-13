@@ -8,7 +8,6 @@ import useAuth from "../Hooks/useAuth";
 import { FaCameraRetro } from "react-icons/fa";
 import Sharebtn from "../Components/Ui/Sharebtn";
 
-
 const tagOptions = [
   { value: "Politics", label: "Politics" },
   { value: "Technology", label: "Technology" },
@@ -24,7 +23,6 @@ const categoryOptions = [
   { value: "Entertainment", label: "Entertainment" },
   { value: "Sports", label: "Sports" },
 ];
-
 
 const AddArticle = () => {
   const {
@@ -89,7 +87,7 @@ const AddArticle = () => {
           title: "Article submitted successfully!",
           icon: "success",
           timer: 1500,
-          showConfirmButton:false,
+          showConfirmButton: false,
         });
         reset();
       }
@@ -107,48 +105,48 @@ const AddArticle = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="flex flex-col md:flex-row gap-4">
-           {/* Title */}
-        <div className="flex-1">
-          <label className="block mb-1 font-medium text-gray-700">Title</label>
-          <input
-            type="text"
-            {...register("title", { required: true })}
-            placeholder="Enter article title"
-            className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          {errors.title && (
-            <p className="text-red-500 text-sm mt-1">Title is required</p>
-          )}
-        </div>
-         {/* Category */}
-        <div className="flex-1">
-          <label className="block mb-1 font-medium text-gray-700">
-            Category
-          </label>
-          <Controller
-            control={control}
-            name="category"
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={categoryOptions}
-                placeholder="Select Category"
-                styles={customSelectStyles} 
-              />
+          {/* Title */}
+          <div className="flex-1">
+            <label className="block mb-1 font-medium text-gray-700">
+              Title
+            </label>
+            <input
+              type="text"
+              {...register("title", { required: true })}
+              placeholder="Enter article title"
+              className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            {errors.title && (
+              <p className="text-red-500 text-sm mt-1">Title is required</p>
             )}
-          />
-          {errors.category && (
-            <p className="text-red-500 text-sm mt-1">Category is required</p>
-          )}
+          </div>
+          {/* Category */}
+          <div className="flex-1">
+            <label className="block mb-1 font-medium text-gray-700">
+              Category
+            </label>
+            <Controller
+              control={control}
+              name="category"
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={categoryOptions}
+                  placeholder="Select Category"
+                  styles={customSelectStyles}
+                />
+              )}
+            />
+            {errors.category && (
+              <p className="text-red-500 text-sm mt-1">Category is required</p>
+            )}
+          </div>
         </div>
-       </div>
 
         {/* Image Upload */}
         <div>
-          <label className="block mb-1 font-medium text-gray-700">
-            Image
-          </label>
+          <label className="block mb-1 font-medium text-gray-700">Image</label>
           <label
             htmlFor="profilePhoto"
             className="flex items-center justify-center px-4 py-3 mb-4 text-center bg-white border-2 border-dashed rounded-lg cursor-pointer dark:border-gray-600 dark:bg-gray-900"
@@ -181,9 +179,7 @@ const AddArticle = () => {
             <input
               {...register("publisher", { required: true })}
               className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              
-            </input>
+            ></input>
             {errors.publisher && (
               <p className="text-red-500 text-sm mt-1">Publisher is required</p>
             )}
@@ -222,14 +218,12 @@ const AddArticle = () => {
             {...register("description", { required: true })}
             rows={4}
             placeholder="Write a short description of the article..."
-           className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {errors.description && (
             <p className="text-red-500 text-sm mt-1">Description is required</p>
           )}
         </div>
-        
-       
 
         {/* Content */}
         <div>
@@ -249,12 +243,7 @@ const AddArticle = () => {
 
         {/* Submit Button */}
         <div className="text-center">
-          <button
-            type="submit"
-           
-          >
-          <Sharebtn text="submit"/>
-          </button>
+          <Sharebtn type="submit" text="submit" />
         </div>
       </form>
     </div>

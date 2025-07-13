@@ -5,6 +5,8 @@ import NavUserDropdown from "../Customs/nav-user-dropdown";
 import { Typewriter } from "react-simple-typewriter";
 import { useState } from "react";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
+import Sharebtn from "../Ui/Sharebtn";
+
 
 const Navbar = () => {
   const { pathname: path } = useLocation();
@@ -12,7 +14,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70 shadow-sm px-4 py-2 lg:px-20 flex items-center justify-between">
+    <nav className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70 shadow-sm px-4 py-4 lg:px-20 flex items-center justify-between">
       {/* Logo */}
       <div className="flex items-center gap-2">
         <img src={logo} alt="Logo" className="w-10" />
@@ -80,16 +82,12 @@ const Navbar = () => {
               <NavUserDropdown user={user} />
             </div>
         ) : (
-          <div className="space-y-2 lg:space-y-0 lg:space-x-4 mt-4 lg:mt-0">
+          <div className="space-y-2 md:flex lg:space-y-0 lg:space-x-2 mt-4 lg:mt-0">
             <Link to="/login">
-              <button className="w-full lg:w-auto px-4 py-2 rounded-md border border-blue-600 text-blue-600 shadow">
-                Login
-              </button>
+              <Sharebtn text="Login"/>
             </Link>
             <Link to="/register">
-              <button className="w-full lg:w-auto px-4 py-2 rounded-md bg-blue-500 text-white shadow">
-                Register
-              </button>
+              <Sharebtn text="Register"/>
             </Link>
           </div>
         )}
