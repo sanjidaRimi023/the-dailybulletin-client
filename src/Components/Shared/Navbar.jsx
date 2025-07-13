@@ -43,7 +43,7 @@ const Navbar = () => {
       <div
         className={`${
           isOpen ? "block" : "hidden"
-        } lg:flex lg:items-center lg:space-x-5 absolute lg:static top-full left-0 w-full lg:w-auto bg-white dark:bg-gray-900 lg:bg-transparent lg:dark:bg-transparent px-4 py-4 lg:p-0`}
+        } lg:flex lg:items-center lg:space-x-2 absolute lg:static top-full left-0 w-full lg:w-auto bg-white dark:bg-gray-900 lg:bg-transparent lg:dark:bg-transparent px-4 py-4 lg:p-0`}
       >
         <Link
           to="/"
@@ -72,6 +72,15 @@ const Navbar = () => {
           }`}
         >
           Subscriptions
+          <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+        </Link>
+        <Link
+          to="/about-us"
+          className={`block px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative overflow-hidden group ${
+            path === "/subscription" ? "text-blue-500" : "text-gray-700"
+          }`}
+        >
+          About Us
           <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
         </Link>
 

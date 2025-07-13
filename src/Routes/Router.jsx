@@ -8,6 +8,7 @@ import AddArticle from "../Pages/AddArticle";
 import SubscriptionPage from "../Pages/Subscription.jsx/SubscriptionPage";
 import DashboardLayout from "../Layouts/dashboard-layout";
 import UserOverView from "../Pages/Dashboard/User/use-over-view";
+import AboutUs from "../Pages/about-us";
 
 
 const router = createBrowserRouter([
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
             {
                 path: '/add-article',
                 element: <AddArticle />
+            },
+            {
+                path: '/about-us',
+                element: <AboutUs />
             },
             {
                 path: '/subscription',

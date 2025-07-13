@@ -18,7 +18,7 @@ const MainLayout = () => {
     <>
       <Toast></Toast>
       <Navbar />
-      <div className="min-h-[calc(100vh-426px)]">
+      <div className="min-h-[calc(100vh-345px)]">
         <Outlet />
       </div>
       <Footer />
