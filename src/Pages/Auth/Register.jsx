@@ -9,6 +9,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import AuthButton from "../../Components/Ui/auth-button";
+import useAxios from "../../Hooks/useAxiosSecure";
 
 const Register = () => {
   const {
@@ -18,6 +19,8 @@ const Register = () => {
   } = useForm();
 
   const { createUser, updateUserProfile } = useAuth();
+  const axiosInstance = useAxios();
+  
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || "/";
@@ -66,13 +69,24 @@ const [showPassword, setShowPassword] = useState(false)
 
   const onSubmit = async (data) => {
     if (!profilePicture) {
-      toast.warn("Please wait until the image is uploaded.");
+      toast.warn("Please upload a image");
       return;
     }
 
     try {
       const res = await createUser(data.email, data.password);
-     console.log(res);
+      console.log(res);
+      const userInfo = {
+        email : data.email,
+        role: "user",
+        photoURL: data.photoURL,
+        created_at : new Date().toISOString(),
+        last_login : new Date().toISOString()
+      }
+      const userRes = await axiosInstance.post("/users", userInfo);
+      console.log(userRes);
+
+
       await updateUserProfile({
       displayName: data.name, 
       photoURL: profilePicture,

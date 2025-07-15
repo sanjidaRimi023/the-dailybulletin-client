@@ -1,9 +1,8 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import Select from "react-select";
-import axios from "axios";
+
 import Swal from "sweetalert2";
-import useAxios from "../Hooks/useAxios";
+import useAxios from "../Hooks/useAxiosSecure";
 import useAuth from "../Hooks/useAuth";
 import { FaCameraRetro } from "react-icons/fa";
 import Sharebtn from "../Components/Ui/Sharebtn";
@@ -32,7 +31,7 @@ const AddArticle = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxios();
   const { user } = useAuth();
 
   const customSelectStyles = {
@@ -56,7 +55,7 @@ const AddArticle = () => {
       formData.append("file", imageFile);
       formData.append("upload_preset", import.meta.env.VITE_CLOUD_PRESET);
 
-      const uploadRes = await axios.post(
+      const uploadRes = await axiosSecure.post(
         `https://api.cloudinary.com/v1_1/${
           import.meta.env.VITE_CLOUD_NAME
         }/image/upload`,
@@ -80,7 +79,7 @@ const AddArticle = () => {
         createdAt: new Date(),
       };
 
-      const res = await axiosInstance.post("/article", articleData);
+      const res = await axiosSecure.post("/article", articleData);
       if (res.data.insertedId) {
         // my article page
         Swal.fire({

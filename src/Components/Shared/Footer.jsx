@@ -7,26 +7,18 @@ import { Typewriter } from "react-simple-typewriter";
 const Footer = () => {
   const { pathname: path } = useLocation();
   return (
-    <footer class="bg-gray-800">
-      <div class="container px-6 py-8 mx-auto">
-        <div class="flex flex-col lg:flex-row justify-between items-center gap-10">
+    <footer className="bg-gray-800">
+      <div className="container px-6 py-8 mx-auto">
+        <div className="flex flex-col lg:flex-row justify-between items-center gap-10">
           <div className="flex items-center gap-2">
             <img src={logo} alt="Logo" className="w-10" />
             <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              <Typewriter
-                words={["The_Daily_Bulletin"]}
-                loop={5}
-                cursor
-                cursorStyle="_"
-                typeSpeed={70}
-                deleteSpeed={50}
-                delaySpeed={1000}
-              />
+              The_Daily_Bulletin
             </span>
             
           </div>
 
-          <div class="flex flex-wrap justify-center mt-6 -mx-4">
+          <div className="flex flex-wrap justify-center mt-6 -mx-4">
             <Link
               to="/"
               className={`block px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative overflow-hidden group ${
@@ -77,10 +69,10 @@ const Footer = () => {
           </div>
         </div>
 
-        <hr class="my-6 border-gray-200 md:my-10 dark:border-gray-700" />
+        <hr className="my-6 border-gray-200 md:my-10 dark:border-gray-700" />
 
-        <div class="flex flex-col items-center sm:flex-row sm:justify-between gap-10">
-          <p class="text-lg text-gray-300">
+        <div className="flex flex-col items-center sm:flex-row sm:justify-between gap-10">
+          <p className="text-lg text-gray-300">
             Copyright: Any unauthorized use or reproduction of{" "}
             <span className="font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">The Daily Bulletin</span> content for commercial purposes{" "}
             <br /> is strictly prohibited and constitutes copyright infringement
