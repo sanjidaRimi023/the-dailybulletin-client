@@ -20,7 +20,7 @@ const Register = () => {
 
   const { createUser, updateUserProfile } = useAuth();
   const axiosInstance = useAxios();
-  
+
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || "/";
@@ -29,8 +29,7 @@ const Register = () => {
   const [profilePicture, setProfilePicture] = useState("");
   const [uploading, setUploading] = useState(false);
 
-
-const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
 
   const cloud_name = import.meta.env.VITE_CLOUD_NAME;
   const upload_preset = import.meta.env.VITE_CLOUD_PRESET;
@@ -59,8 +58,6 @@ const [showPassword, setShowPassword] = useState(false)
     if (file && file.type.startsWith("image/")) {
       setSelectedImage(URL.createObjectURL(file));
       const url = await uploadImageToCloudinary(file);
-      console.log(url);
-
       setProfilePicture(url);
     } else {
       console.log("Please upload a valid image file");
@@ -68,6 +65,7 @@ const [showPassword, setShowPassword] = useState(false)
   };
 
   const onSubmit = async (data) => {
+    console.log(data);
     if (!profilePicture) {
       toast.warn("Please upload a image");
       return;
@@ -77,20 +75,20 @@ const [showPassword, setShowPassword] = useState(false)
       const res = await createUser(data.email, data.password);
       console.log(res);
       const userInfo = {
-        email : data.email,
+        email: data.email,
         role: "user",
-        photoURL: data.photoURL,
-        created_at : new Date().toISOString(),
-        last_login : new Date().toISOString()
-      }
+        photoURL: profilePicture,
+        created_at: new Date().toISOString(),
+        last_login: new Date().toISOString(),
+      };
+      console.log(userInfo);
       const userRes = await axiosInstance.post("/users", userInfo);
       console.log(userRes);
 
-
       await updateUserProfile({
-      displayName: data.name, 
-      photoURL: profilePicture,
-    });
+        displayName: data.name,
+        photoURL: profilePicture,
+      });
       toast.success("Profile updated successfully!");
       navigate(from);
     } catch (error) {
@@ -100,7 +98,7 @@ const [showPassword, setShowPassword] = useState(false)
 
   return (
     <div
-       data-aos="zoom-in"
+      data-aos="zoom-in"
       className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl my-10 bg-white/90 dark:bg-gray-800/90 hover:shadow-xl backdrop-blur-md transition-all duration-300"
     >
       {/* Left Side Image */}
@@ -113,7 +111,7 @@ const [showPassword, setShowPassword] = useState(false)
 
       {/* Right Side Form */}
       <form
-       data-aos="zoom-in"
+        data-aos="zoom-in"
         onSubmit={handleSubmit(onSubmit)}
         className="w-full px-6 py-8 md:px-8 lg:w-1/2"
       >
@@ -148,7 +146,6 @@ const [showPassword, setShowPassword] = useState(false)
             className="hidden"
             onChange={handleImageChange}
           />
-          {uploading && <p className="text-blue-500">Uploading image...</p>}
         </div>
 
         {/* Username */}
@@ -163,9 +160,7 @@ const [showPassword, setShowPassword] = useState(false)
             <FaUser />
           </span>
           {errors.name && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.name.message}
-            </p>
+            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
           )}
         </div>
 
@@ -193,38 +188,38 @@ const [showPassword, setShowPassword] = useState(false)
 
         {/* Password */}
         <div className="mb-4 relative">
-  <input
-    {...register("password", {
-      required: "Password is required",
-      minLength: {
-        value: 6,
-        message: "Password must be at least 6 characters",
-      },
-    })}
-    type={showPassword ? "text" : "password"}
-    placeholder="Password"
-    className="w-full py-3 px-4 pl-11 pr-11 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 border rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-  />
+          <input
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
+            })}
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            className="w-full py-3 px-4 pl-11 pr-11 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 border rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
 
-  {/* Lock Icon on Left */}
-  <span className="absolute top-3 left-3 text-gray-400">
-    <RiLockPasswordFill />
-  </span>
+          {/* Lock Icon on Left */}
+          <span className="absolute top-3 left-3 text-gray-400">
+            <RiLockPasswordFill />
+          </span>
 
-  {/* Eye Toggle Icon on Right */}
-  <span
-    className="absolute top-3 right-3 text-gray-400 cursor-pointer"
-    onClick={() => setShowPassword(!showPassword)}
-  >
-    {showPassword ? <FiEyeOff /> : <FiEye />}
-  </span>
+          {/* Eye Toggle Icon on Right */}
+          <span
+            className="absolute top-3 right-3 text-gray-400 cursor-pointer"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FiEyeOff /> : <FiEye />}
+          </span>
 
-  {errors.password && (
-    <p className="text-red-500 text-sm mt-1">
-      {errors.password.message}
-    </p>
-  )}
-</div>
+          {errors.password && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.password.message}
+            </p>
+          )}
+        </div>
 
         {/* Submit Button */}
         <AuthButton

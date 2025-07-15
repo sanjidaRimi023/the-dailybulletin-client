@@ -1,11 +1,11 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-
 import Swal from "sweetalert2";
 import useAxios from "../Hooks/useAxiosSecure";
 import useAuth from "../Hooks/useAuth";
 import { FaCameraRetro } from "react-icons/fa";
 import Sharebtn from "../Components/Ui/Sharebtn";
+import Select from 'react-select';
 
 const tagOptions = [
   { value: "Politics", label: "Politics" },

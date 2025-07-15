@@ -7,7 +7,6 @@ import { useState } from "react";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 import Sharebtn from "../Ui/Sharebtn";
 
-
 const Navbar = () => {
   const { pathname: path } = useLocation();
   const { user } = useAuth();
@@ -64,6 +63,16 @@ const Navbar = () => {
           All Article
           <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
         </Link>
+      
+        <Link
+          to="/add-article"
+          className={`block px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative overflow-hidden group ${
+            path === "/add-article" ? "text-blue-500" : "text-gray-700"
+          }`}
+        >
+          Add Article
+          <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+        </Link>
 
         <Link
           to="/subscription"
@@ -77,7 +86,7 @@ const Navbar = () => {
         <Link
           to="/about-us"
           className={`block px-4 py-2 rounded-full text-lg font-semibold transition-all duration-300 relative overflow-hidden group ${
-            path === "/subscription" ? "text-blue-500" : "text-gray-700"
+            path === "/about-us" ? "text-blue-500" : "text-gray-700"
           }`}
         >
           About Us
@@ -90,16 +99,16 @@ const Navbar = () => {
             <div className="flex justify-end">
               <NavUserDropdown user={user} />
             </div>
-        ) : (
-          <div className="space-y-2 md:flex lg:space-y-0 lg:space-x-2 mt-4 lg:mt-0">
-            <Link to="/login">
-              <Sharebtn text="Login"/>
-            </Link>
-            <Link to="/register">
-              <Sharebtn text="Register"/>
-            </Link>
-          </div>
-        )}
+          ) : (
+            <div className="space-y-2 md:flex lg:space-y-0 lg:space-x-2 mt-4 lg:mt-0">
+              <Link to="/login">
+                <Sharebtn text="Login" />
+              </Link>
+              <Link to="/register">
+                <Sharebtn text="Register" />
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>

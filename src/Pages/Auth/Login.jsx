@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import AuthButton from "../../Components/Ui/auth-button";
+import useAxios from "../../Hooks/useAxiosSecure";
+
 
 const Login = () => {
   const {
@@ -19,8 +21,9 @@ const Login = () => {
 
   const { loginUser, googleLogin } = useAuth();
   const navigate = useNavigate();
-   const location = useLocation();
-   const from = location.state?.from || "/";
+  const location = useLocation();
+  const from = location.state?.from || "/";
+    const axiosInstance = useAxios();
 
   const onSubmit = (data) => {
     loginUser(data?.email, data?.password, auth)
@@ -37,8 +40,18 @@ const Login = () => {
 
   const handleGoogleBtn = () => {
     googleLogin()
-      .then((result) => {
-        console.log(result.user);
+      .then(async(result) => {
+        const user = result.user;
+      const userInfo = {
+        email : user.email,
+        role: "user",
+        photoURL: user.photoURL,
+        created_at : new Date().toISOString(),
+        last_login : new Date().toISOString()
+      }
+      const userRes = await axiosInstance.post("/users", userInfo);
+        console.log(userRes);
+        
         navigate(from);
         toast.success("Signed in with Google!");
       })
@@ -49,7 +62,8 @@ const Login = () => {
   };
 
   return (
-    <div data-aos="zoom-in"
+    <div
+      data-aos="zoom-in"
       className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl my-10 bg-white/90 dark:bg-gray-800/90 hover:shadow-xl backdrop-blur-md transition-all duration-300"
     >
       <div
@@ -65,19 +79,15 @@ const Login = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-         
-
           <h2 className="text-3xl my-4 font-bold text-center text-gray-800 dark:text-white">
-          
-          <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Welcome 
-          </span> {" "}
-        back
+            <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              Welcome
+            </span>{" "}
+            back
           </h2>
           <p className="text-sm text-center my-2 text-gray-600 dark:text-gray-300">
-    Glad to see you again. Let's get you back in!
-    </p>
-
+            Glad to see you again. Let's get you back in!
+          </p>
 
           <button
             onClick={handleGoogleBtn}
@@ -161,16 +171,11 @@ const Login = () => {
             </div>
 
             <div>
-              <AuthButton
-                type="submit"
-              
-                text="Login" />
-          
+              <AuthButton type="submit" text="Login" />
             </div>
           </form>
 
           <div className="flex flex-col  items-center justify-between mt-6">
-           
             <span>
               Don't have any account?{" "}
               <Link
