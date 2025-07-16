@@ -9,8 +9,7 @@ import { toast } from "react-toastify";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import AuthButton from "../../Components/Ui/auth-button";
-import useAxios from "../../Hooks/useAxiosSecure";
-
+import useAxios from "../../Hooks/useAxios";
 
 const Login = () => {
   const {
@@ -23,35 +22,43 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || "/";
-    const axiosInstance = useAxios();
+  const axiosInstance = useAxios();
 
-  const onSubmit = (data) => {
-    loginUser(data?.email, data?.password, auth)
-      .then((res) => {
-        console.log(res.user);
-        navigate(from);
-        toast.success("Login successful!");
-      })
-      .catch((error) => {
-        toast.error("Invalid email or password!");
-        console.log(error);
-      });
+  const saveJWT = async (email) => {
+    const res = await axiosInstance.post("/jwt", { email });
+    const token = res.data.token;
+    localStorage.setItem("access-token", token);
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await loginUser(data?.email, data?.password, auth);
+      console.log(res.user);
+
+      await saveJWT(res.user.email);
+      toast.success("Login successful!");
+      navigate(from);
+    } catch (error) {
+      toast.error("Invalid email or password!");
+      console.log(error);
+    }
   };
 
   const handleGoogleBtn = () => {
     googleLogin()
-      .then(async(result) => {
+      .then(async (result) => {
         const user = result.user;
-      const userInfo = {
-        email : user.email,
-        role: "user",
-        photoURL: user.photoURL,
-        created_at : new Date().toISOString(),
-        last_login : new Date().toISOString()
-      }
-      const userRes = await axiosInstance.post("/users", userInfo);
+
+        const userInfo = {
+          email: user.email,
+          role: "user",
+          photoURL: user.photoURL,
+          created_at: new Date().toISOString(),
+          last_login: new Date().toISOString(),
+        };
+        const userRes = await axiosInstance.post("/users", userInfo);
         console.log(userRes);
-        
+        await saveJWT(user.email);
         navigate(from);
         toast.success("Signed in with Google!");
       })

@@ -21,7 +21,17 @@ const categoryOptions = [
   { value: "Health", label: "Health" },
   { value: "Entertainment", label: "Entertainment" },
   { value: "Sports", label: "Sports" },
+  { value: "Lifestyle", label: "Lifestyle" },
+  { value: "Education", label: "Education" },
+  { value: "Business", label: "Business" },
+  { value: "Environment", label: "Environment" },
+  { value: "Science", label: "Science" },
+  { value: "Travel", label: "Travel" },
+  { value: "Crime", label: "Crime" },
+  { value: "Religion", label: "Religion" },
+  { value: "Culture", label: "Culture" }
 ];
+
 
 const AddArticle = () => {
   const {

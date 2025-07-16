@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 const ErrorPage = () => {
   return (
@@ -19,7 +20,7 @@ const ErrorPage = () => {
               </p>
 
               <div className="flex items-center w-full mt-6 gap-x-3 shrink-0 sm:w-auto">
-                <button className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg dark:text-gray-200 gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:border-gray-700">
+                <Link to="/" className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg dark:text-gray-200 gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:border-gray-700">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -36,11 +37,11 @@ const ErrorPage = () => {
                   </svg>
 
                   <span>Go back</span>
-                </button>
+                </Link>
 
-                <button className="w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                <Link to="/" className="w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                   Take me home
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -71,8 +72,7 @@ const ErrorPage = () => {
                   Dive in to learn all about our product.
                 </p>
 
-                <a
-                  href="#"
+                <Link
                   className="inline-flex items-center mt-4 text-sm text-blue-500 gap-x-2 dark:text-blue-400 hover:underline"
                 >
                   <span>Start learning</span>
@@ -91,7 +91,7 @@ const ErrorPage = () => {
                       d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
                     />
                   </svg>
-                </a>
+                </Link>
               </div>
 
               <div className="p-6 rounded-lg bg-blue-50 dark:bg-gray-800">

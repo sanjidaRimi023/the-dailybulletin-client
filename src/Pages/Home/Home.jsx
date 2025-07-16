@@ -3,12 +3,13 @@ import HomeBannerSlider from "./HomeBannerSlider";
 import Plan from "./Plan";
 
 
+
 const Home = () => {
   return (
     <>
       <HomeBannerSlider />
       <Plan />
-      
+    
      
     </>
   );

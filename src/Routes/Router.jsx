@@ -11,6 +11,7 @@ import AboutUs from "../Pages/about-us";
 import AddArticle from "../Pages/AddArticle";
 import UserArticle from "../Pages/Dashboard/User/userArticle";
 import ManageArticle from "../Pages/Dashboard/User/manage-article";
+import AllArticle from "../Pages/all-article";
 
 
 const router = createBrowserRouter([
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
             {
                 path: '/payment',
                 element: <SubscriptionPage />
+            },
+            {
+                path: '/all-article',
+                element: <AllArticle/>
             },
 
 
