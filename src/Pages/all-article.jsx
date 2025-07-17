@@ -6,7 +6,7 @@ import { Link } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import LoadSpinner from "../Components/Ui/LoadSpinner";
 import useAxios from "../Hooks/useAxios";
-
+import UserArticleCard from "../Components/Customs/UserArticleCard"; 
 const AllArticle = () => {
   const [articles, setArticles] = useState([]);
   const [layout, setLayout] = useState("card");
@@ -15,6 +15,7 @@ const AllArticle = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 6;
 
+  const userType = "premium";
   const axiosInstance = useAxios();
 
   useEffect(() => {
@@ -48,7 +49,9 @@ const AllArticle = () => {
   return (
     <div className="min-h-screen py-10 px-4">
       <div className="text-center space-y-3 mb-10">
-        <h1 className="text-3xl font-bold text-primary">Read Our Latest Articles</h1>
+        <h1 className="text-3xl font-bold text-primary">
+          Read Our Latest Articles
+        </h1>
         <p className="text-base max-w-2xl mx-auto text-gray-600">
           Dive into the latest news and insightful articles. Stay informed with
           categorized news coverage, from politics to pop culture.
@@ -59,14 +62,16 @@ const AllArticle = () => {
       <div className="flex flex-wrap justify-center gap-4 mb-6 items-center">
         {/* Category filter */}
         <select
-          className="border px-4 py-2 rounded shadow-sm focus:outline-none"
+          className="border px-10 py-3 rounded-2xl"
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
         >
           <option value="">All Categories</option>
-          <option value="Politics">Politics</option>
+          <option value="Politics & Governance">Politics</option>
+          <option value="Business & Economy">Bussiness</option>
           <option value="Sports">Sports</option>
-          <option value="Tech">Tech</option>
+          <option value="Science & Research">Science</option>
+          <option value="Technology">Technology</option>
           <option value="Health">Health</option>
           <option value="Entertainment">Entertainment</option>
         </select>
@@ -89,52 +94,21 @@ const AllArticle = () => {
 
       {/* Layout Rendering */}
       {layout === "card" ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          className={
+            userType === "premium"
+              ? "container mx-auto my-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+              : "container mx-auto my-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          }
+        >
           <AnimatePresence>
             {currentArticles.map((article, index) => (
-              <motion.div
+              <UserArticleCard
                 key={article._id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="border rounded-lg shadow hover:shadow-md transition bg-white flex flex-col"
-              >
-                <img
-                  src={article.image}
-                  alt={article.title}
-                  className="rounded-t-lg h-52 w-full object-cover"
-                />
-                <div className="p-4 flex-1 flex flex-col justify-between gap-3">
-                  <div>
-                    <h2 className="text-xl font-bold text-primary mb-1">{article.title}</h2>
-                    <p className="text-sm text-gray-600">By {article.author}</p>
-                    <p className="text-sm text-gray-500">
-                      Category:{" "}
-                      <span className="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">
-                        {article.category}
-                      </span>
-                    </p>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {article.tags?.slice(0, 3).map((tag, i) => (
-                        <span
-                          key={i}
-                          className="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded-full"
-                        >
-                          #{tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="mt-4 text-right">
-                    <Link to={`/articles/${article._id}`}>
-                      <button className="bg-primary text-white px-4 py-1 rounded hover:bg-opacity-90 text-sm">
-                        Read More
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </motion.div>
+                article={article}
+                index={index}
+                userType={article.isPremium ? "premium" : "normal"}
+              />
             ))}
           </AnimatePresence>
         </div>
@@ -162,7 +136,7 @@ const AllArticle = () => {
                     />
                   </td>
                   <td className="px-4 py-2">{article.title}</td>
-                  <td className="px-4 py-2">{article.author}</td>
+                  <td className="px-4 py-2">{article.authorName}</td>
                   <td className="px-4 py-2">{article.category}</td>
                   <td className="px-4 py-2">
                     <div className="flex flex-wrap gap-1">
