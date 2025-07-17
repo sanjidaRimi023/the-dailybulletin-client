@@ -6,56 +6,8 @@ import { FaArrowRight } from "react-icons/fa";
 const UserArticleCard = ({ article, index, userType }) => {
   if (userType === "premium") {
     return (
+    
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: index * 0.05 }}
-      >
-        <Link
-          to={`/articles/${article._id}`}
-          className="flex flex-col sm:flex-row gap-4 rounded-md border border-gray-300 p-4 shadow-sm sm:p-6 hover:shadow-md transition"
-        >
-          {/* Image Left */}
-          <div className="sm:w-48 shrink-0">
-            <img
-              src={article.image}
-              alt={article.title}
-              className="h-56 w-full rounded-tr-3xl rounded-bl-3xl object-cover sm:h-64 lg:h-72"
-            />
-          </div>
-
-          {/* Content Right */}
-          <div className="flex-1 flex flex-col justify-between">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {article.title}
-              </h3>
-
-              <p className="mt-1 text-sm text-gray-700 dark:text-gray-400">
-                By {article.authorName}
-              </p>
-
-              <p className="mt-3 text-sm text-gray-700 dark:text-gray-300 line-clamp-2">
-                {article.description?.slice(0, 150) + "..."}
-              </p>
-            </div>
-            <Link
-              to={`/articles/${article._id}`}
-              className="inline-flex transition hover:scale-110 hover:shadow-xl items-center gap-2 mt-4 px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-fit"
-            >
-              Read more
-              <FaArrowRight />
-            </Link>
-          </div>
-        </Link>
-      </motion.div>
-    );
-  }
-
-  // Normal user layout
-  return (
-    <motion.div
       key={article._id}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -123,6 +75,55 @@ const UserArticleCard = ({ article, index, userType }) => {
         </Link>
       </div>
     </motion.div>
+    );
+  }
+
+  // Normal user layout
+  return (
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, delay: index * 0.05 }}
+      >
+        <Link
+          to={`/articles/${article._id}`}
+          className="flex flex-col sm:flex-row gap-4 rounded-md border border-gray-300 p-4 shadow-sm sm:p-6 hover:shadow-md transition"
+        >
+          {/* Image Left */}
+          <div className="sm:w-48 shrink-0">
+            <img
+              src={article.image}
+              alt={article.title}
+              className="h-56 w-full rounded-tr-3xl rounded-bl-3xl object-cover sm:h-64 lg:h-72"
+            />
+          </div>
+
+          {/* Content Right */}
+          <div className="flex-1 flex flex-col justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                {article.title}
+              </h3>
+
+              <p className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                By {article.authorName}
+              </p>
+
+              <p className="mt-3 text-sm text-gray-700 dark:text-gray-300 line-clamp-2">
+                {article.description?.slice(0, 150) + "..."}
+              </p>
+            </div>
+            <Link
+              to={`/articles/${article._id}`}
+              className="inline-flex transition hover:scale-110 hover:shadow-xl items-center gap-2 mt-4 px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-fit"
+            >
+              Read more
+              <FaArrowRight />
+            </Link>
+          </div>
+        </Link>
+      </motion.div>
   );
 };
 

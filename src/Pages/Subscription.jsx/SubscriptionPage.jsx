@@ -32,7 +32,7 @@ const SubscriptionPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const [selectedPlan, setSelectedPlan] = useState(plans[0]); // Default Trial
+  const [selectedPlan, setSelectedPlan] = useState(plans[0]); 
 
   const handlePlanChange = (e) => {
     const selected = plans.find(

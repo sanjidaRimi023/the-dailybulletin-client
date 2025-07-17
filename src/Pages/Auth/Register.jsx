@@ -9,7 +9,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import AuthButton from "../../Components/Ui/auth-button";
-import useAxios from "../../Hooks/useAxiosSecure";
+import useAxios from "../../Hooks/useAxios";
 
 const Register = () => {
   const {

@@ -1,41 +1,63 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { IoGrid } from "react-icons/io5";
 import { FaTable } from "react-icons/fa6";
 import { Link } from "react-router";
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "framer-motion";
 import LoadSpinner from "../Components/Ui/LoadSpinner";
-import useAxios from "../Hooks/useAxios";
-import UserArticleCard from "../Components/Customs/UserArticleCard"; 
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import useAuth from "../Hooks/useAuth";
+import UserArticleCard from "../Components/Customs/UserArticleCard";
+import { useQuery } from "@tanstack/react-query";
+
 const AllArticle = () => {
-  const [articles, setArticles] = useState([]);
   const [layout, setLayout] = useState("card");
-  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 6;
 
-  const userType = "premium";
-  const axiosInstance = useAxios();
+  const { user, loading: authLoading } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
-  useEffect(() => {
-    axiosInstance("/article")
-      .then((res) => {
-        setArticles(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error loading articles:", err);
-        setLoading(false);
-      });
-  }, [axiosInstance]);
+  // Fetch articles
+  const {
+    data: articles = [],
+    isLoading: articlesLoading,
+  } = useQuery({
+    queryKey: ["all-articles"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/article");
+      return res.data;
+    },
+  });
 
-  // Category filter
+  // Fetch user role
+  const {
+    data: userData,
+    isLoading: userLoading,
+  } = useQuery({
+    queryKey: ["user-role", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user.email}`);
+      return res.data; // contains: role, isPremium
+    },
+  });
+
+  const userType = userData?.role === "admin"
+    ? "admin"
+    : userData?.isPremium
+    ? "premium"
+    : "normal";
+
+  if (articlesLoading || userLoading || authLoading) return <LoadSpinner />;
+
+
   const filteredArticles = articles.filter((article) =>
     selectedCategory ? article.category === selectedCategory : true
   );
 
-  // Pagination logic
+
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
   const currentArticles = filteredArticles.slice(
@@ -43,8 +65,6 @@ const AllArticle = () => {
     indexOfLastArticle
   );
   const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
-
-  if (loading) return <LoadSpinner />;
 
   return (
     <div className="min-h-screen py-10 px-4">
@@ -58,9 +78,8 @@ const AllArticle = () => {
         </p>
       </div>
 
-      {/* Filter + View Toggle */}
+      
       <div className="flex flex-wrap justify-center gap-4 mb-6 items-center">
-        {/* Category filter */}
         <select
           className="border px-10 py-3 rounded-2xl"
           value={selectedCategory}
@@ -68,7 +87,7 @@ const AllArticle = () => {
         >
           <option value="">All Categories</option>
           <option value="Politics & Governance">Politics</option>
-          <option value="Business & Economy">Bussiness</option>
+          <option value="Business & Economy">Business</option>
           <option value="Sports">Sports</option>
           <option value="Science & Research">Science</option>
           <option value="Technology">Technology</option>
@@ -76,7 +95,6 @@ const AllArticle = () => {
           <option value="Entertainment">Entertainment</option>
         </select>
 
-        {/* Layout Toggle */}
         <div className="flex items-center gap-2 ml-auto">
           <span className="text-lg font-semibold">View</span>
           <button
@@ -92,22 +110,16 @@ const AllArticle = () => {
         </div>
       </div>
 
-      {/* Layout Rendering */}
+    
       {layout === "card" ? (
-        <div
-          className={
-            userType === "premium"
-              ? "container mx-auto my-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-              : "container mx-auto my-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          }
-        >
+        <div className="container mx-auto my-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
             {currentArticles.map((article, index) => (
               <UserArticleCard
                 key={article._id}
                 article={article}
                 index={index}
-                userType={article.isPremium ? "premium" : "normal"}
+                userType={userType}
               />
             ))}
           </AnimatePresence>
