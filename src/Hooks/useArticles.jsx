@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import useAxios from "./useAxios";
 
 
-
 const useArticles = () => {
   const axiosInstance = useAxios;
 

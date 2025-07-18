@@ -9,6 +9,7 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 import useAuth from "../Hooks/useAuth";
 import UserArticleCard from "../Components/Customs/UserArticleCard";
 import { useQuery } from "@tanstack/react-query";
+import Pagination from "../Components/Customs/Pagination";
 
 const AllArticle = () => {
   const [layout, setLayout] = useState("card");
@@ -19,11 +20,7 @@ const AllArticle = () => {
   const { user, loading: authLoading } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  // Fetch articles
-  const {
-    data: articles = [],
-    isLoading: articlesLoading,
-  } = useQuery({
+  const { data: articles = [], isLoading: articlesLoading } = useQuery({
     queryKey: ["all-articles"],
     queryFn: async () => {
       const res = await axiosSecure.get("/article");
@@ -31,32 +28,27 @@ const AllArticle = () => {
     },
   });
 
-  // Fetch user role
-  const {
-    data: userData,
-    isLoading: userLoading,
-  } = useQuery({
+  const { data: userData, isLoading: userLoading } = useQuery({
     queryKey: ["user-role", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/${user.email}`);
-      return res.data; // contains: role, isPremium
+      return res.data;
     },
   });
 
-  const userType = userData?.role === "admin"
-    ? "admin"
-    : userData?.isPremium
-    ? "premium"
-    : "normal";
+  const userType =
+    userData?.role === "admin"
+      ? "admin"
+      : userData?.isPremium
+      ? "premium"
+      : "normal";
 
   if (articlesLoading || userLoading || authLoading) return <LoadSpinner />;
-
 
   const filteredArticles = articles.filter((article) =>
     selectedCategory ? article.category === selectedCategory : true
   );
-
 
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
@@ -78,7 +70,6 @@ const AllArticle = () => {
         </p>
       </div>
 
-      
       <div className="flex flex-wrap justify-center gap-4 mb-6 items-center">
         <select
           className="border px-10 py-3 rounded-2xl"
@@ -110,19 +101,20 @@ const AllArticle = () => {
         </div>
       </div>
 
-    
       {layout === "card" ? (
-        <div className="container mx-auto my-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence>
-            {currentArticles.map((article, index) => (
-              <UserArticleCard
-                key={article._id}
-                article={article}
-                index={index}
-                userType={userType}
-              />
-            ))}
-          </AnimatePresence>
+        <div
+          className={`container mx-auto grid gap-6 ${
+            userType === "isPremium" ? "lg:grid-cols-3" : "lg:grid-cols-2"
+          } md:grid-cols-2`}
+        >
+          {currentArticles.map((article, index) => (
+            <UserArticleCard
+              key={article._id}
+              article={article}
+              index={index}
+              userType={userType}
+            />
+          ))}
         </div>
       ) : (
         <div className="w-full overflow-x-auto">
@@ -163,7 +155,7 @@ const AllArticle = () => {
                     </div>
                   </td>
                   <td className="px-4 py-2">
-                    <Link to={`/articles/${article._id}`}>
+                    <Link to={`/article-detail/${article._id}`}>
                       <button className="bg-primary text-white px-2 py-1 rounded text-xs hover:bg-opacity-90">
                         View
                       </button>
@@ -176,22 +168,12 @@ const AllArticle = () => {
         </div>
       )}
 
-      {/* Pagination */}
-      <div className="flex justify-center mt-10 flex-wrap gap-2">
-        {Array.from({ length: totalPages }).map((_, index) => (
-          <button
-            key={index}
-            className={`px-3 py-1 text-sm rounded border ${
-              currentPage === index + 1
-                ? "bg-primary text-white"
-                : "bg-white text-primary border-primary"
-            }`}
-            onClick={() => setCurrentPage(index + 1)}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
+      {/* Pagination Component */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 };

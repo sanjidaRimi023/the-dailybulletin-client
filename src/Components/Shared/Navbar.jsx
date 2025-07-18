@@ -14,10 +14,10 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70 shadow-sm px-4 py-4 lg:px-20 flex items-center justify-between">
-      {/* Logo */}
+   
       <div className="flex items-center gap-2">
         <img src={logo} alt="Logo" className="w-10" />
-        <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+        <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
           <Typewriter
             words={["The_Daily_Bulletin"]}
             loop={5}
@@ -27,7 +27,7 @@ const Navbar = () => {
             deleteSpeed={50}
             delaySpeed={1000}
           />
-        </span>
+        </Link>
       </div>
 
       {/* Mobile Toggle */}

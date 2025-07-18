@@ -12,6 +12,7 @@ import AddArticle from "../Pages/AddArticle";
 import UserArticle from "../Pages/Dashboard/User/userArticle";
 import ManageArticle from "../Pages/Dashboard/User/manage-article";
 import AllArticle from "../Pages/all-article";
+import ArticleDetail from "../Pages/ArticleDetail";
 // import PamentPage from "../Pages/Subscription.jsx/PamentPage";
 
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: '/all-article',
                 element: <AllArticle/>
+            },
+            {
+                path: '/article-detail/:id',
+                element: <ArticleDetail/>
             },
             // {
             //     path: '/subscription',
