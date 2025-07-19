@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { IoGrid } from "react-icons/io5";
 import { FaTable } from "react-icons/fa6";
 import { Link } from "react-router";
-// eslint-disable-next-line no-unused-vars
-import { AnimatePresence, motion } from "framer-motion";
 import LoadSpinner from "../Components/Ui/LoadSpinner";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import useAuth from "../Hooks/useAuth";
@@ -37,12 +35,11 @@ const AllArticle = () => {
     },
   });
 
-  const userType =
-    userData?.role === "admin"
-      ? "admin"
-      : userData?.isPremium
-      ? "premium"
-      : "normal";
+  const userType = userData?.role === "admin"
+    ? "admin"
+    : userData?.role === "premium"
+    ? "premium"
+    : "user";
 
   if (articlesLoading || userLoading || authLoading) return <LoadSpinner />;
 
@@ -61,30 +58,39 @@ const AllArticle = () => {
   return (
     <div className="min-h-screen py-10 px-4">
       <div className="text-center space-y-3 mb-10">
-        <h1 className="text-3xl font-bold text-primary">
-          Read Our Latest Articles
-        </h1>
-        <p className="text-base max-w-2xl mx-auto text-gray-600">
-          Dive into the latest news and insightful articles. Stay informed with
-          categorized news coverage, from politics to pop culture.
+        <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-indigo-900 bg-clip-text text-transparent">
+          Featured Insights
+        </h2>
+        <p>
+          Thought-provoking analysis and commentary from leading voices in
+          journalism. <br /> Dive deeper into the issues that matter most.
         </p>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-4 mb-6 items-center">
-        <select
-          className="border px-10 py-3 rounded-2xl"
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-        >
-          <option value="">All Categories</option>
-          <option value="Politics & Governance">Politics</option>
-          <option value="Business & Economy">Business</option>
-          <option value="Sports">Sports</option>
-          <option value="Science & Research">Science</option>
-          <option value="Technology">Technology</option>
-          <option value="Health">Health</option>
-          <option value="Entertainment">Entertainment</option>
-        </select>
+      <div className="container mx-auto flex flex-wrap justify-center gap-4 mb-6 items-center">
+        <div className="w-full max-w-xs">
+          <label
+            htmlFor="category"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Filter by Category
+          </label>
+          <select
+            id="category"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="block w-full px-5 py-3 text-sm text-gray-900 border-none border-gray-300 rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-blue-500 transition duration-200 ease-in-out"
+          >
+            <option value="">All Categories</option>
+            <option value="Politics & Governance">Politics</option>
+            <option value="Business & Economy">Business</option>
+            <option value="Sports">Sports</option>
+            <option value="Science & Research">Science</option>
+            <option value="Technology">Technology</option>
+            <option value="Health">Health</option>
+            <option value="Entertainment">Entertainment</option>
+          </select>
+        </div>
 
         <div className="flex items-center gap-2 ml-auto">
           <span className="text-lg font-semibold">View</span>
@@ -103,9 +109,7 @@ const AllArticle = () => {
 
       {layout === "card" ? (
         <div
-          className={`container mx-auto grid gap-6 ${
-            userType === "isPremium" ? "lg:grid-cols-3" : "lg:grid-cols-2"
-          } md:grid-cols-2`}
+          className={`container mx-auto grid gap-6 lg:grid-cols-3 md:grid-cols-2`}
         >
           {currentArticles.map((article, index) => (
             <UserArticleCard
@@ -156,7 +160,7 @@ const AllArticle = () => {
                   </td>
                   <td className="px-4 py-2">
                     <Link to={`/article-detail/${article._id}`}>
-                      <button className="bg-primary text-white px-2 py-1 rounded text-xs hover:bg-opacity-90">
+                      <button className="bg-indigo-500 text-white px-2 py-1 rounded text-xs hover:bg-opacity-90">
                         View
                       </button>
                     </Link>
@@ -168,7 +172,6 @@ const AllArticle = () => {
         </div>
       )}
 
-      {/* Pagination Component */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

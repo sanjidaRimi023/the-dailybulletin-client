@@ -90,7 +90,7 @@ const UserArticleCard = ({ article, index, userType }) => {
           <img
             src={article.image}
             alt={article.title}
-            className="h-56 w-full object-cover rounded-tr-3xl rounded-bl-3xl sm:h-64 lg:h-72"
+            className="h-56 w-full object-cover rounded-tr-3xl rounded-bl-3xl sm:h-64 lg:h-80"
           />
         </div>
 

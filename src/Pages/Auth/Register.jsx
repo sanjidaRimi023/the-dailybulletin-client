@@ -80,6 +80,7 @@ const Register = () => {
         photoURL: profilePicture,
         created_at: new Date().toISOString(),
         last_login: new Date().toISOString(),
+        
       };
       console.log(userInfo);
       const userRes = await axiosInstance.post("/users", userInfo);

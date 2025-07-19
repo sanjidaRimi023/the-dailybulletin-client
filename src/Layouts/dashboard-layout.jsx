@@ -24,6 +24,23 @@ export default function DashboardLayout() {
         icon: RiListSettingsFill,
       },
     ],
+    admin: [
+      {
+        path: "/dashboard/admin",
+        title: "Admin Dashboard",
+        icon: MdDashboard,
+      },
+      {
+        path: "/dashboard/admin/manage-users",
+        title: "Manage Users",
+        icon: RiListSettingsFill,
+      },
+      {
+        path: "/dashboard/admin/manage-articles",
+        title: "All Articles",
+        icon: SiBlogger,
+      },
+    ],
   };
 
   return (
@@ -43,9 +60,7 @@ export default function DashboardLayout() {
                 src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
                 alt="avatar"
               />
-              <span className="mx-2 font-medium text-gray-800 dark:text-gray-200">
-             
-              </span>
+              <span className="mx-2 font-medium text-gray-800 dark:text-gray-200"></span>
             </a>
           </div>
         </div>
