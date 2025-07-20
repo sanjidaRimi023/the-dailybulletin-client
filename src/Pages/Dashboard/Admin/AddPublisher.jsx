@@ -10,6 +10,7 @@ const AddPublisher = () => {
  const [imagePreview, setImagePreview] = useState(null);
   const cloud_name = import.meta.env.VITE_CLOUD_NAME;
   const upload_preset = import.meta.env.VITE_CLOUD_PRESET;
+  
 
   const onSubmit = async (data) => {
     if (!data.image || data.image.length === 0) {
@@ -65,12 +66,25 @@ const AddPublisher = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="max-w-xl w-full p-8 bg-white shadow-2xl rounded-2xl">
-        <h2 className="text-3xl font-semibold mb-6 text-center text-indigo-700">
+      <div className="max-w-xl w-full p-8 shadow-2xl rounded-2xl shadow-indigo-600 transition duration-300">
+        <h2 className="text-xl md:text-3xl font-semibold mb-6 text-center text-indigo-700">
           Add New Publisher
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {imagePreview && (
+            <div className="mt-4 flex flex-col items-center justify-center">
+              <p className="text-sm text-gray-500 mb-1">Image Preview:</p>
+              <img
+                src={
+                imagePreview ||
+                "https://i.ibb.co/xKJF9LBf/image-upload-icon.png"
+              }
+                alt="Preview"
+                className="w-40 h-40 object-cover rounded-full shadow border border-indigo-600"
+              />
+            </div>
+          )}
           <div>
             <label className="block mb-1 text-sm font-medium text-gray-700">
               Publisher Name
@@ -96,16 +110,7 @@ const AddPublisher = () => {
             />
           </div>
 
-          {imagePreview && (
-            <div className="mt-4">
-              <p className="text-sm text-gray-500 mb-1">Image Preview:</p>
-              <img
-                src={imagePreview}
-                alt="Preview"
-                className="w-40 h-40 object-cover rounded-lg shadow border"
-              />
-            </div>
-          )}
+          
 
           <button
             type="submit"

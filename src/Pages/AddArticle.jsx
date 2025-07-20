@@ -6,6 +6,8 @@ import { FaCameraRetro } from "react-icons/fa";
 import Sharebtn from "../Components/Ui/Sharebtn";
 import Select from "react-select";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import LoadSpinner from "../Components/Ui/LoadSpinner";
 
 const categoryOptions = [
   { value: "Politics", label: "Politics" },
@@ -34,7 +36,6 @@ const AddArticle = () => {
   } = useForm();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
   const [showTagError, setShowTagError] = useState(false);
@@ -69,6 +70,13 @@ const AddArticle = () => {
     const updatedTags = tags.filter((_, i) => i !== indexToRemove);
     setTags(updatedTags);
   };
+  const { data: publishers = [], isPending } = useQuery({
+    queryKey: ["publishers"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/publishers");
+      return res.data;
+    },
+  });
 
   const onSubmit = async (data) => {
     if (tags.length === 0) {
@@ -83,16 +91,21 @@ const AddArticle = () => {
       formData.append("upload_preset", import.meta.env.VITE_CLOUD_PRESET);
 
       const uploadRes = await axiosSecure.post(
-        `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`,
+        `https://api.cloudinary.com/v1_1/${
+          import.meta.env.VITE_CLOUD_NAME
+        }/image/upload`,
         formData
       );
 
       const imageUrl = uploadRes.data.secure_url;
-
+      const selectedPublisher = publishers.find(
+        (p) => p._id === data.publisherId
+      );
       const articleData = {
         title: data.title,
         image: imageUrl,
-        publisher: data.publisher,
+        publisher: selectedPublisher?.name || "Unknown",
+        publisherImage: selectedPublisher?.image || "",
         description: data.description,
         content: data.content,
         tags: tags,
@@ -121,6 +134,9 @@ const AddArticle = () => {
       Swal.fire("Error!", "Failed to submit article!", "error");
     }
   };
+  if (isPending) {
+    return <LoadSpinner />;
+  }
 
   return (
     <div className="max-w-4xl mx-auto my-12 p-10 bg-white dark:bg-base-200 rounded-2xl shadow-2xl border border-gray-200">
@@ -134,18 +150,24 @@ const AddArticle = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block font-semibold mb-1 text-gray-800">Title</label>
+            <label className="block font-semibold mb-1 text-gray-800">
+              Title
+            </label>
             <input
               type="text"
               {...register("title", { required: true })}
               placeholder="Enter article title"
               className="w-full border px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.title && <p className="text-red-500 text-sm mt-1">Title is required</p>}
+            {errors.title && (
+              <p className="text-red-500 text-sm mt-1">Title is required</p>
+            )}
           </div>
 
           <div>
-            <label className="block font-semibold mb-1 text-gray-800">Category</label>
+            <label className="block font-semibold mb-1 text-gray-800">
+              Category
+            </label>
             <Controller
               control={control}
               name="category"
@@ -159,12 +181,16 @@ const AddArticle = () => {
                 />
               )}
             />
-            {errors.category && <p className="text-red-500 text-sm mt-1">Category is required</p>}
+            {errors.category && (
+              <p className="text-red-500 text-sm mt-1">Category is required</p>
+            )}
           </div>
         </div>
 
         <div>
-          <label className="block font-semibold mb-1 text-gray-800">Article Thumbnail</label>
+          <label className="block font-semibold mb-1 text-gray-800">
+            Article Thumbnail
+          </label>
           <label
             htmlFor="profilePhoto"
             className="flex items-center justify-center px-4 py-3 text-center bg-gray-100 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-200 transition"
@@ -179,23 +205,32 @@ const AddArticle = () => {
             {...register("image", { required: true })}
             className="hidden"
           />
-          {errors.image && <p className="text-red-500 text-sm mt-1">Image is required</p>}
+          {errors.image && (
+            <p className="text-red-500 text-sm mt-1">Image is required</p>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block font-semibold mb-1 text-gray-800">Publisher</label>
-            <input
-              {...register("publisher", { required: true })}
-              placeholder="Publisher name"
-              className="w-full border px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.publisher && <p className="text-red-500 text-sm mt-1">Publisher is required</p>}
+            <label className="block mb-2 font-semibold">Publisher</label>
+            <select
+              {...register("publisherId")}
+              className="w-full border rounded p-2"
+            >
+              <option value="">Select a publisher</option>
+              {publishers.map((publisher) => (
+                <option key={publisher._id} value={publisher._id}>
+                  {publisher.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Custom Tag Input */}
           <div>
-            <label className="block font-semibold mb-1 text-gray-800">Tags</label>
+            <label className="block font-semibold mb-1 text-gray-800">
+              Tags
+            </label>
             <div className="flex flex-col gap-2">
               <div className="flex gap-2 flex-wrap min-h-[44px] items-center border rounded-lg px-3 py-2">
                 {tags.map((tag, index) => (
@@ -230,25 +265,33 @@ const AddArticle = () => {
         </div>
 
         <div>
-          <label className="block font-semibold mb-1 text-gray-800">Short Description</label>
+          <label className="block font-semibold mb-1 text-gray-800">
+            Short Description
+          </label>
           <textarea
             {...register("description", { required: true })}
             rows={3}
             placeholder="Brief summary of the article..."
             className="w-full border px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {errors.description && <p className="text-red-500 text-sm mt-1">Description is required</p>}
+          {errors.description && (
+            <p className="text-red-500 text-sm mt-1">Description is required</p>
+          )}
         </div>
 
         <div>
-          <label className="block font-semibold mb-1 text-gray-800">Full Content</label>
+          <label className="block font-semibold mb-1 text-gray-800">
+            Full Content
+          </label>
           <textarea
             {...register("content", { required: true })}
             rows={10}
             placeholder="Write your full article content here..."
             className="w-full border px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {errors.content && <p className="text-red-500 text-sm mt-1">Content is required</p>}
+          {errors.content && (
+            <p className="text-red-500 text-sm mt-1">Content is required</p>
+          )}
         </div>
 
         <div className="text-center mt-6">
