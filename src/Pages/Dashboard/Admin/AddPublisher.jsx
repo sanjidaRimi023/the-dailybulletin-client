@@ -1,0 +1,127 @@
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import useAxios from "../../../Hooks/useAxios";
+import { toast } from "react-toastify";
+
+const AddPublisher = () => {
+  const { register, handleSubmit, reset } = useForm();
+  const [loading, setLoading] = useState(false);
+  const axiosInstance = useAxios();
+ const [imagePreview, setImagePreview] = useState(null);
+  const cloud_name = import.meta.env.VITE_CLOUD_NAME;
+  const upload_preset = import.meta.env.VITE_CLOUD_PRESET;
+
+  const onSubmit = async (data) => {
+    if (!data.image || data.image.length === 0) {
+      toast.error("Please select an image!");
+      return;
+    }
+
+    setLoading(true);
+
+    
+    const imageFormData = new FormData();
+    imageFormData.append("file", data.image[0]);
+    imageFormData.append("upload_preset", upload_preset);
+    imageFormData.append("cloud_name", cloud_name);
+
+    const cloudinaryRes = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
+      {
+        method: "POST",
+        body: imageFormData,
+      }
+    );
+
+    const cloudinaryData = await cloudinaryRes.json();
+
+    if (!cloudinaryData.secure_url) {
+      throw new Error("Image upload failed");
+    }
+
+    const imageUrl = cloudinaryData.secure_url;
+
+    const publisherInfo = {
+      name: data.name,
+      image: imageUrl,
+    };
+
+    const res = await axiosInstance.post("/publishers", publisherInfo);
+    if (res?.data?.insertedId) {
+      toast.success("Publisher added successfully!");
+        reset();
+         setImagePreview(null);
+        setLoading(false);
+    } else {
+      toast.error("Failed to add publisher to DB");
+    }
+    };
+     const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+      <div className="max-w-xl w-full p-8 bg-white shadow-2xl rounded-2xl">
+        <h2 className="text-3xl font-semibold mb-6 text-center text-indigo-700">
+          Add New Publisher
+        </h2>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Publisher Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter publisher name"
+              {...register("name", { required: true })}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Upload Logo/Image
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              {...register("image", { required: true })}
+              onChange={handleImageChange}
+              className="w-full px-4 py-2 border rounded-lg bg-gray-50 cursor-pointer"
+            />
+          </div>
+
+          {imagePreview && (
+            <div className="mt-4">
+              <p className="text-sm text-gray-500 mb-1">Image Preview:</p>
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="w-40 h-40 object-cover rounded-lg shadow border"
+              />
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-3 rounded-full text-white font-semibold transition ${
+              loading
+                ? "bg-indigo-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700"
+            }`}
+          >
+            {loading ? "Uploading..." : "Add Publisher"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default AddPublisher;

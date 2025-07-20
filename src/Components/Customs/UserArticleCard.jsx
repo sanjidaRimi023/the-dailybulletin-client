@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { FaArrowRight } from "react-icons/fa";
@@ -14,7 +14,6 @@ const UserArticleCard = ({ article, index, userType }) => {
         transition={{ duration: 0.4, delay: index * 0.05 }}
         className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between hover:shadow-indigo-400"
       >
-        {/* Article Image with Hover Zoom */}
         <div className="relative group">
           <img
             src={article.image}
@@ -26,9 +25,7 @@ const UserArticleCard = ({ article, index, userType }) => {
           </span>
         </div>
 
-        {/* Card Body */}
         <div className="p-5 flex flex-col gap-3">
-          {/* Title */}
           <Link
             to={`/articles/${article._id}`}
             className="text-2xl font-semibold leading-tight text-gray-900 dark:text-white hover:text-indigo-600 transition-colors duration-200"
@@ -36,12 +33,10 @@ const UserArticleCard = ({ article, index, userType }) => {
             {article.title}
           </Link>
 
-          {/* Description */}
           <p className="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">
             {article.description?.slice(0, 150)}...
           </p>
 
-          {/* Author Info */}
           <div className="flex items-center gap-3 mt-2">
             <img
               className="w-9 h-9 rounded-full object-cover border-2 border-indigo-500"
@@ -65,7 +60,6 @@ const UserArticleCard = ({ article, index, userType }) => {
             </div>
           </div>
 
-          {/* Read More Button */}
           <Link
             to={`/article-detail/${article._id}`}
             className="group inline-flex items-center gap-2 mt-4 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-fit transition-transform duration-300 hover:scale-105"
@@ -78,14 +72,12 @@ const UserArticleCard = ({ article, index, userType }) => {
     );
   }
 
-  // Normal user layout
   return (
     <div>
       <div
         data-aos="fade-up"
         className="flex flex-col sm:flex-row rounded-xl border border-gray-200 dark:border-gray-700 p-3 sm:p-5 hover:shadow-md dark:hover:shadow-lg transition-all duration-300 bg-white dark:bg-gray-900 gap-4"
       >
-        {/* Image Section */}
         <div className="sm:w-48 shrink-0">
           <img
             src={article.image}
@@ -94,7 +86,6 @@ const UserArticleCard = ({ article, index, userType }) => {
           />
         </div>
 
-        {/* Content Section */}
         <div className="flex-1 flex flex-col justify-center">
           <div className="flex flex-col gap-1">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-snug hover:text-blue-700 transition">
@@ -110,7 +101,6 @@ const UserArticleCard = ({ article, index, userType }) => {
             </p>
           </div>
 
-          {/* CTA */}
           <Link
             to={`/article-detail/${article._id}`}
             className="mt-4 inline-flex w-fit items-center gap-2 rounded-full bg-indigo-600 px-5 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition"

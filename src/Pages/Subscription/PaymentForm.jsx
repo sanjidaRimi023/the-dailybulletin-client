@@ -14,7 +14,7 @@ const PaymentForm = ({ paymentInfo }) => {
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
-    // backend e payment intent create kora
+    
     if (paymentInfo?.price) {
       axiosSecure.post("/payment/create-payment-intent", {
           amount: paymentInfo?.price
@@ -54,7 +54,6 @@ const PaymentForm = ({ paymentInfo }) => {
 
     if (paymentIntent.status === "succeeded") {
       
-      // Ekhane paymentInfo diye DB te save koro (e.g., axiosSecure.post("/save-subscription", {...}))
       await axiosSecure.patch(`/users/subscribe/${user.email}`)
       toast.success("✅ Payment succeeded!");
     }

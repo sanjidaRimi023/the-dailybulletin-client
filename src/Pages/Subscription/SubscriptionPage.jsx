@@ -50,7 +50,7 @@ const SubscriptionPage = () => {
 
   return (
     <div className="container flex flex-col px-6 py-10 mx-auto space-y-6 lg:h-auto lg:py-16 lg:flex-row lg:items-start">
-      {/* Left Side (Dynamic) */}
+
       <div className="w-full lg:w-1/2 z-10">
         {!showPayment ? (
           <div className="lg:max-w-lg">
@@ -132,7 +132,7 @@ const SubscriptionPage = () => {
         )}
       </div>
 
-      {/* Right Side (Always visible image) */}
+      
       <div
         data-aos="fade-up"
         className="flex items-center justify-center w-full h-96 lg:w-1/2"
