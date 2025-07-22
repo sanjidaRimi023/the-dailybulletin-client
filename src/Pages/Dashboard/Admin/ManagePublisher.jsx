@@ -81,10 +81,15 @@ const ManagePublisher = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">
-        Manage Publishers
-      </h2>
+      <div className="flex items-center gap-3 mb-6">
+        {/* Vertical line */}
+        <div className="w-1 h-10 bg-indigo-600 rounded-sm"></div>
 
+        {/* Heading */}
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+          Publisher list
+        </h2>
+      </div>
       {/* Search Input */}
       <div className="mb-4">
         <input
@@ -99,7 +104,7 @@ const ManagePublisher = () => {
       {/* Publisher Table */}
       <div className="overflow-x-auto rounded-lg shadow">
         <table className="min-w-full bg-white border border-gray-200 text-sm">
-          <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+          <thead className="bg-indigo-100 text-indigo-700 uppercase text-xs">
             <tr>
               <th className="px-4 py-3 text-left">#</th>
               <th className="px-4 py-3 text-left">Image</th>
