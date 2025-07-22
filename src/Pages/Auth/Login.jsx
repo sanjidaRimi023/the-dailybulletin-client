@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import sideImage from "../../assets/newspaper-background-concept.jpg";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../Hooks/useAuth";
-import { auth } from "../../Firebase/firebase.config";
 import { toast } from "react-toastify";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
@@ -23,24 +22,25 @@ const Login = () => {
   const location = useLocation();
   const from = location.state?.from || "/";
   const axiosInstance = useAxios();
-
-  const saveJWT = async (email) => {
-    const res = await axiosInstance.post("/jwt", { email });
-    const token = res.data.token;
-    localStorage.setItem("access-token", token);
-  };
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
-      const res = await loginUser(data?.email, data?.password, auth);
-      console.log(res.user);
+      const res = await loginUser(data?.email, data?.password);
+      console.log(res);
 
-      await saveJWT(res.user.email);
+      // Optional: Store JWT token if using backend auth
+      // const tokenRes = await axiosInstance.post("/jwt", { email: data?.email });
+      // localStorage.setItem("access-token", tokenRes.data.token);
+
       toast.success("Login successful!");
       navigate(from);
     } catch (error) {
       toast.error("Invalid email or password!");
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,9 +56,13 @@ const Login = () => {
           created_at: new Date().toISOString(),
           last_login: new Date().toISOString(),
         };
+
         const userRes = await axiosInstance.post("/users", userInfo);
         console.log(userRes);
-        await saveJWT(user.email);
+        // Optional: Save JWT
+        // const tokenRes = await axiosInstance.post("/jwt", { email: user.email });
+        // localStorage.setItem("access-token", tokenRes.data.token);
+
         navigate(from);
         toast.success("Signed in with Google!");
       })
@@ -75,9 +79,7 @@ const Login = () => {
     >
       <div
         className="hidden bg-cover lg:block lg:w-1/2"
-        style={{
-          backgroundImage: `url(${sideImage})`,
-        }}
+        style={{ backgroundImage: `url(${sideImage})` }}
       ></div>
 
       <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
@@ -98,7 +100,8 @@ const Login = () => {
 
           <button
             onClick={handleGoogleBtn}
-            className="flex items-center justify-center w-full px-4 py-2 mb-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
+            disabled={loading}
+            className="flex items-center justify-center w-full px-4 py-2 mb-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-50"
           >
             <span className="mx-3 w-5">
               <FcGoogle />
@@ -178,13 +181,17 @@ const Login = () => {
             </div>
 
             <div>
-              <AuthButton type="submit" text="Login" />
+              <AuthButton
+                type="submit"
+                text={loading ? "Logging in..." : "Login"}
+                disabled={loading}
+              />
             </div>
           </form>
 
-          <div className="flex flex-col  items-center justify-between mt-6">
+          <div className="flex flex-col items-center justify-between mt-6">
             <span>
-              Don't have any account?{" "}
+              Don't have an account?{" "}
               <Link
                 state={{ from }}
                 to="/register"

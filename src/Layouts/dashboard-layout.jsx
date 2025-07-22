@@ -25,7 +25,6 @@ export default function DashboardLayout() {
     return () => mbl.removeEventListener("change", onChange);
   }, []);
 
-  console.log(isMobile);
 
   const dashboardItems = {
     user: [
