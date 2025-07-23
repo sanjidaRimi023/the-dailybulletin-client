@@ -39,8 +39,8 @@ export default function DashboardLayout() {
         icon: SiBlogger,
       },
       {
-        path: "/dashboard/user/manage-article",
-        title: "Manage Article",
+        path: "/dashboard/user/profile",
+        title: "Profile",
         icon: RiListSettingsFill,
       },
     ],
@@ -129,7 +129,7 @@ export default function DashboardLayout() {
                 </h3>
               </Link>
               <div className="flex w-full flex-col justify-between flex-1 mt-6">
-                <DashboardSideBar navItems={dashboardItems?.admin} />
+                <DashboardSideBar navItems={dashboardItems?.user} />
                 <a href="#" className="flex items-center px-4 -mx-2">
                   <img
                     className="object-cover mx-2 rounded-full h-9 w-9"
