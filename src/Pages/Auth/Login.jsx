@@ -30,9 +30,7 @@ const Login = () => {
       const res = await loginUser(data?.email, data?.password);
       console.log(res);
 
-      // Optional: Store JWT token if using backend auth
-      // const tokenRes = await axiosInstance.post("/jwt", { email: data?.email });
-      // localStorage.setItem("access-token", tokenRes.data.token);
+      
 
       toast.success("Login successful!");
       navigate(from);

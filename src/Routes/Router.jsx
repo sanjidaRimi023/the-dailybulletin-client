@@ -18,6 +18,7 @@ import AdminOverview from "../Pages/Dashboard/Admin/AdminOverview";
 import ManageAllArticles from "../Pages/Dashboard/Admin/ManageAllArticles";
 import ManagePublisher from "../Pages/Dashboard/Admin/ManagePublisher";
 import UserOverView from "../Pages/Dashboard/User/UserOverView";
+import UserProfile from "../Pages/Dashboard/User/UserProfile";
 
 
 
@@ -79,6 +80,10 @@ const router = createBrowserRouter([
       {
         path: "user/manage-article",
         element: <ManageArticle />,
+      },
+      {
+        path: "user/profile",
+        element: <UserProfile/>
       },
       //   admin
       {
