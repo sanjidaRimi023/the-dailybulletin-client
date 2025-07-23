@@ -5,9 +5,9 @@ import useAuth from "../Hooks/useAuth";
 import { FaCameraRetro } from "react-icons/fa";
 import Sharebtn from "../Components/Ui/Sharebtn";
 import Select from "react-select";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import LoadSpinner from "../Components/Ui/LoadSpinner";
+import useAxios from "../Hooks/useAxios";
 
 const categoryOptions = [
   { value: "Politics", label: "Politics" },
@@ -34,7 +34,7 @@ const AddArticle = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const axiosSecure = useAxiosSecure();
+  const axiosInstance = useAxios()
   const { user } = useAuth();
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
@@ -73,7 +73,7 @@ const AddArticle = () => {
   const { data: publishers = [], isPending } = useQuery({
     queryKey: ["publishers"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/publishers");
+      const res = await axiosInstance.get("/publishers");
       return res.data;
     },
   });
@@ -90,7 +90,7 @@ const AddArticle = () => {
       formData.append("file", imageFile);
       formData.append("upload_preset", import.meta.env.VITE_CLOUD_PRESET);
 
-      const uploadRes = await axiosSecure.post(
+      const uploadRes = await axiosInstance.post(
         `https://api.cloudinary.com/v1_1/${
           import.meta.env.VITE_CLOUD_NAME
         }/image/upload`,
@@ -117,7 +117,7 @@ const AddArticle = () => {
         createdAt: new Date(),
       };
 
-      const res = await axiosSecure.post("/article", articleData);
+      const res = await axiosInstance.post("/article", articleData);
       if (res.data.insertedId) {
         Swal.fire({
           title: "Article submitted successfully!",

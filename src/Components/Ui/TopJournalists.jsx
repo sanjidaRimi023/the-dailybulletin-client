@@ -28,9 +28,6 @@ export const TopJournalists = () => {
 
   return (
     <section className="py-10 bg-gradient-to-br from-indigo-50 via-white to-yellow-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-500">
-      {/* Blurred blobs background */}
-    
-
       <div className="relative max-w-7xl mx-auto px-4 z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -40,12 +37,10 @@ export const TopJournalists = () => {
           className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 dark:text-white mb-16"
         >
           <div className="flex items-center gap-3 mb-6">
-            {/* Vertical line */}
             <div className="w-1 h-10 bg-indigo-600 rounded-sm"></div>
 
-            {/* Heading */}
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-            Top Journalists
+              Top Journalists
             </h2>
           </div>
         </motion.div>
@@ -81,7 +76,6 @@ export const TopJournalists = () => {
               </div>
 
               <div className="mt-1 text-xl text-gray-500 dark:text-gray-300 flex items-center justify-center gap-1">
-                
                 <CountUp end={j.totalViews} duration={2} /> views
               </div>
 
