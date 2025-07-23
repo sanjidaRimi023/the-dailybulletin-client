@@ -73,7 +73,6 @@ const ManageAllArticles = () => {
           : b.viewCount - a.viewCount;
       }
       if (sortField === "status") {
-        // Sort by status alphabetically
         return sortOrder === "asc"
           ? a.status.localeCompare(b.status)
           : b.status.localeCompare(a.status);
@@ -100,10 +99,8 @@ const ManageAllArticles = () => {
             value={sortField}
           >
             <option value="createdAt">Date</option>
-            <option value="status">Status</option>
             <option value="viewCount">Views</option>
           </select>
-         
 
           <select
             onChange={(e) => setSortOrder(e.target.value)}
@@ -142,30 +139,34 @@ const ManageAllArticles = () => {
                   <td className="px-4 py-3">{article.viewCount}</td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-center gap-3">
-                      <button
-                        title="Preview"
-                        onClick={() => setSelectedArticle(article)}
-                        className="text-indigo-500 hover:text-indigo-600"
-                      >
-                        <FaEye size={18} />
-                      </button>
-                      <button
-                        title="Approve"
-                        onClick={() => handleApprove(article._id)}
-                        className="text-green-500 hover:text-green-600"
-                      >
-                        <FaCheckCircle size={18} />
-                      </button>
-                      <button
-                        title="Reject"
-                        onClick={() => {
-                          setSelectedArticle(article);
-                          setRejectionModalOpen(true);
-                        }}
-                        className="text-red-500 hover:text-red-600"
-                      >
-                        <FaTimesCircle size={18} />
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          title="Preview"
+                          onClick={() => setSelectedArticle(article)}
+                          className="p-2 rounded-lg bg-indigo-100 text-indigo-600 hover:bg-indigo-200 transition-all duration-200 shadow-sm"
+                        >
+                          <FaEye size={18} />
+                        </button>
+
+                        <button
+                          title="Approve"
+                          onClick={() => handleApprove(article._id)}
+                          className="p-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-200 transition-all duration-200 shadow-sm"
+                        >
+                          <FaCheckCircle size={18} />
+                        </button>
+
+                        <button
+                          title="Reject"
+                          onClick={() => {
+                            setSelectedArticle(article);
+                            setRejectionModalOpen(true);
+                          }}
+                          className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-all duration-200 shadow-sm"
+                        >
+                          <FaTimesCircle size={18} />
+                        </button>
+                      </div>
                     </div>
                   </td>
                 </tr>

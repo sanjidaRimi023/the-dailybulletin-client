@@ -6,6 +6,7 @@ import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import { useForm } from "react-hook-form";
 import { CiSearch } from "react-icons/ci";
+import LoadSpinner from "../../../Components/Ui/LoadSpinner";
 
 
 const ManagePublisher = () => {
@@ -25,13 +26,17 @@ const ManagePublisher = () => {
 
   const imageURL = watch("image");
 
-  const { data: publishers = [], refetch } = useQuery({
+  const { data: publishers = [], refetch, isLoading } = useQuery({
     queryKey: ["publishers"],
     queryFn: async () => {
       const res = await axiosSecure.get("/publishers");
       return res.data;
     },
   });
+
+  if (isLoading) {
+    return <LoadSpinner/>
+  }
 
   const filteredPublishers = publishers.filter((pub) =>
     pub.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -87,12 +92,12 @@ const ManagePublisher = () => {
         {/* Vertical line */}
         <div className="w-1 h-10 bg-indigo-600 rounded-sm"></div>
 
-        {/* Heading */}
+      
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
           Publisher list
         </h2>
       </div>
-      {/* Search Input */}
+    
       <div className="mb-4">
         <label
           for="default-search"
@@ -115,7 +120,7 @@ const ManagePublisher = () => {
         </div>
       </div>
 
-      {/* Publisher Table */}
+    
       <div className="overflow-x-auto rounded-lg shadow">
         <table className="min-w-full bg-white border border-gray-200 text-sm">
           <thead className="bg-indigo-100 text-indigo-700 uppercase text-xs">
