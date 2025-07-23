@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { auth } from "../Firebase/firebase.config";
 import { AuthContext } from "../Context/AuthContext";
 import useAxios from "../Hooks/useAxios";
-import { toast } from "react-toastify";
+
 
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
@@ -49,12 +49,12 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
 
       if (currentUser) {
-        axiosInstance.post("/jwt", {
+        axiosInstance
+          .post("/jwt", {
             email: currentUser.email,
           })
           .then((res) => {
             localStorage.setItem("token", res.data.token);
-              toast.success(res.data.message || "JWT Created Successfully!");
           });
       } else {
         localStorage.removeItem("token");

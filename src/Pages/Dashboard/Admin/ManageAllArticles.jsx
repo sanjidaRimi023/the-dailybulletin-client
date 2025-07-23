@@ -3,25 +3,32 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { FaCheckCircle, FaEye, FaTimesCircle } from "react-icons/fa";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import LoadSpinner from "../../../Components/Ui/LoadSpinner";
+
 
 const ManageAllArticles = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [rejectionModalOpen, setRejectionModalOpen] = useState(false);
   const [rejectionReason, setRejectionReason] = useState("");
+ 
+  
 
   const [sortField, setSortField] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState("desc");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const { data: articles = [], refetch } = useQuery({
+  const { data: articles = [], refetch, isLoading } = useQuery({
     queryKey: ["all-pending-articles"],
     queryFn: async () => {
       const res = await axiosSecure.get("/article");
       return res.data;
     },
   });
+  if (isLoading) {
+    return <LoadSpinner/>
+  }
 
   const handleApprove = async (id) => {
     try {

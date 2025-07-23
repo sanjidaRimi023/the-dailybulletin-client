@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import { useForm } from "react-hook-form";
+import { CiSearch } from "react-icons/ci";
+
 
 const ManagePublisher = () => {
   const axiosSecure = useAxiosSecure();
@@ -92,13 +94,25 @@ const ManagePublisher = () => {
       </div>
       {/* Search Input */}
       <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Search by name..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="input input-bordered w-full max-w-md"
-        />
+        <label
+          for="default-search"
+          className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+        >
+          Search
+        </label>
+        <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <CiSearch/>
+          </div>
+          <input
+            type="text"
+            placeholder="Search by name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            class="block p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+            required
+          />
+        </div>
       </div>
 
       {/* Publisher Table */}
@@ -230,7 +244,6 @@ const ManagePublisher = () => {
               />
             </div>
 
-           
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Image URL
@@ -257,7 +270,6 @@ const ManagePublisher = () => {
                     );
                     const data = await res.json();
                     if (data.secure_url) {
-                    
                       reset({ ...getValues(), image: data.secure_url });
                     }
                   } catch (err) {
