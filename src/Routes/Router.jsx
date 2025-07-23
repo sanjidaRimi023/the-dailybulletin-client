@@ -6,10 +6,9 @@ import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
 import SubscriptionPage from "../Pages/Subscription/SubscriptionPage";
 import DashboardLayout from "../Layouts/dashboard-layout";
-import UserOverView from "../Pages/Dashboard/User/use-over-view";
 import AboutUs from "../Pages/about-us";
 import AddArticle from "../Pages/AddArticle";
-import UserArticle from "../Pages/Dashboard/User/userArticle";
+import UserArticle from "../Pages/Dashboard/User/UserArticle";
 import ManageArticle from "../Pages/Dashboard/User/manage-article";
 import AllArticle from "../Pages/all-article";
 import ArticleDetail from "../Pages/ArticleDetail";
@@ -18,6 +17,9 @@ import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import AdminOverview from "../Pages/Dashboard/Admin/AdminOverview";
 import ManageAllArticles from "../Pages/Dashboard/Admin/ManageAllArticles";
 import ManagePublisher from "../Pages/Dashboard/Admin/ManagePublisher";
+import UserOverView from "../Pages/Dashboard/User/UserOverView";
+
+
 
 
 const router = createBrowserRouter([
@@ -68,7 +70,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "user",
-        element: <UserOverView />,
+        element: <UserOverView/>
       },
       {
         path: "user/my-article",

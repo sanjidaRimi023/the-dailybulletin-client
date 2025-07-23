@@ -59,9 +59,7 @@ const Login = () => {
 
         const userRes = await axiosInstance.post("/users", userInfo);
         console.log(userRes);
-        // Optional: Save JWT
-        // const tokenRes = await axiosInstance.post("/jwt", { email: user.email });
-        // localStorage.setItem("access-token", tokenRes.data.token);
+        
 
         navigate(from);
         toast.success("Signed in with Google!");
