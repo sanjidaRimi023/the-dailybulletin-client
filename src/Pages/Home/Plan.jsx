@@ -7,7 +7,7 @@ import { FaCheckDouble, FaStar } from "react-icons/fa";
 // ডেটা স্ট্রাকচার আপডেট করা হয়েছে monthly/yearly price রাখার জন্য
 const plans = [
   {
-    name: "Starter",
+    name: "Trial",
     price: {
       monthly: 1,
       yearly: 10, // বাৎসরিক প্ল্যানে ছাড়
@@ -17,7 +17,7 @@ const plans = [
     highlighted: false,
   },
   {
-    name: "Pro",
+    name: "Standard",
     price: {
       monthly: 10,
       yearly: 99,
@@ -32,7 +32,7 @@ const plans = [
     highlighted: true,
   },
   {
-    name: "Team",
+    name: "Basic",
     price: {
       monthly: 5,
       yearly: 50,
@@ -125,7 +125,7 @@ export default function Plan() {
 
               <Link to="/dashboard/user/subscription" className="mt-10 block">
                 <button
-                  className={`w-full py-3 px-6 text-base font-semibold rounded-lg transition-colors duration-300 ${plan.highlighted ? "bg-purple-600 text-white hover:bg-purple-700" : "bg-white text-purple-600 border border-purple-300 hover:bg-purple-50 dark:bg-gray-700 dark:text-purple-300 dark:hover:bg-gray-600"}`}
+                  className={`w-full py-2 px-4 text-base font-semibold rounded-full transition-colors duration-300 ${plan.highlighted ? "bg-purple-600 text-white hover:bg-purple-700" : "bg-white text-purple-600 border border-purple-300 hover:bg-purple-300 dark:bg-gray-700 dark:text-purple-300 dark:hover:bg-gray-600"}`}
                 >
                   Choose Plan
                 </button>

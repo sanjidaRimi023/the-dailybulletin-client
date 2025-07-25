@@ -2,89 +2,149 @@
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import { FaEye, FaRegNewspaper } from "react-icons/fa";
+import { Link } from "react-router";
 
 export const TopJournalists = () => {
   const journalists = [
     {
-      name: "John Smith",
+      name: "Utshob Saha",
       image: "https://i.ibb.co/84jHfHYT/law2.jpg",
       articles: 10,
       totalViews: 2500,
     },
     {
-      name: "Emily Johnson",
-      image:
-        "https://i.ibb.co/TBkn2ky9/indian-businessman-with-his-white-car.jpg",
+      name: "Samiha Rahman",
+      image: "https://i.ibb.co/Kp2Md3ss/happy-businesswoman-holding-folder.jpg",
       articles: 8,
       totalViews: 2100,
     },
     {
-      name: "David Lee",
-      image: "https://i.ibb.co/84jHfHYT/law2.jpg",
+      name: "Sharafat Hossain",
+      image:
+        "https://i.ibb.co/8LT8W7jN/portrait-confident-young-businessman-with-his-arms-crossed.jpg",
       articles: 12,
       totalViews: 3000,
     },
   ];
 
-  return (
-    <section className="py-10 bg-gradient-to-br from-indigo-50 via-white to-yellow-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-500">
-      <div className="relative max-w-7xl mx-auto px-4 z-10">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 dark:text-white mb-16"
-        >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-10 bg-indigo-600 rounded-sm"></div>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
 
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-              Top Journalists
-            </h2>
-          </div>
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeInOut",
+      },
+    },
+  };
+
+  return (
+    <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900 font-sans">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12 md:mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">
+            Our Top Journalists
+          </h2>
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Meet the talented individuals driving our news coverage, ranked by
+            their impact and readership.
+          </p>
+          <div className="mt-6 w-24 h-1 bg-indigo-600 mx-auto rounded-full"></div>
         </motion.div>
 
-        <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {journalists.map((j, i) => (
+        <motion.div
+          className="grid gap-8 md:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          {journalists.map((journalist, index) => (
             <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.2 }}
-              viewport={{ once: true }}
-              className="relative bg-white/80 dark:bg-white/10 backdrop-blur-md border border-gray-200 dark:border-gray-700 shadow-xl rounded-3xl p-8 text-center hover:scale-105 hover:shadow-2xl transition-all duration-300"
+              key={index}
+              variants={itemVariants}
+              whileHover={{ scale: 1.05, y: -10 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden transform-group  hover:shadow-indigo-600"
             >
-              {/* Badge */}
-              <div className="absolute top-4 right-4 bg-indigo-100 dark:bg-indigo-600 text-indigo-600 dark:text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-                #{i + 1}
+              <div className="relative">
+                <img
+                  className="w-full h-56 object-cover object-center"
+                  src={journalist.image}
+                  alt={journalist.name}
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+
+                <div className="absolute top-4 right-4 bg-indigo-600 text-white font-bold text-sm px-3 py-1 rounded-full shadow-md">
+                  #{index + 1}
+                </div>
+
+                <div className="absolute bottom-0 left-0 p-5">
+                  <h3 className="text-2xl font-bold text-white tracking-wide">
+                    {journalist.name}
+                  </h3>
+                </div>
               </div>
 
-              <img
-                src={j.image}
-                alt={j.name}
-                className="w-24 h-24 sm:w-28 sm:h-28 rounded-full mx-auto mb-4 object-cover border-4 border-white dark:border-gray-300 shadow-md"
-              />
+              <div className="p-6">
+                <div className="flex justify-around items-center text-center border-b dark:border-gray-700 pb-4 mb-4">
+                  <div className="flex flex-col items-center w-1/2">
+                    <FaRegNewspaper className="text-2xl text-indigo-500 mb-2" />
+                    <span className="text-2xl font-bold text-gray-800 dark:text-white">
+                      {journalist.articles}
+                    </span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                      Articles
+                    </span>
+                  </div>
 
-              <h3 className="text-3xl font-semibold text-gray-800 dark:text-white">
-                {j.name}
-              </h3>
+                  <div className="h-16 w-px bg-gray-200 dark:bg-gray-600"></div>
 
-              <div className="mt-2 text-xl text-gray-500 dark:text-gray-300 flex items-center justify-center gap-1">
-                <FaRegNewspaper className="text-indigo-600 dark:text-indigo-300" />
-                Articles: <span className="font-medium ml-1">{j.articles}</span>
+                  <div className="flex flex-col items-center w-1/2">
+                    <FaEye className="text-2xl text-indigo-500 mb-2" />
+                    <span className="text-2xl font-bold text-gray-800 dark:text-white">
+                      <CountUp
+                        end={journalist.totalViews}
+                        duration={3}
+                        separator=","
+                        enableScrollSpy
+                        scrollSpyOnce
+                      />
+                    </span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                      Total Views
+                    </span>
+                  </div>
+                </div>
+
+                {/* Action Button */}
+                <Link to="/all-article">
+                  <button className="w-full mt-4 px-4 py-2 bg-indigo-600 text-white font-semibold rounded-full shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 transition-all duration-300 transform group-hover:scale-105">
+                    See Articles
+                  </button>
+                </Link>
               </div>
-
-              <div className="mt-1 text-xl text-gray-500 dark:text-gray-300 flex items-center justify-center gap-1">
-                <CountUp end={j.totalViews} duration={2} /> views
-              </div>
-
-              <button className="mt-6 px-6 py-2 bg-indigo-600 text-white rounded-full text-sm font-medium hover:bg-indigo-700 dark:hover:bg-indigo-500 transition-all shadow-md">
-                View Articles
-              </button>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
