@@ -3,9 +3,10 @@ import { Typewriter } from "react-simple-typewriter";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Link } from "react-router";
-import useAuth from "../../Hooks/useAuth";
+
 import PaymentForm from "../Subscription/PaymentForm";
 import Sharebtn from "../../Components/Ui/Sharebtn";
+import useAuth from "../../Hooks/useAuth";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 

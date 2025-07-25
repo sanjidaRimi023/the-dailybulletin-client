@@ -12,8 +12,9 @@ import {
 } from "react-icons/io5";
 
 import logo from "../../assets/nav-logo.png";
-import useAuth from "../../Hooks/useAuth";
+
 import NavUserDropdown from "../Customs/nav-user-dropdown";
+import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
   const { pathname } = useLocation();
@@ -22,16 +23,27 @@ const Navbar = () => {
 
   const navLinks = [
     { to: "/", text: "Home", icon: <IoHomeOutline size={18} /> },
-    { to: "/all-article", text: "All Articles", icon: <IoNewspaperOutline size={18} /> },
-    { to: "/add-article", text: "Add Article", icon: <IoAddCircleOutline size={18} /> },
-    { to: "/about-us", text: "About Us", icon: <IoInformationCircleOutline size={18} /> },
+    {
+      to: "/all-article",
+      text: "All Articles",
+      icon: <IoNewspaperOutline size={18} />,
+    },
+    {
+      to: "/add-article",
+      text: "Add Article",
+      icon: <IoAddCircleOutline size={18} />,
+    },
+    {
+      to: "/about-us",
+      text: "About Us",
+      icon: <IoInformationCircleOutline size={18} />,
+    },
   ];
 
   const closeMenu = () => setIsOpen(false);
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70 shadow-sm px-4 py-4 lg:px-20 flex items-center justify-between">
-
       <div className="flex items-center gap-2">
         <img src={logo} alt="Logo" className="w-10" />
         <Link
@@ -51,15 +63,13 @@ const Navbar = () => {
         </Link>
       </div>
 
-  
       <button
-        className="lg:hidden text-3xl text-indigo-600 z-10" 
+        className="lg:hidden text-3xl text-indigo-600 z-10"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <HiOutlineX /> : <HiOutlineMenuAlt3 />}
       </button>
 
- 
       <div
         className={`
           absolute lg:static top-full left-0 w-full lg:w-auto
@@ -67,10 +77,13 @@ const Navbar = () => {
           bg-white dark:bg-gray-900 lg:bg-transparent lg:dark:bg-transparent
           p-4 lg:p-0 shadow-lg lg:shadow-none rounded-b-lg lg:rounded-none
           transition-all duration-300 ease-in-out
-          ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5 invisible lg:visible lg:opacity-100 lg:translate-y-0"}
+          ${
+            isOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-5 invisible lg:visible lg:opacity-100 lg:translate-y-0"
+          }
         `}
       >
-
         <div className="flex flex-col lg:flex-row lg:items-center lg:gap-2 w-full">
           {navLinks.map((link) => (
             <Link
@@ -89,7 +102,6 @@ const Navbar = () => {
           ))}
         </div>
 
-       
         <hr className="my-4 border-gray-200 dark:border-gray-700 lg:hidden" />
 
         <div className="flex items-center">

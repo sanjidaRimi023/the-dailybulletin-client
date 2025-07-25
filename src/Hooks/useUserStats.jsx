@@ -1,14 +1,14 @@
-// src/Hooks/useUserStats.js
-import { useQuery } from '@tanstack/react-query';
-import useAxiosSecure from './useAxiosSecure';
-import useAuth from './useAuth';
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "./useAxiosSecure";
+import useAuth from "./useAuth";
+
 
 const useUserStats = () => {
-  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const {user}=useAuth()
 
   const { data: stats = {}, isLoading } = useQuery({
-    queryKey: ['userStats', user?.email],
+    queryKey: ["userStats", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/article/user-stats/${user.email}`);
       return res.data;

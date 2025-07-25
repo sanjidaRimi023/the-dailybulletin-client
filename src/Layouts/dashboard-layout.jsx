@@ -1,7 +1,5 @@
-import { Link, Outlet } from "react-router";
 import { useEffect, useState } from "react";
-import Toast from "../Components/Shared/Toast";
-import DashboardSideBar from "../Components/Customs/dashboard-side-bar";
+import { Link, Outlet } from "react-router";
 import { FaUserCircle } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { SiBlogger } from "react-icons/si";
@@ -11,6 +9,11 @@ import { TiUserAdd } from "react-icons/ti";
 import { IoPricetagsOutline } from "react-icons/io5";
 import { FaBars } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
+import Toast from "../Components/Shared/Toast";
+import DashboardSideBar from "../Components/Customs/dashboard-side-bar";
+import useAuth from "../Hooks/useAuth";
+
+
 
 const mobileBreakPoint = 768;
 
@@ -45,8 +48,8 @@ export default function DashboardLayout() {
   );
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-  // --- This should come from your auth context or state management ---
-  const isAdmin = false;
+  const { user } = useAuth(); // 🧠 grab logged-in user
+  const isAdmin = user?.role === "admin"; // ✅ Dynamic condition
 
   useEffect(() => {
     const handleResize = () => {

@@ -31,12 +31,12 @@ const ArticleCardSlider = () => {
     <>
       <div className="container mx-auto dark:bg-gray-900 py-10">
         <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-10 bg-indigo-600 rounded-sm"></div>
+          <div className="w-1 h-10 bg-indigo-600 rounded-sm"></div>
 
-            <h2 className="text-2xl md:text-4xl font-bold text-gray-800">
-              Latest News
-            </h2>
-          </div>
+          <h2 className="text-2xl md:text-4xl font-bold text-gray-800">
+            Latest News
+          </h2>
+        </div>
         <Swiper
           slidesPerView={1}
           spaceBetween={30}

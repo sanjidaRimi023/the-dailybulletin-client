@@ -3,12 +3,13 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import sideImage from "../../assets/newspaper-background-concept.jpg";
 import { FcGoogle } from "react-icons/fc";
-import useAuth from "../../Hooks/useAuth";
+
 import { toast } from "react-toastify";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import AuthButton from "../../Components/Ui/auth-button";
 import useAxios from "../../Hooks/useAxios";
+import useAuth from "../../Hooks/useAuth";
 
 const Login = () => {
   const {
@@ -29,8 +30,6 @@ const Login = () => {
     try {
       const res = await loginUser(data?.email, data?.password);
       console.log(res);
-
-      
 
       toast.success("Login successful!");
       navigate(from);
@@ -57,7 +56,6 @@ const Login = () => {
 
         const userRes = await axiosInstance.post("/users", userInfo);
         console.log(userRes);
-        
 
         navigate(from);
         toast.success("Signed in with Google!");

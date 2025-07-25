@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form";
 import { CiSearch } from "react-icons/ci";
 import LoadSpinner from "../../../Components/Ui/LoadSpinner";
 
-
 const ManagePublisher = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedPublisher, setSelectedPublisher] = useState(null);
@@ -26,7 +25,11 @@ const ManagePublisher = () => {
 
   const imageURL = watch("image");
 
-  const { data: publishers = [], refetch, isLoading } = useQuery({
+  const {
+    data: publishers = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["publishers"],
     queryFn: async () => {
       const res = await axiosSecure.get("/publishers");
@@ -35,7 +38,7 @@ const ManagePublisher = () => {
   });
 
   if (isLoading) {
-    return <LoadSpinner/>
+    return <LoadSpinner />;
   }
 
   const filteredPublishers = publishers.filter((pub) =>
@@ -92,12 +95,11 @@ const ManagePublisher = () => {
         {/* Vertical line */}
         <div className="w-1 h-10 bg-indigo-600 rounded-sm"></div>
 
-      
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
           Publisher list
         </h2>
       </div>
-    
+
       <div className="mb-4">
         <label
           for="default-search"
@@ -107,7 +109,7 @@ const ManagePublisher = () => {
         </label>
         <div class="relative">
           <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <CiSearch/>
+            <CiSearch />
           </div>
           <input
             type="text"
@@ -120,7 +122,6 @@ const ManagePublisher = () => {
         </div>
       </div>
 
-    
       <div className="overflow-x-auto rounded-lg shadow">
         <table className="min-w-full bg-white border border-gray-200 text-sm">
           <thead className="bg-indigo-100 text-indigo-700 uppercase text-xs">

@@ -2,9 +2,10 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Sharebtn from "../../Components/Ui/Sharebtn";
+
+import { toast } from "react-toastify";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { toast } from "react-toastify";
 
 const PaymentForm = ({ paymentInfo }) => {
   const { user } = useAuth();
@@ -14,7 +15,7 @@ const PaymentForm = ({ paymentInfo }) => {
   const navigate = useNavigate();
 
   const [clientSecret, setClientSecret] = useState("");
-  const [processing, setProcessing] = useState(false); 
+  const [processing, setProcessing] = useState(false);
   const [error, setError] = useState("");
   useEffect(() => {
     if (paymentInfo?.price && paymentInfo.price > 0) {
@@ -35,8 +36,8 @@ const PaymentForm = ({ paymentInfo }) => {
       return;
     }
 
-    setProcessing(true); 
-    setError(""); 
+    setProcessing(true);
+    setError("");
 
     const card = elements.getElement(CardElement);
     if (card == null) {
@@ -76,7 +77,6 @@ const PaymentForm = ({ paymentInfo }) => {
 
     if (paymentIntent.status === "succeeded") {
       try {
-      
         const subscriptionData = {
           durationMinutes: paymentInfo.durationMinutes,
           planName: paymentInfo.durationLabel,
@@ -84,21 +84,20 @@ const PaymentForm = ({ paymentInfo }) => {
           transactionId: paymentIntent.id,
         };
 
+        await axiosSecure.patch("/users/subscribe", subscriptionData);
 
-        await axiosSecure.patch('/users/subscribe', subscriptionData);
-        
         toast.success("Payment Succeeded & You are now a premium member!");
-        
-     
-        navigate("/article");
 
+        navigate("/article");
       } catch (dbError) {
         console.error("Failed to update user status:", dbError);
-        setError("Payment was successful, but we couldn't update your status. Please contact support.");
+        setError(
+          "Payment was successful, but we couldn't update your status. Please contact support."
+        );
       }
     }
 
-    setProcessing(false); 
+    setProcessing(false);
   };
 
   return (
@@ -121,8 +120,7 @@ const PaymentForm = ({ paymentInfo }) => {
             },
           }}
         />
-        
-        
+
         {error && <p className="text-red-600 my-2">{error}</p>}
 
         <Sharebtn

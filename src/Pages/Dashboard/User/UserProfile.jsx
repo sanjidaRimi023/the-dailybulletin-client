@@ -1,7 +1,5 @@
-
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import useAuth from "../../../Hooks/useAuth";
 
 import {
   FaUser,
@@ -16,8 +14,7 @@ import {
 import { toast } from "react-toastify";
 import axios from "axios";
 import axiosInstance from "../../../Hooks/useAxios";
-
-
+import useAuth from "../../../Hooks/useAuth";
 
 const TabButton = ({ active, onClick, children }) => (
   <button
@@ -73,7 +70,6 @@ const UserProfile = () => {
       const fetchHistory = async () => {
         setHistoryLoading(true);
         try {
-          
           setTimeout(() => {
             setReadingHistory([
               {
@@ -99,7 +95,6 @@ const UserProfile = () => {
     }
   }, [activeTab, user]);
 
-  // প্রোফাইল আপডেট ফাংশন অপরিবর্তিত থাকবে...
   const onProfileSubmit = async (data) => {
     try {
       let photoURL = user?.photoURL;
@@ -131,10 +126,8 @@ const UserProfile = () => {
     }
   };
 
-
   const onPasswordChangeSubmit = async (data) => {
     try {
-
       await updateUserPassword(data.currentPassword, data.newPassword);
       toast.success("Password updated successfully!");
       resetPassword();
@@ -158,7 +151,6 @@ const UserProfile = () => {
     <div className="bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 min-h-screen p-6">
       <div className="max-w-4xl mx-auto shadow-xl rounded-3xl overflow-hidden bg-white dark:bg-gray-900">
         <div className="p-8">
-     
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
             <div>
               <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
@@ -181,7 +173,7 @@ const UserProfile = () => {
               >
                 Security
               </TabButton>
-           
+
               <TabButton
                 active={activeTab === "history"}
                 onClick={() => setActiveTab("history")}
@@ -191,13 +183,11 @@ const UserProfile = () => {
             </div>
           </div>
 
-
           {activeTab === "profile" && (
             <form
               onSubmit={handleSubmit(onProfileSubmit)}
               className="grid grid-cols-1 lg:grid-cols-3 gap-10"
             >
-   
               <div className="flex flex-col items-center gap-4">
                 <div className="relative">
                   <img
@@ -305,7 +295,6 @@ const UserProfile = () => {
             </form>
           )}
 
-  
           {activeTab === "security" && (
             <div className="max-w-md mx-auto">
               <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
@@ -315,7 +304,6 @@ const UserProfile = () => {
                 onSubmit={handlePasswordSubmit(onPasswordChangeSubmit)}
                 className="space-y-6"
               >
-            
                 <InputGroup
                   label="Current Password"
                   name="currentPassword"

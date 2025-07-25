@@ -4,12 +4,12 @@ import { FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import sideImage from "../../assets/newspaper-background-concept.jpg";
-import useAuth from "../../Hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import AuthButton from "../../Components/Ui/auth-button";
 import useAxios from "../../Hooks/useAxios";
+import useAuth from "../../Hooks/useAuth";
 
 const Register = () => {
   const {
@@ -78,9 +78,9 @@ const Register = () => {
         email: data.email,
         role: "user",
         photoURL: profilePicture,
+        isPremium: false,
         created_at: new Date().toISOString(),
         last_login: new Date().toISOString(),
-        
       };
       console.log(userInfo);
       const userRes = await axiosInstance.post("/users", userInfo);

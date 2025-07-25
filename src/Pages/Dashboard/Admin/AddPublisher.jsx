@@ -7,10 +7,9 @@ const AddPublisher = () => {
   const { register, handleSubmit, reset } = useForm();
   const [loading, setLoading] = useState(false);
   const axiosInstance = useAxios();
- const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const cloud_name = import.meta.env.VITE_CLOUD_NAME;
   const upload_preset = import.meta.env.VITE_CLOUD_PRESET;
-  
 
   const onSubmit = async (data) => {
     if (!data.image || data.image.length === 0) {
@@ -20,7 +19,6 @@ const AddPublisher = () => {
 
     setLoading(true);
 
-    
     const imageFormData = new FormData();
     imageFormData.append("file", data.image[0]);
     imageFormData.append("upload_preset", upload_preset);
@@ -50,14 +48,14 @@ const AddPublisher = () => {
     const res = await axiosInstance.post("/publishers", publisherInfo);
     if (res?.data?.insertedId) {
       toast.success("Publisher added successfully!");
-        reset();
-         setImagePreview(null);
-        setLoading(false);
+      reset();
+      setImagePreview(null);
+      setLoading(false);
     } else {
       toast.error("Failed to add publisher to DB");
     }
-    };
-     const handleImageChange = (e) => {
+  };
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setImagePreview(URL.createObjectURL(file));
@@ -77,9 +75,9 @@ const AddPublisher = () => {
               <p className="text-sm text-gray-500 mb-1">Image Preview:</p>
               <img
                 src={
-                imagePreview ||
-                "https://i.ibb.co/xKJF9LBf/image-upload-icon.png"
-              }
+                  imagePreview ||
+                  "https://i.ibb.co/xKJF9LBf/image-upload-icon.png"
+                }
                 alt="Preview"
                 className="w-40 h-40 object-cover rounded-full shadow border border-indigo-600"
               />
@@ -109,8 +107,6 @@ const AddPublisher = () => {
               className="w-full px-4 py-2 border rounded-lg bg-gray-50 cursor-pointer"
             />
           </div>
-
-          
 
           <button
             type="submit"

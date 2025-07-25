@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import useAuth from "../../../Hooks/useAuth";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+
 import LoadSpinner from "../../../Components/Ui/LoadSpinner";
 import UserArticleModal from "../../../Components/Ui/UserArticleModal";
 import UserArticleCard from "../../../Components/Ui/UserArticleCard";
+import useAuth from "../../../Hooks/useAuth";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const UserArticle = () => {
   const { user } = useAuth();
@@ -20,7 +21,9 @@ const UserArticle = () => {
     queryKey: ["UserArticle", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/article/my-article?email=${user.email}`);
+      const res = await axiosSecure.get(
+        `/article/my-article?email=${user.email}`
+      );
       return res.data;
     },
   });

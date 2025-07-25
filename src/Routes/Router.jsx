@@ -19,15 +19,14 @@ import ManageAllArticles from "../Pages/Dashboard/Admin/ManageAllArticles";
 import ManagePublisher from "../Pages/Dashboard/Admin/ManagePublisher";
 import UserOverView from "../Pages/Dashboard/User/UserOverView";
 import UserProfile from "../Pages/Dashboard/User/UserProfile";
-
-
-
+import ForbiddenPage from "../Pages/ForbiddenPage";
+import AdminRoute from "./AdminRoute";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -52,62 +51,104 @@ const router = createBrowserRouter([
       },
       {
         path: "/all-article",
-        element: <AllArticle />,
+        element: <PrivateRoute>
+          <AllArticle />
+        </PrivateRoute>,
       },
       {
         path: "/article-detail/:id",
-        element: <ArticleDetail />,
+        element: <PrivateRoute>
+          <ArticleDetail />
+        </PrivateRoute>,
       },
-      
+      {
+        path: "/forbidden-page",
+        element: <ForbiddenPage />,
+      },
     ],
   },
   {
     path: "/dashboard",
     element: <DashboardLayout />,
-    errorElement: <ErrorPage />,
     children: [
       {
         path: "user",
-        element: <UserOverView/>
+        element: <PrivateRoute>
+          <UserOverView />
+        </PrivateRoute>,
       },
       {
         path: "user/my-article",
-        element: <UserArticle />,
+        element: <PrivateRoute>
+          <UserArticle />
+        </PrivateRoute>,
       },
       {
         path: "user/manage-article",
-        element: <ManageArticle />,
+        element: <PrivateRoute>
+           <ManageArticle />
+        </PrivateRoute>,
       },
       {
         path: "user/profile",
-        element: <UserProfile/>
+        element: <PrivateRoute>
+          <UserProfile />
+        </PrivateRoute>,
       },
       {
         path: "user/subscription",
-        element: <SubscriptionPage />,
+        element: <PrivateRoute>
+          <SubscriptionPage />
+        </PrivateRoute>,
       },
       //   admin
       {
         path: "/dashboard/admin",
-        element: <AdminOverview />,
+        element: (
+          <AdminRoute>
+            <AdminOverview />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/admin/manage-users",
-        element: <ManageUsers />,
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/admin/manage-articles",
-        element: <ManageAllArticles />,
+        element: (
+          <AdminRoute>
+            <ManageAllArticles />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/admin/add-publisher",
-        element: <AddPublisher />,
+        element: (
+          <AdminRoute>
+            <AddPublisher />
+          </AdminRoute>
+        ),
       },
-        {
-          path: "/dashboard/admin/manage-publisher",
-          element: <ManagePublisher/>
+      
+      {
+        path: "/dashboard/admin/manage-publisher",
+        element: (
+          <AdminRoute>
+            <ManagePublisher />
+          </AdminRoute>
+        ),
       },
     ],
+
   },
+  {
+    path: "*",
+    element: <ErrorPage/>
+  }
 ]);
 export default router;

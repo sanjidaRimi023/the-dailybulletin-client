@@ -3,11 +3,12 @@ import { IoGrid } from "react-icons/io5";
 import { FaTable } from "react-icons/fa6";
 import { Link } from "react-router";
 import LoadSpinner from "../Components/Ui/LoadSpinner";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
-import useAuth from "../Hooks/useAuth";
+
 import UserArticleCard from "../Components/Customs/UserArticleCard";
 import { useQuery } from "@tanstack/react-query";
 import Pagination from "../Components/Customs/Pagination";
+import useAuth from "../Hooks/useAuth";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const AllArticle = () => {
   const [layout, setLayout] = useState("card");
@@ -35,11 +36,12 @@ const AllArticle = () => {
     },
   });
 
-  const userType = userData?.role === "admin"
-    ? "admin"
-    : userData?.role === "premium"
-    ? "premium"
-    : "user";
+  const userType =
+    userData?.role === "admin"
+      ? "admin"
+      : userData?.role === "premium"
+      ? "premium"
+      : "user";
 
   if (articlesLoading || userLoading || authLoading) return <LoadSpinner />;
 

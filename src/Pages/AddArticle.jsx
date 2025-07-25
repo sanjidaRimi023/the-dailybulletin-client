@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Swal from "sweetalert2";
-import useAuth from "../Hooks/useAuth";
+
 import { FaCameraRetro } from "react-icons/fa";
 import Sharebtn from "../Components/Ui/Sharebtn";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
 import LoadSpinner from "../Components/Ui/LoadSpinner";
 import useAxios from "../Hooks/useAxios";
+import useAuth from "../Hooks/useAuth";
 
 const categoryOptions = [
   { value: "Politics", label: "Politics" },
@@ -34,7 +35,7 @@ const AddArticle = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const axiosInstance = useAxios()
+  const axiosInstance = useAxios();
   const { user } = useAuth();
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");

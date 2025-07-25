@@ -1,19 +1,17 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router"; 
+import { Link } from "react-router";
 import { toast } from "react-toastify";
 import { auth } from "../../Firebase/firebase.config";
-import useAuth from "../../Hooks/useAuth";
-
 
 import { MdDashboard } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { VscSignOut } from "react-icons/vsc";
+import useAuth from "../../Hooks/useAuth";
 
 export default function NavUserDropdown({ user }) {
   const [isOpen, setIsOpen] = useState(false);
   const { logOutUser } = useAuth();
   const dropdownRef = useRef(null);
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -30,20 +28,21 @@ export default function NavUserDropdown({ user }) {
   const handleLogout = () => {
     logOutUser(auth).then(() => {
       toast.success("Logout successful!");
-      setIsOpen(false); 
+      setIsOpen(false);
     });
   };
 
   const closeDropdown = () => setIsOpen(false);
-
 
   const fallbackAvatar = "https://i.ibb.co/6RJ4Mh5/avatar.png";
   const userAvatar = user?.photoURL || fallbackAvatar;
 
   return (
     <div className="relative" ref={dropdownRef}>
-
-      <button onClick={() => setIsOpen(!isOpen)} className="cursor-pointer block">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="cursor-pointer block"
+      >
         <img
           className="object-cover border-2 border-indigo-500 rounded-full size-12"
           src={userAvatar}
@@ -56,10 +55,13 @@ export default function NavUserDropdown({ user }) {
           absolute right-0 z-20 w-64 py-2 mt-2 overflow-hidden origin-top-right
           bg-white dark:bg-gray-800 rounded-md shadow-xl
           transition-all duration-200 ease-out
-          ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
+          ${
+            isOpen
+              ? "opacity-100 scale-100"
+              : "opacity-0 scale-95 pointer-events-none"
+          }
         `}
       >
-
         <div className="flex items-center p-3">
           <img
             className="flex-shrink-0 object-cover mx-1 rounded-full size-10"
@@ -98,7 +100,6 @@ export default function NavUserDropdown({ user }) {
         </div>
 
         <hr className="border-gray-200 dark:border-gray-700" />
-
 
         <button
           onClick={handleLogout}
