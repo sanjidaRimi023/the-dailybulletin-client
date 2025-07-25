@@ -6,6 +6,7 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
+  updatePassword
 } from "firebase/auth";
 import React, {  useEffect, useState } from "react";
 import { auth } from "../Firebase/firebase.config";
@@ -39,6 +40,16 @@ const AuthProvider = ({ children }) => {
   const updateUserProfile = (profile) => {
     return updateProfile(auth.currentUser, profile);
   };
+  const changePassword = (newPassword) => {
+    if (auth.currentUser) {
+        return updatePassword(auth.currentUser, newPassword);
+    }
+    return Promise.reject(new Error("No user is currently signed in."));
+  };
+
+  const updateUser = (updatedData) => {
+    setUser(prevUser => ({...prevUser, ...updatedData}));
+  }
 
   const googleLogin = () => {
     setLoading(true);
@@ -102,6 +113,8 @@ const AuthProvider = ({ children }) => {
     logOutUser,
     googleLogin,
     updateUserProfile,
+     changePassword,
+    updateUser,
   };
 
   return (

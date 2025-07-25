@@ -2,7 +2,7 @@ import { Link, Outlet } from "react-router";
 import { useEffect, useState } from "react";
 import Toast from "../Components/Shared/Toast";
 import DashboardSideBar from "../Components/Customs/dashboard-side-bar";
-
+import { FaUserCircle } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { SiBlogger } from "react-icons/si";
 import { RiListSettingsFill } from "react-icons/ri";
@@ -73,7 +73,7 @@ export default function DashboardLayout() {
       {
         path: "/dashboard/user/profile",
         title: "Profile",
-        icon: RiListSettingsFill,
+        icon: FaUserCircle,
       },
       {
         path: "/dashboard/user/subscription",
