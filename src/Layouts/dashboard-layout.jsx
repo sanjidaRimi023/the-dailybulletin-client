@@ -1,39 +1,70 @@
 import { Link, Outlet } from "react-router";
+import { useEffect, useState } from "react";
+import Toast from "../Components/Shared/Toast";
 import DashboardSideBar from "../Components/Customs/dashboard-side-bar";
+
 import { MdDashboard } from "react-icons/md";
 import { SiBlogger } from "react-icons/si";
 import { RiListSettingsFill } from "react-icons/ri";
 import { FaUsersCog } from "react-icons/fa";
 import { TiUserAdd } from "react-icons/ti";
-import Toast from "../Components/Shared/Toast";
-import { useEffect, useState } from "react";
+import { IoPricetagsOutline } from "react-icons/io5";
 import { FaBars } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
-import { IoPricetagsOutline } from "react-icons/io5";
+
 const mobileBreakPoint = 768;
 
+const SidebarContent = ({ navItems }) => (
+  <div className="flex flex-col justify-between h-full">
+    <div>
+      <Link to="/" className="inline-block">
+        <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+          The Daily Bulletin
+        </h3>
+      </Link>
+      <div className="mt-6">
+        <DashboardSideBar navItems={navItems} />
+      </div>
+    </div>
+    <div>
+      <a href="#" className="flex items-center p-2 -mx-2">
+        <img
+          className="object-cover mx-2 rounded-full h-9 w-9"
+          src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+          alt="avatar"
+        />
+        <span className="mx-2 font-medium text-gray-800">John Doe</span>
+      </a>
+    </div>
+  </div>
+);
+
 export default function DashboardLayout() {
-  const [isMobile, setIsMobile] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    window.innerWidth < mobileBreakPoint
+  );
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+
+  // --- This should come from your auth context or state management ---
+  const isAdmin = false;
+
   useEffect(() => {
-    const mbl = window.matchMedia(`(max-width: ${mobileBreakPoint - 1}px)`);
+    const handleResize = () => {
+      const mobile = window.innerWidth < mobileBreakPoint;
+      setIsMobile(mobile);
 
-    const onChange = () => {
-      setIsMobile(window.innerWidth < mobileBreakPoint);
+      if (!mobile) {
+        setSidebarOpen(false);
+      }
     };
-    mbl.addEventListener("change", onChange);
-    setIsMobile(window.innerWidth < mobileBreakPoint);
-    return () => mbl.removeEventListener("change", onChange);
-  }, []);
 
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const dashboardItems = {
     user: [
-      {
-        path: "/dashboard/user",
-        title: "Dashboard",
-        icon: MdDashboard,
-      },
+      { path: "/dashboard/user", title: "Dashboard", icon: MdDashboard },
       {
         path: "/dashboard/user/my-article",
         title: "My Article",
@@ -47,15 +78,11 @@ export default function DashboardLayout() {
       {
         path: "/dashboard/user/subscription",
         title: "Subscriptions",
-        icon: IoPricetagsOutline
+        icon: IoPricetagsOutline,
       },
     ],
     admin: [
-      {
-        path: "/dashboard/admin",
-        title: "Admin Dashboard",
-        icon: MdDashboard,
-      },
+      { path: "/dashboard/admin", title: "Admin Dashboard", icon: MdDashboard },
       {
         path: "/dashboard/admin/manage-users",
         title: "Manage Users",
@@ -79,80 +106,51 @@ export default function DashboardLayout() {
     ],
   };
 
+  const navItems = isAdmin ? dashboardItems.admin : dashboardItems.user;
+
+  const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+
   return (
     <>
       <Toast />
-
-      {/* Mobile Sidebar Toggle */}
-      <div className="flex">
+      <div className="relative flex min-h-screen bg-gray-50">
         {isMobile ? (
-          <div className="relative">
-            <div className="">
-              <button
-                onClick={() => setOpen(!open)}
-                className={`text-2xl py-4 px-2 ${open && "hidden"}`}
-              >
-                <FaBars />
-              </button>
-            </div>
+          <>
             <aside
-              className={`${
-                open ? "block" : "hidden"
-              } absolute z-[500] w-64 px-4 py-8 bg-white min-h-screen`}
+              className={`fixed inset-y-0 left-0 z-50 w-64 px-4 py-8 bg-white border-r transform transition-transform duration-300 ease-in-out ${
+                isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+              }`}
             >
-              <div className="flex flex-col relative">
-                <Link to="/">
-                  <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                    The Daily Bulletin
-                  </h3>
-                </Link>
-                <div className="flex w-full flex-col justify-between flex-1 mt-6">
-                  <DashboardSideBar navItems={dashboardItems?.admin} />
-                  <a href="#" className="flex items-center px-4 -mx-2">
-                    <img
-                      className="object-cover mx-2 rounded-full h-9 w-9"
-                      src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-                      alt="avatar"
-                    />
-                    <span className="mx-2 font-medium text-gray-800 dark:text-gray-200"></span>
-                  </a>
-                </div>
-                <button
-                  onClick={() => setOpen(!open)}
-                  className={`absolute -top-8 -right-4 text-red-600 text-2xl py-4 px-2 ${!open && "hidden"}`}
-                >
-                  <RxCross1 />
-                </button>
-              </div>
+              <SidebarContent navItems={navItems} />
             </aside>
-          </div>
+
+            {isSidebarOpen && (
+              <div
+                className="fixed inset-0 z-40 bg-black opacity-50"
+                onClick={toggleSidebar}
+              ></div>
+            )}
+          </>
         ) : (
-          <aside className="w-64 px-4 py-8 bg-white border-r min-h-screen rtl:border-r-0 rtl:border-l border-gray-400">
-            <div className="flex flex-col min-h-[95vh] fixed">
-              <Link to="/">
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                  The Daily Bulletin
-                </h3>
-              </Link>
-              <div className="flex w-full flex-col justify-between flex-1 mt-6">
-                <DashboardSideBar navItems={dashboardItems?.user} />
-                <a href="#" className="flex items-center px-4 -mx-2">
-                  <img
-                    className="object-cover mx-2 rounded-full h-9 w-9"
-                    src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-                    alt="avatar"
-                  />
-                  <span className="mx-2 font-medium text-gray-800 dark:text-gray-200"></span>
-                </a>
-              </div>
+          <aside className="w-64 px-4 py-8 bg-white border-r">
+            <div className="fixed w-64 h-[95vh]">
+              <SidebarContent navItems={navItems} />
             </div>
           </aside>
         )}
 
-        {/* Content */}
-        <div className="flex-1 z-0">
-          <Outlet />
-        </div>
+        <main className="flex-1">
+          {isMobile && (
+            <header className="p-4 bg-white shadow-md">
+              <button onClick={toggleSidebar} className="text-2xl">
+                {isSidebarOpen ? <RxCross1 /> : <FaBars />}
+              </button>
+            </header>
+          )}
+          <div className="p-4 md:p-8">
+            <Outlet />
+          </div>
+        </main>
       </div>
     </>
   );
