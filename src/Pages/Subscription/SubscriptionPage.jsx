@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Typewriter } from "react-simple-typewriter";
-import Sharebtn from "../../Components/Ui/Sharebtn";
-import PaymentForm from "../Subscription/PaymentForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import useAuth from "../../Hooks/useAuth";
 import { Link } from "react-router";
+import useAuth from "../../Hooks/useAuth";
+import PaymentForm from "../Subscription/PaymentForm";
+import Sharebtn from "../../Components/Ui/Sharebtn";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -15,151 +15,231 @@ const plans = [
     durationLabel: "1 minute",
     durationMinutes: 1,
     price: 1,
-    description: "Perfect for testing and preview.",
+    description: "Perfect for a quick test drive.",
+    recommended: false,
   },
   {
     name: "Basic",
     durationLabel: "5 days",
     durationMinutes: 5 * 24 * 60,
     price: 5,
-    description: "Best for short-term premium access.",
+    description: "Ideal for short-term projects.",
+    recommended: false,
   },
   {
     name: "Standard",
     durationLabel: "10 days",
     durationMinutes: 10 * 24 * 60,
     price: 10,
-    description: "Recommended for regular users.",
+    description: "Best value for regular users.",
+    recommended: true,
   },
 ];
 
 const SubscriptionPage = () => {
+  const { user, isPremium } = useAuth();
+  const [selectedPlan, setSelectedPlan] = useState(
+    plans.find((p) => p.recommended) || plans[1]
+  );
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
-  const { user, isPremium } = useAuth(); 
-  const [selectedPlan, setSelectedPlan] = useState(plans[0]);
-  const [showPayment, setShowPayment] = useState(false);
-
-  const handlePlanChange = (e) => {
-    const selected = plans.find(
-      (plan) => plan.durationLabel === e.target.value
-    );
-    setSelectedPlan(selected);
-  };
-
-  const handleSubscribe = () => {
-    setShowPayment(true);
-  };
+  useEffect(() => {
+    if (showPaymentModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showPaymentModal]);
 
   if (isPremium) {
     return (
-      <div className="container flex flex-col items-center justify-center px-6 py-20 mx-auto text-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-green-600 dark:text-green-400 mb-4">
-          You Are Already a Premium Member!
-        </h1>
-        <p className="text-gray-700 dark:text-gray-300 max-w-xl mb-6">
-          Thank you for being a valued subscriber. You can enjoy all premium articles and features without any interruption.
-        </p>
-        <Link to="/premium-articles">
-          <Sharebtn text="Explore Premium Articles" />
-        </Link>
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)] px-6 py-20 text-center bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-xl p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+          <h1 className="text-3xl font-bold text-green-600 dark:text-green-400 mb-4">
+            You're Already a Premium Member!
+          </h1>
+          <p className="text-gray-700 dark:text-gray-300 mb-6">
+            Thank you for your support. Enjoy unlimited access to all our
+            premium articles and features.
+          </p>
+          <Link to="/premium-articles">
+            <Sharebtn text="Explore Premium Articles" />
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container flex flex-col px-6 py-10 mx-auto space-y-6 lg:h-auto lg:py-16 lg:flex-row lg:items-start">
-      <div className="w-full lg:w-1/2 z-10">
-        {!showPayment ? (
-          <div className="lg:max-w-lg">
-            <div className="text-center mb-10">
-              <h1 className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-3">
-                <Typewriter
-                  words={[
-                    "Unlock Premium Access",
-                    "Read Articles Without Limits",
-                    "Support Quality Journalism",
-                  ]}
-                  loop={0}
-                  cursor
-                  cursorStyle="_"
-                  typeSpeed={70}
-                  deleteSpeed={50}
-                  delaySpeed={1000}
-                />
-              </h1>
-              <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-2">
-                Subscribe Now & Enjoy the Benefits
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                Choose a subscription plan that fits your needs. Instantly upgrade
-                to premium and explore exclusive articles, features, and insights
-                with no limitations.
-              </p>
-            </div>
-
-            <div className="mt-8 space-y-5">
-              <div className="mt-6">
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Choose Subscription Plan:
-                </label>
-                <select
-                  value={selectedPlan.durationLabel}
-                  onChange={handlePlanChange}
-                  className="w-full border border-gray-300 p-3 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
-                >
-                  {plans.map((plan) => (
-                    <option key={plan.durationLabel} value={plan.durationLabel}>
-                      {plan.durationLabel} - ${plan.price}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <p className="text-lg mt-2 font-medium text-blue-700">
-                Price: ${selectedPlan.price}
-              </p>
-
-              <Sharebtn onClick={handleSubscribe} text="Get Access" />
-            </div>
+    <>
+      <div className="bg-white dark:bg-gray-900 py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-4xl text-center">
+            <h1 className="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">
+              Pricing
+            </h1>
+            <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+              <Typewriter
+                words={[
+                  "Unlock Premium Access",
+                  "Read Without Limits",
+                  "Support Quality Content",
+                ]}
+                loop={0}
+                cursor
+                cursorStyle="_"
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={1500}
+              />
+            </p>
           </div>
-        ) : (
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-blue-600">
-                Complete Your Payment
-              </h3>
-              <button
-                onClick={() => setShowPayment(false)}
-                className="text-gray-600 hover:text-red-500 text-xl font-bold"
+          <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600 dark:text-gray-300">
+            Choose the plan that's right for you and gain instant access to
+            exclusive articles, in-depth analysis, and more.
+          </p>
+
+          <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-8 md:max-w-2xl md:grid-cols-2 lg:max-w-4xl xl:mx-0 xl:max-w-none xl:grid-cols-3">
+            {plans.map((plan) => (
+              <div
+                key={plan.name}
+                onClick={() => setSelectedPlan(plan)}
+                className={`rounded-3xl p-8 ring-1 transition-all duration-300 cursor-pointer hover:shadow-2xl  hover:shadow-indigo-700 hover:-translate-y-1 ${
+                  selectedPlan.name === plan.name
+                    ? "ring-2 ring-indigo-600 bg-indigo-50 dark:bg-indigo-900/10"
+                    : "ring-gray-200 dark:ring-gray-700 bg-white dark:bg-gray-800/50"
+                }`}
               >
-                x
+                <h3 className="text-lg font-semibold leading-8 text-gray-900 dark:text-white">
+                  {plan.name}
+                  {plan.recommended && (
+                    <span className="ml-2 inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 dark:bg-indigo-900 dark:text-indigo-300 dark:ring-indigo-700">
+                      Recommended
+                    </span>
+                  )}
+                </h3>
+                <p className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                  {plan.description}
+                </p>
+                <p className="mt-6 flex items-baseline gap-x-1">
+                  <span className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    ${plan.price}
+                  </span>
+                  <span className="text-sm font-semibold leading-6 text-gray-600 dark:text-gray-400">
+                    for {plan.durationLabel}
+                  </span>
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 flex justify-center">
+            <button
+              onClick={() => setShowPaymentModal(true)}
+              className="rounded-md bg-indigo-600 px-4 md:px-8 py-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors"
+            >
+              Subscribe to "{selectedPlan.name}" plan
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {showPaymentModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-sm"
+          aria-labelledby="payment-modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="w-full max-w-md transform rounded-2xl bg-white dark:bg-gray-800 text-left align-middle shadow-xl transition-all">
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+              <div className="flex items-center gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-indigo-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                  />
+                </svg>
+                <h3
+                  className="text-lg font-bold text-gray-900 dark:text-white"
+                  id="payment-modal-title"
+                >
+                  Secure Payment
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowPaymentModal(false)}
+                className="rounded-full p-1 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-800 dark:hover:text-white transition-colors"
+                aria-label="Close payment form"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
               </button>
             </div>
-            <Elements stripe={stripePromise}>
-              <PaymentForm
-                paymentInfo={{
-                  email: user?.email,
-                  durationMinutes: selectedPlan.durationMinutes,
-                  price: selectedPlan.price,
-                  durationLabel: selectedPlan.durationLabel,
-                }}
-              />
-            </Elements>
-          </div>
-        )}
-      </div>
 
-      <div
-        data-aos="fade-up"
-        className="flex items-center justify-center w-full h-96 lg:w-1/2"
-      >
-        <img
-          className="object-cover w-full h-full mx-auto rounded-md lg:max-w-2xl"
-          src="https://i.ibb.co/D4tK364/Capture.png"
-          alt="subscription banner"
-        />
-      </div>
-    </div>
+            <div className="px-6 py-5">
+              <div className="mb-6 rounded-lg bg-slate-50 dark:bg-slate-700/50 p-4">
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-3">
+                  Order Summary
+                </p>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500 dark:text-gray-400">
+                      Plan:
+                    </span>
+                    <span className="font-semibold text-gray-800 dark:text-white">
+                      {selectedPlan.name} ({selectedPlan.durationLabel})
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500 dark:text-gray-400">
+                      Price:
+                    </span>
+                    <span className="font-semibold text-gray-800 dark:text-white">
+                      ${selectedPlan.price}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <Elements stripe={stripePromise}>
+                <PaymentForm
+                  paymentInfo={{
+                    email: user?.email,
+                    durationMinutes: selectedPlan.durationMinutes,
+                    price: selectedPlan.price,
+                    durationLabel: selectedPlan.durationLabel,
+                  }}
+                />
+              </Elements>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

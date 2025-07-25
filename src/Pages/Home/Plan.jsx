@@ -123,7 +123,7 @@ export default function Plan() {
                 ))}
               </ul>
 
-              <Link to="/subscription" className="mt-10 block">
+              <Link to="/dashboard/user/subscription" className="mt-10 block">
                 <button
                   className={`w-full py-3 px-6 text-base font-semibold rounded-lg transition-colors duration-300 ${plan.highlighted ? "bg-purple-600 text-white hover:bg-purple-700" : "bg-white text-purple-600 border border-purple-300 hover:bg-purple-50 dark:bg-gray-700 dark:text-purple-300 dark:hover:bg-gray-600"}`}
                 >
