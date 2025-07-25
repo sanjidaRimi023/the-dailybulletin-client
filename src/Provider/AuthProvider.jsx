@@ -7,15 +7,16 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import React, { useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { auth } from "../Firebase/firebase.config";
+import useAxios from "../Hooks/useAxios"; 
 import { AuthContext } from "../Context/AuthContext";
-import useAxios from "../Hooks/useAxios";
+
 
 
 const AuthProvider = ({ children }) => {
-  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const provider = new GoogleAuthProvider();
   const axiosInstance = useAxios();
 
@@ -30,6 +31,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const logOutUser = () => {
+    setLoading(true); 
     localStorage.removeItem("token");
     return signOut(auth);
   };
@@ -38,40 +40,68 @@ const AuthProvider = ({ children }) => {
     return updateProfile(auth.currentUser, profile);
   };
 
-  const googleLogin = async () => {
+  const googleLogin = () => {
     setLoading(true);
     return signInWithPopup(auth, provider);
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        axiosInstance
-          .post("/jwt", {
-            email: currentUser.email,
-          })
-          .then((res) => {
+      
+        try {
+          const res = await axiosInstance.post("/jwt", { email: currentUser.email });
+          if (res.data.token) {
             localStorage.setItem("token", res.data.token);
+          }
+        } catch (error) {
+            console.error("JWT Token fetch error:", error);
+        }
+
+
+        try {
+          const { data: dbUser } = await axiosInstance.get(`/users/${currentUser.email}`);
+          
+       
+          let isUserPremium = false;
+          if (dbUser && dbUser.premiumExpiresAt) {
+            const expiryDate = new Date(dbUser.premiumExpiresAt);
+            if (expiryDate > new Date()) {
+              isUserPremium = true;
+            }
+          }
+
+          
+          setUser({
+            ...currentUser, 
+            ...dbUser,     
+            isPremium: isUserPremium, 
           });
+
+        } catch (error) {
+            console.error("DB user data fetch error:", error);
+            setUser({ ...currentUser, isPremium: false }); 
+        }
+
       } else {
         localStorage.removeItem("token");
+        setUser(null);
       }
+      
+      setLoading(false);
     });
 
     return () => unsubscribe();
   }, [axiosInstance]);
 
   const authInfo = {
+    user,
+    loading,
     createUser,
     loginUser,
     logOutUser,
     googleLogin,
     updateUserProfile,
-    loading,
-    user,
   };
 
   return (

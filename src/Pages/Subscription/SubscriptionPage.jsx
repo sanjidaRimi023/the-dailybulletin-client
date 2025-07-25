@@ -5,6 +5,7 @@ import PaymentForm from "../Subscription/PaymentForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import useAuth from "../../Hooks/useAuth";
+import { Link } from "react-router";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -33,7 +34,8 @@ const plans = [
 ];
 
 const SubscriptionPage = () => {
-  const { user } = useAuth();
+
+  const { user, isPremium } = useAuth(); 
   const [selectedPlan, setSelectedPlan] = useState(plans[0]);
   const [showPayment, setShowPayment] = useState(false);
 
@@ -48,9 +50,24 @@ const SubscriptionPage = () => {
     setShowPayment(true);
   };
 
+  if (isPremium) {
+    return (
+      <div className="container flex flex-col items-center justify-center px-6 py-20 mx-auto text-center">
+        <h1 className="text-3xl md:text-4xl font-bold text-green-600 dark:text-green-400 mb-4">
+          You Are Already a Premium Member!
+        </h1>
+        <p className="text-gray-700 dark:text-gray-300 max-w-xl mb-6">
+          Thank you for being a valued subscriber. You can enjoy all premium articles and features without any interruption.
+        </p>
+        <Link to="/premium-articles">
+          <Sharebtn text="Explore Premium Articles" />
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="container flex flex-col px-6 py-10 mx-auto space-y-6 lg:h-auto lg:py-16 lg:flex-row lg:items-start">
-
       <div className="w-full lg:w-1/2 z-10">
         {!showPayment ? (
           <div className="lg:max-w-lg">
@@ -132,14 +149,13 @@ const SubscriptionPage = () => {
         )}
       </div>
 
-      
       <div
         data-aos="fade-up"
         className="flex items-center justify-center w-full h-96 lg:w-1/2"
       >
         <img
           className="object-cover w-full h-full mx-auto rounded-md lg:max-w-2xl"
-          src="https://i.ibb.co/20tnXmMj/old-texture-newspapers-stack-arrangement.jpg"
+          src="https://i.ibb.co/D4tK364/Capture.png"
           alt="subscription banner"
         />
       </div>

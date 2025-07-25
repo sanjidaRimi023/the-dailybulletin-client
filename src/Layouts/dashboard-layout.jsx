@@ -9,6 +9,7 @@ import Toast from "../Components/Shared/Toast";
 import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
+import { IoPricetagsOutline } from "react-icons/io5";
 const mobileBreakPoint = 768;
 
 export default function DashboardLayout() {
@@ -42,6 +43,11 @@ export default function DashboardLayout() {
         path: "/dashboard/user/profile",
         title: "Profile",
         icon: RiListSettingsFill,
+      },
+      {
+        path: "/dashboard/user/subscription",
+        title: "Subscriptions",
+        icon: IoPricetagsOutline
       },
     ],
     admin: [

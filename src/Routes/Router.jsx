@@ -58,10 +58,7 @@ const router = createBrowserRouter([
         path: "/article-detail/:id",
         element: <ArticleDetail />,
       },
-      {
-        path: "/subscription",
-        element: <SubscriptionPage />,
-      },
+      
     ],
   },
   {
@@ -84,6 +81,10 @@ const router = createBrowserRouter([
       {
         path: "user/profile",
         element: <UserProfile/>
+      },
+      {
+        path: "user/subscription",
+        element: <SubscriptionPage />,
       },
       //   admin
       {
