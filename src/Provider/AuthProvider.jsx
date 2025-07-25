@@ -6,7 +6,9 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
-  updatePassword
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider
 } from "firebase/auth";
 import React, {  useEffect, useState } from "react";
 import { auth } from "../Firebase/firebase.config";
@@ -40,17 +42,26 @@ const AuthProvider = ({ children }) => {
   const updateUserProfile = (profile) => {
     return updateProfile(auth.currentUser, profile);
   };
-  const changePassword = (newPassword) => {
-    if (auth.currentUser) {
-        return updatePassword(auth.currentUser, newPassword);
-    }
-    return Promise.reject(new Error("No user is currently signed in."));
+   // লোকাল ইউজার স্টেট আপডেট করার জন্য
+  const updateUser = (updatedData) => {
+    setUser(prevUser => ({ ...prevUser, ...updatedData }));
   };
 
-  const updateUser = (updatedData) => {
-    setUser(prevUser => ({...prevUser, ...updatedData}));
-  }
+  // নতুন এবং নিরাপদ পাসওয়ার্ড পরিবর্তনের ফাংশন
+  const updateUserPassword = async (currentPassword, newPassword) => {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      throw new Error("No user is currently signed in.");
+    }
+    // Reauthentication-এর জন্য credential তৈরি করা
+    const credential = EmailAuthProvider.credential(currentUser.email, currentPassword);
 
+    // প্রথমে ব্যবহারকারীকে reauthenticate করা
+    await reauthenticateWithCredential(currentUser, credential);
+    
+    // সফলভাবে reauthenticate হলে পাসওয়ার্ড আপডেট করা
+    await updatePassword(currentUser, newPassword);
+  };
   const googleLogin = () => {
     setLoading(true);
     return signInWithPopup(auth, provider);
@@ -113,8 +124,8 @@ const AuthProvider = ({ children }) => {
     logOutUser,
     googleLogin,
     updateUserProfile,
-     changePassword,
     updateUser,
+    updateUserPassword,
   };
 
   return (
