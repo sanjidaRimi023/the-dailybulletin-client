@@ -4,7 +4,7 @@
 /* font 1 */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
-.playfair-display{
+.playfair{
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
   font-style: normal;
@@ -17,4 +17,41 @@
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+}
+
+/* Apply default font to body */
+body {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/* Apply Playfair only to h2 */
+h2 {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.swiper-slide {
+  
+  background: transparent;
+  display: flex; 
+  height: auto; 
+}
+
+:root {
+  --swiper-navigation-color: #ffffff; 
+  --swiper-navigation-size: 22px; 
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.swiper-pagination-bullet {
+  background-color: #9ca3af; 
+  opacity: 1;
 }
