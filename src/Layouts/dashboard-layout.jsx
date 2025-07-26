@@ -48,8 +48,8 @@ export default function DashboardLayout() {
   );
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-  const { user } = useAuth(); // 🧠 grab logged-in user
-  const isAdmin = user?.role === "admin"; // ✅ Dynamic condition
+  const { user } = useAuth(); 
+  const isAdmin = user?.role === "admin"; 
 
   useEffect(() => {
     const handleResize = () => {

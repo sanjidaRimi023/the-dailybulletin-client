@@ -88,7 +88,7 @@ const PaymentForm = ({ paymentInfo }) => {
 
         toast.success("Payment Succeeded & You are now a premium member!");
 
-        navigate("/article");
+        navigate("/all-article");
       } catch (dbError) {
         console.error("Failed to update user status:", dbError);
         setError(

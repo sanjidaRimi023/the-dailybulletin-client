@@ -7,6 +7,8 @@ import { Link } from "react-router";
 import PaymentForm from "../Subscription/PaymentForm";
 import Sharebtn from "../../Components/Ui/Sharebtn";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -38,7 +40,21 @@ const plans = [
 ];
 
 const SubscriptionPage = () => {
-  const { user, isPremium } = useAuth();
+  const { user } = useAuth();
+
+  const axiosSecure = useAxiosSecure();
+
+    const { data: userData } = useQuery({
+    queryKey: ["user-role", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user.email}`);
+      return res.data;
+    },
+    });
+  const userType = userData?.isPremium === true;
+
+
   const [selectedPlan, setSelectedPlan] = useState(
     plans.find((p) => p.recommended) || plans[1]
   );
@@ -55,7 +71,10 @@ const SubscriptionPage = () => {
     };
   }, [showPaymentModal]);
 
-  if (isPremium) {
+  
+  
+
+  if (userType) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)] px-6 py-20 text-center bg-gray-50 dark:bg-gray-900">
         <div className="max-w-xl p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
@@ -66,7 +85,7 @@ const SubscriptionPage = () => {
             Thank you for your support. Enjoy unlimited access to all our
             premium articles and features.
           </p>
-          <Link to="/premium-articles">
+          <Link to="/all-articles">
             <Sharebtn text="Explore Premium Articles" />
           </Link>
         </div>

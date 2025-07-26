@@ -35,13 +35,10 @@ const AllArticle = () => {
       return res.data;
     },
   });
+const isPremiumValid = new Date(userData?.premiumExpiresAt) > new Date();
+const userType = userData?.isPremium && isPremiumValid ? "premium" : "normal";
 
-  const userType =
-    userData?.role === "admin"
-      ? "admin"
-      : userData?.role === "premium"
-      ? "premium"
-      : "user";
+
 
   if (articlesLoading || userLoading || authLoading) return <LoadSpinner />;
 
