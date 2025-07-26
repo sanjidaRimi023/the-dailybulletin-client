@@ -40,27 +40,26 @@ const AuthProvider = ({ children }) => {
   const updateUserProfile = (profile) => {
     return updateProfile(auth.currentUser, profile);
   };
-  // লোকাল ইউজার স্টেট আপডেট করার জন্য
+
   const updateUser = (updatedData) => {
     setUser((prevUser) => ({ ...prevUser, ...updatedData }));
   };
 
-  // নতুন এবং নিরাপদ পাসওয়ার্ড পরিবর্তনের ফাংশন
+
   const updateUserPassword = async (currentPassword, newPassword) => {
     const currentUser = auth.currentUser;
     if (!currentUser) {
       throw new Error("No user is currently signed in.");
     }
-    // Reauthentication-এর জন্য credential তৈরি করা
+   
     const credential = EmailAuthProvider.credential(
       currentUser.email,
       currentPassword
     );
 
-    // প্রথমে ব্যবহারকারীকে reauthenticate করা
+
     await reauthenticateWithCredential(currentUser, credential);
 
-    // সফলভাবে reauthenticate হলে পাসওয়ার্ড আপডেট করা
     await updatePassword(currentUser, newPassword);
   };
   const googleLogin = () => {

@@ -79,7 +79,7 @@ const UserArticleCard = ({ article, index, userType }) => {
         className="group relative block w-full h-96 overflow-hidden rounded-xl shadow-lg transition-all duration-500"
       >
         <Link
-          to={`/article-detail/${article._id}`}
+         to={`/article-detail/${article._id}`}
           className="absolute inset-0 z-10"
           aria-label={`Read more about ${article.title}`}
         >
@@ -100,7 +100,7 @@ const UserArticleCard = ({ article, index, userType }) => {
             <span className="bg-blue-500/80 px-2 py-0.5 rounded-full">
               {article.category || "Technology"}
             </span>
-            {/* You can add more meta data here */}
+  
             <span>
               {new Date(article.createdAt).toLocaleDateString("en-US", {
                 year: "numeric",
@@ -109,10 +109,12 @@ const UserArticleCard = ({ article, index, userType }) => {
               }) || "July 26, 2025"}
             </span>
           </div>
-
-          <h3 className="text-2xl font-bold text-white leading-tight transition duration-300 group-hover:text-blue-300">
+        <Link to={`/article-detail/${article._id}`}>
+        <h3 className="text-2xl font-bold text-white leading-tight transition duration-300 group-hover:text-blue-300">
             {article.title}
           </h3>
+        </Link>
+          
 
           <p className="mt-2 text-sm font-medium text-gray-300">
             By {article.authorName}

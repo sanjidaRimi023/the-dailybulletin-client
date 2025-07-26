@@ -8,6 +8,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import useAuth from "../Hooks/useAuth";
 import LoadSpinner from "../Components/Ui/LoadSpinner";
+import PremiumPrompt from "../Components/Customs/PremiumPrompt";
 
 const MainLayout = () => {
 
@@ -29,6 +30,7 @@ const MainLayout = () => {
       <Toast></Toast>
       <Navbar />
       <div className="min-h-[calc(100vh-345px)]">
+        <PremiumPrompt/>
         <Outlet />
       </div>
       <Footer />

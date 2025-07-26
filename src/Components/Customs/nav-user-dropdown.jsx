@@ -27,6 +27,7 @@ export default function NavUserDropdown({ user }) {
 
   const handleLogout = () => {
     logOutUser(auth).then(() => {
+       localStorage.removeItem("promptShown"); 
       toast.success("Logout successful!");
       setIsOpen(false);
     });
