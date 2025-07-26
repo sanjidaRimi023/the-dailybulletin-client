@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoGrid } from "react-icons/io5";
 import { FaTable } from "react-icons/fa6";
 import { Link } from "react-router";
 import LoadSpinner from "../Components/Ui/LoadSpinner";
-
 import UserArticleCard from "../Components/Customs/UserArticleCard";
 import { useQuery } from "@tanstack/react-query";
 import Pagination from "../Components/Customs/Pagination";
@@ -13,6 +12,7 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 const AllArticle = () => {
   const [layout, setLayout] = useState("card");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchTitle, setSearchTitle] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 6;
 
@@ -20,9 +20,9 @@ const AllArticle = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data: articles = [], isLoading: articlesLoading } = useQuery({
-    queryKey: ["all-articles"],
+    queryKey: ["approved-articles"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/article");
+      const res = await axiosSecure.get("/article/approved");
       return res.data;
     },
   });
@@ -35,17 +35,26 @@ const AllArticle = () => {
       return res.data;
     },
   });
-const isPremiumValid = new Date(userData?.premiumExpiresAt) > new Date();
-const userType = userData?.isPremium && isPremiumValid ? "premium" : "normal";
 
-
-
+  const isPremiumValid = new Date(userData?.premiumExpiresAt) > new Date();
+  const userType = userData?.isPremium && isPremiumValid ? "premium" : "normal";
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchTitle]);
   if (articlesLoading || userLoading || authLoading) return <LoadSpinner />;
 
-  const filteredArticles = articles.filter((article) =>
-    selectedCategory ? article.category === selectedCategory : true
-  );
+  // === 🔍 Combined AND Filtering ===
+  const filteredArticles = articles.filter((article) => {
+    const matchCategory = selectedCategory
+      ? article.category === selectedCategory
+      : true;
+    const matchTitle = searchTitle
+      ? article.title.toLowerCase().includes(searchTitle.toLowerCase())
+      : true;
+    return matchCategory && matchTitle;
+  });
 
+  // === 🧮 Pagination ===
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
   const currentArticles = filteredArticles.slice(
@@ -53,6 +62,8 @@ const userType = userData?.isPremium && isPremiumValid ? "premium" : "normal";
     indexOfLastArticle
   );
   const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
+
+  // 🔄 Reset pagination on filter change
 
   return (
     <div className="min-h-screen py-10 px-4">
@@ -62,12 +73,16 @@ const userType = userData?.isPremium && isPremiumValid ? "premium" : "normal";
         </h2>
         <p>
           Thought-provoking analysis and commentary from leading voices in
-          journalism. <br /> Dive deeper into the issues that matter most.
+          journalism.
+          <br />
+          Dive deeper into the issues that matter most.
         </p>
       </div>
 
-      <div className="container mx-auto flex flex-wrap justify-center gap-4 mb-6 items-center">
-        <div className="w-full max-w-xs">
+      {/* === 🧠 Filter + Layout Switch === */}
+      <div className="container mx-auto flex flex-wrap justify-center gap-4 mb-6 items-end">
+        {/* 📂 Category Filter */}
+        <div className="w-full sm:w-1/3">
           <label
             htmlFor="category"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -78,7 +93,7 @@ const userType = userData?.isPremium && isPremiumValid ? "premium" : "normal";
             id="category"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="block w-full px-5 py-3 text-sm text-gray-900 border-none border-gray-300 rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-blue-500 transition duration-200 ease-in-out"
+            className="block w-full px-5 py-3 text-sm border border-gray-300 rounded-2xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:text-white"
           >
             <option value="">All Categories</option>
             <option value="Politics & Governance">Politics</option>
@@ -91,11 +106,26 @@ const userType = userData?.isPremium && isPremiumValid ? "premium" : "normal";
           </select>
         </div>
 
-        <div className="flex items-center gap-2 ml-auto">
+        {/* 🔎 Title Search */}
+        <div className="w-full sm:w-1/2">
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Search by Title
+          </label>
+          <input
+            type="text"
+            value={searchTitle}
+            onChange={(e) => setSearchTitle(e.target.value)}
+            placeholder="Type a title to search..."
+            className="block w-full px-5 py-3 text-sm border border-gray-300 rounded-2xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:text-white"
+          />
+        </div>
+
+        {/* 🪄 Layout Switcher */}
+        <div className="flex items-center gap-2 mt-2 sm:mt-0 ml-auto">
           <span className="text-lg font-semibold">View</span>
           <button
             onClick={() => setLayout(layout === "card" ? "table" : "card")}
-            className="p-2 border rounded hover:bg-gray-100 transition duration-200"
+            className="p-2 border rounded hover:bg-gray-100 transition dark:border-gray-600 dark:text-white"
           >
             {layout === "card" ? (
               <FaTable className="w-5 h-5" />
@@ -106,10 +136,9 @@ const userType = userData?.isPremium && isPremiumValid ? "premium" : "normal";
         </div>
       </div>
 
+      {/* === 🧾 Article Display === */}
       {layout === "card" ? (
-        <div
-          className={`container mx-auto grid gap-6 lg:grid-cols-3 md:grid-cols-2`}
-        >
+        <div className="container mx-auto grid gap-6 lg:grid-cols-3 md:grid-cols-2">
           {currentArticles.map((article, index) => (
             <UserArticleCard
               key={article._id}
@@ -120,48 +149,54 @@ const userType = userData?.isPremium && isPremiumValid ? "premium" : "normal";
           ))}
         </div>
       ) : (
-        <div className="w-full overflow-x-auto">
-          <table className="min-w-full table-auto border-collapse border rounded-lg shadow-sm">
-            <thead className="bg-gray-100 text-left text-sm">
+        <div className="w-full overflow-x-auto bg-white rounded-lg shadow-md">
+          <table className="min-w-full table-auto text-sm text-left">
+            <thead className="bg-gray-50 text-gray-600 font-medium border-b">
               <tr>
-                <th className="px-4 py-2">Image</th>
-                <th className="px-4 py-2">Title</th>
-                <th className="px-4 py-2">Author</th>
-                <th className="px-4 py-2">Category</th>
-                <th className="px-4 py-2">Tags</th>
-                <th className="px-4 py-2">Action</th>
+                <th className="px-6 py-4">Image</th>
+                <th className="px-6 py-4">Title</th>
+                <th className="px-6 py-4">Author</th>
+                <th className="px-6 py-4">Category</th>
+                <th className="px-6 py-4">Tags</th>
+                <th className="px-6 py-4 text-center">Action</th>
               </tr>
             </thead>
-            <tbody className="text-sm divide-y">
+            <tbody className="text-gray-700">
               {currentArticles.map((article) => (
-                <tr key={article._id}>
-                  <td className="px-4 py-2">
+                <tr
+                  key={article._id}
+                  className="border-b hover:bg-gray-50 transition"
+                >
+                  <td className="px-6 py-4">
                     <img
                       src={article.image}
                       alt={article.title}
-                      className="w-14 h-14 object-cover rounded-md"
+                      className="w-16 h-16 object-cover rounded-md"
                     />
                   </td>
-                  <td className="px-4 py-2">{article.title}</td>
-                  <td className="px-4 py-2">{article.authorName}</td>
-                  <td className="px-4 py-2">{article.category}</td>
-                  <td className="px-4 py-2">
-                    <div className="flex flex-wrap gap-1">
+                  <td className="px-6 py-4 font-medium">{article.title}</td>
+                  <td className="px-6 py-4">{article.authorName}</td>
+                  <td className="px-6 py-4 font-semibold text-yellow-500">
+                    {article.category}
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex flex-wrap gap-2">
                       {article.tags?.map((tag, i) => (
                         <span
                           key={i}
-                          className="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded-full"
+                          className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded-full"
                         >
-                          #{tag}
+                          {tag}
                         </span>
                       ))}
                     </div>
                   </td>
-                  <td className="px-4 py-2">
-                    <Link to={`/article-detail/${article._id}`}>
-                      <button className="bg-indigo-500 text-white px-2 py-1 rounded text-xs hover:bg-opacity-90">
-                        View
-                      </button>
+                  <td className="px-4 py-2 text-center">
+                    <Link
+                      to={`/article-detail/${article._id}`}
+                      className="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-5 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition"
+                    >
+                      View
                     </Link>
                   </td>
                 </tr>
@@ -171,6 +206,7 @@ const userType = userData?.isPremium && isPremiumValid ? "premium" : "normal";
         </div>
       )}
 
+      {/* === 📄 Pagination === */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

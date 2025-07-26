@@ -51,7 +51,7 @@ const UserOverView = () => {
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* User Greeting */}
+  
         <div className="mb-10">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             Welcome back, {user?.displayName}!
@@ -61,11 +61,11 @@ const UserOverView = () => {
           </p>
         </div>
 
-        {/* Main content grid */}
+   
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column: User Info and Stats */}
+   
           <div className="lg:col-span-1 space-y-8">
-            {/* USER INFO CARD */}
+
             <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 text-center">
               <img
                 src={user?.photoURL}
@@ -85,7 +85,7 @@ const UserOverView = () => {
               </div>
             </div>
 
-            {/* STATS CARDS */}
+    
             <div className="space-y-4">
               <StatCard
                 icon={<FaFileAlt className="text-blue-500 text-2xl" />}
@@ -102,9 +102,9 @@ const UserOverView = () => {
             </div>
           </div>
 
-          {/* Right Column: Chart and Detailed Stats */}
+
           <div className="lg:col-span-2 space-y-8">
-            {/* PIE CHART */}
+    
             <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6">
               <h3 className="text-lg font-bold mb-6 text-gray-800 dark:text-white">
                 Article Status Overview

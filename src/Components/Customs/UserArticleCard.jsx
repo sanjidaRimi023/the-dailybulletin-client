@@ -73,41 +73,55 @@ const UserArticleCard = ({ article, index, userType }) => {
   }
 
   return (
-    <div>
-      <div
+ 
+      <article
         data-aos="fade-up"
-        className="flex flex-col sm:flex-row rounded-xl border border-gray-200 dark:border-gray-700 p-3 sm:p-5 hover:shadow-md dark:hover:shadow-lg transition-all duration-300 bg-white dark:bg-gray-900 gap-4"
+        className="group relative block w-full h-96 overflow-hidden rounded-xl shadow-lg transition-all duration-500"
       >
-        <div className="sm:w-48 shrink-0">
-          <img
-            src={article.image}
-            alt={article.title}
-            className="h-56 w-full object-cover rounded-tr-3xl rounded-bl-3xl sm:h-64 lg:h-80"
-          />
-        </div>
+        <Link
+          to={`/article-detail/${article._id}`}
+          className="absolute inset-0 z-10"
+          aria-label={`Read more about ${article.title}`}
+        >
+          <span className="sr-only">Read more about {article.title}</span>
+        </Link>
 
-        <div className="flex-1 flex flex-col justify-center">
-          <div className="flex flex-col gap-1">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-snug hover:text-blue-700 transition">
-              {article.title}
-            </h3>
+        <img
+          src={article.image}
+          alt={article.title}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+        />
 
-            <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
-              By {article.authorName}
-            </p>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
 
-            <p className="text-sm text-gray-700 dark:text-gray-300 mt-2 line-clamp-2">
-              {article.description?.slice(0, 150)}...
-            </p>
+        <div className="relative flex h-full flex-col items-start justify-end p-6 z-20">
+          <div className="mb-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-white">
+            <span className="bg-blue-500/80 px-2 py-0.5 rounded-full">
+              {article.category || "Technology"}
+            </span>
+            {/* You can add more meta data here */}
+            <span>
+              {new Date(article.createdAt).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              }) || "July 26, 2025"}
+            </span>
           </div>
 
-          <Link
-            to={`/article-detail/${article._id}`}
-            className="mt-4 inline-flex w-fit items-center gap-2 rounded-full bg-indigo-600 px-5 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition"
-          >
-            Read More
+          <h3 className="text-2xl font-bold text-white leading-tight transition duration-300 group-hover:text-blue-300">
+            {article.title}
+          </h3>
+
+          <p className="mt-2 text-sm font-medium text-gray-300">
+            By {article.authorName}
+          </p>
+
+          <div className="mt-4 flex items-center gap-2 text-white/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <span>Read More</span>
             <svg
-              className="w-4 h-4"
+              className="h-4 w-4"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
@@ -119,10 +133,10 @@ const UserArticleCard = ({ article, index, userType }) => {
                 d="M17 8l4 4m0 0l-4 4m4-4H3"
               />
             </svg>
-          </Link>
+          </div>
         </div>
-      </div>
-    </div>
+      </article>
+ 
   );
 };
 

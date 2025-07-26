@@ -6,14 +6,24 @@ import Footer from "../Components/Shared/Footer";
 import Toast from "../Components/Shared/Toast";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import useAuth from "../Hooks/useAuth";
+import LoadSpinner from "../Components/Ui/LoadSpinner";
 
 const MainLayout = () => {
+
+  const { loading } = useAuth();
+
   useEffect(() => {
     AOS.init({
         duration: 1000,
         mirror: true,	
     });
   }, []);
+
+  if (loading) {
+    return <LoadSpinner />
+    
+  }
   return (
     <>
       <Toast></Toast>
