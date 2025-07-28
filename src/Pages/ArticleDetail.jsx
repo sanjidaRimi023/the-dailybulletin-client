@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { FaHeart, FaRegHeart, FaShareAlt } from "react-icons/fa"; 
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import LoadSpinner from "../Components/Ui/LoadSpinner";
 
 const ArticleDetail = () => {
   const { id } = useParams();
@@ -63,9 +64,7 @@ const ArticleDetail = () => {
 
   if (loadingArticle) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
+      <LoadSpinner/>
     );
   }
 
@@ -131,10 +130,10 @@ const ArticleDetail = () => {
                   <div className="flex items-center gap-4">
                     <button
                       onClick={handleLike}
-                      className="flex items-center gap-2 text-gray-600 hover:text-blue-500 transition-colors duration-200"
+                      className="flex items-center gap-2 text-gray-600 hover:text-rose-500 transition-colors duration-200"
                     >
                       {isLiked ? (
-                        <FaHeart className="text-blue-500 text-xl" />
+                        <FaHeart className="text-rose-500 text-xl" />
                       ) : (
                         <FaRegHeart className="text-xl" />
                       )}
