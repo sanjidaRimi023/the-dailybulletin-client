@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../Hooks/useAxios";
 import { MdFlashOn } from "react-icons/md";
-
 const Headline = () => {
-  const [current, setCurrent] = useState(0);
-  const [fade, setFade] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [wordIndex, setWordIndex] = useState(0);
+  const [displayedWords, setDisplayedWords] = useState([]);
   const axiosInstance = useAxios();
 
   const { data: articles = [], isLoading } = useQuery({
@@ -17,44 +17,47 @@ const Headline = () => {
   });
 
   useEffect(() => {
-    if (!articles || articles.length === 0) return;
+    if (!articles.length) return;
 
-    const interval = setInterval(() => {
-      setFade(false);
-      setTimeout(() => {
-        setCurrent((prev) => (prev + 1) % articles.length);
-        setFade(true);
-      }, 300);
-    }, 3000);
+    const words = articles[currentIndex]?.title?.split(" ") || [];
 
-    return () => clearInterval(interval);
-  }, [articles]);
+    const wordInterval = setInterval(() => {
+      setDisplayedWords((prev) => {
+        const nextWords = [...prev, words[wordIndex]];
+        return nextWords;
+      });
+
+      setWordIndex((prev) => prev + 1);
+
+      if (wordIndex >= words.length - 1) {
+        clearInterval(wordInterval);
+        setTimeout(() => {
+          setDisplayedWords([]);
+          setWordIndex(0);
+          setCurrentIndex((prev) => (prev + 1) % articles.length);
+        }, 2000);
+      }
+    }, 200);
+
+    return () => clearInterval(wordInterval);
+  }, [articles, currentIndex, wordIndex]);
 
   if (isLoading) {
     return (
-      <div className="bg-red-600 text-white py-3 text-center text-sm font-medium">
-        Loading breaking news...
-      </div>
+      <div className="bg-red-600 text-white p-2 text-sm">Loading breaking news...</div>
     );
   }
 
   return (
-    <div className="w-full bg-gradient-to-r from-red-700 to-red-600 text-white py-3 px-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 shadow-md overflow-hidden">
-    
-      <div className="flex items-center gap-2 bg-white text-red-600 px-3 py-1 rounded-full text-sm font-bold shadow-sm">
-        <MdFlashOn className="text-xl" />
+    <div className="bg-red-600 text-white py-2 px-4 flex items-center gap-4 overflow-hidden">
+       <div className="flex items-center gap-2 bg-white text-red-600 px-3 py-1 rounded-full text-sm font-bold shadow-sm">
+        <MdFlashOn className="text-xl animate-pulse" />
         <span>BREAKING</span>
       </div>
-
-  
-      <div className="relative h-6 w-full overflow-hidden">
-        <div
-          className={`transition-opacity duration-500 ease-in-out text-sm sm:text-base font-medium truncate ${
-            fade ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          {articles[current]?.title}
-        </div>
+      <div className="relative h-6 w-full overflow-hidden whitespace-nowrap">
+        <p className="transition-all duration-500 ease-in-out text-sm md:text-base font-medium">
+          {displayedWords.join(" ")}
+        </p>
       </div>
     </div>
   );
