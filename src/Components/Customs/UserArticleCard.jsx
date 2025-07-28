@@ -78,13 +78,7 @@ const UserArticleCard = ({ article, index, userType }) => {
         data-aos="fade-up"
         className="group relative block w-full h-96 overflow-hidden rounded-xl shadow-lg transition-all duration-500"
       >
-        <Link
-         to={`/article-detail/${article._id}`}
-          className="absolute inset-0 z-10"
-          aria-label={`Read more about ${article.title}`}
-        >
-          <span className="sr-only">Read more about {article.title}</span>
-        </Link>
+        
 
         <img
           src={article.image}
@@ -97,7 +91,7 @@ const UserArticleCard = ({ article, index, userType }) => {
 
         <div className="relative flex h-full flex-col items-start justify-end p-6 z-20">
           <div className="mb-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-white">
-            <span className="bg-blue-500/80 px-2 py-0.5 rounded-full">
+            <span className="bg-blue-600 px-2 py-0.5 rounded-full">
               {article.category || "Technology"}
             </span>
   
@@ -110,7 +104,7 @@ const UserArticleCard = ({ article, index, userType }) => {
             </span>
           </div>
         <Link to={`/article-detail/${article._id}`}>
-        <h3 className="text-2xl font-bold text-white leading-tight transition duration-300 group-hover:text-blue-300">
+        <h3 className="text-2xl font-bold text-white leading-tight transition duration-300 group-hover:text-blue-300 hover:underline">
             {article.title}
           </h3>
         </Link>
@@ -121,20 +115,10 @@ const UserArticleCard = ({ article, index, userType }) => {
           </p>
 
           <div className="mt-4 flex items-center gap-2 text-white/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            <span>Read More</span>
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
+          <Link to={`/article-detail/${article._id}`} className="flex items-center gap-1"> 
+          <span>Read More</span>
+            <FaArrowRight />
+          </Link>
           </div>
         </div>
       </article>

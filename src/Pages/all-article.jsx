@@ -43,7 +43,7 @@ const AllArticle = () => {
   }, [selectedCategory, searchTitle]);
   if (articlesLoading || userLoading || authLoading) return <LoadSpinner />;
 
-  // === 🔍 Combined AND Filtering ===
+
   const filteredArticles = articles.filter((article) => {
     const matchCategory = selectedCategory
       ? article.category === selectedCategory
@@ -54,7 +54,6 @@ const AllArticle = () => {
     return matchCategory && matchTitle;
   });
 
-  // === 🧮 Pagination ===
   const indexOfLastArticle = currentPage * articlesPerPage;
   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
   const currentArticles = filteredArticles.slice(
@@ -63,7 +62,7 @@ const AllArticle = () => {
   );
   const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
 
-  // 🔄 Reset pagination on filter change
+
 
   return (
     <div className="min-h-screen py-10 px-4">
@@ -79,9 +78,9 @@ const AllArticle = () => {
         </p>
       </div>
 
-      {/* === 🧠 Filter + Layout Switch === */}
+
       <div className="container mx-auto flex flex-wrap justify-center gap-4 mb-6 items-end">
-        {/* 📂 Category Filter */}
+       
         <div className="w-full sm:w-1/3">
           <label
             htmlFor="category"
@@ -206,7 +205,7 @@ const AllArticle = () => {
         </div>
       )}
 
-      {/* === 📄 Pagination === */}
+    
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
