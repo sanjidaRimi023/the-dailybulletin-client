@@ -7,7 +7,6 @@ import Register from "../Pages/Auth/Register";
 import SubscriptionPage from "../Pages/Subscription/SubscriptionPage";
 import DashboardLayout from "../Layouts/dashboard-layout";
 import AboutUs from "../Pages/about-us";
-import AddArticle from "../Pages/AddArticle";
 import UserArticle from "../Pages/Dashboard/User/UserArticle";
 import ManageArticle from "../Pages/Dashboard/User/manage-article";
 import AllArticle from "../Pages/all-article";
@@ -22,6 +21,7 @@ import UserProfile from "../Pages/Dashboard/User/UserProfile";
 import ForbiddenPage from "../Pages/ForbiddenPage";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
+import AddArticle from "../Pages/Dashboard/User/AddArticle";
 
 const router = createBrowserRouter([
   {
@@ -40,10 +40,6 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
-      },
-      {
-        path: "/add-article",
-        element: <AddArticle />,
       },
       {
         path: "/about-us",
@@ -90,6 +86,12 @@ const router = createBrowserRouter([
         </PrivateRoute>,
       },
       {
+        path: "user/add-article",
+        element: <PrivateRoute>
+          <AddArticle />
+        </PrivateRoute>,
+      },
+      {
         path: "user/profile",
         element: <PrivateRoute>
           <UserProfile />
@@ -103,7 +105,7 @@ const router = createBrowserRouter([
       },
       //   admin
       {
-        path: "/dashboard/admin",
+        path: "admin",
         element: (
           <AdminRoute>
             <AdminOverview />
@@ -111,7 +113,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/admin/manage-users",
+        path: "admin/manage-users",
         element: (
           <AdminRoute>
             <ManageUsers />
@@ -119,7 +121,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/admin/manage-articles",
+        path: "admin/manage-articles",
         element: (
           <AdminRoute>
             <ManageAllArticles />
@@ -127,7 +129,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/admin/add-publisher",
+        path: "admin/add-publisher",
         element: (
           <AdminRoute>
             <AddPublisher />

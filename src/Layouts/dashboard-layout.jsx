@@ -6,14 +6,12 @@ import { SiBlogger } from "react-icons/si";
 import { RiListSettingsFill } from "react-icons/ri";
 import { FaUsersCog } from "react-icons/fa";
 import { TiUserAdd } from "react-icons/ti";
-import { IoPricetagsOutline } from "react-icons/io5";
+import { IoAddCircleOutline, IoPricetagsOutline } from "react-icons/io5";
 import { FaBars } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import Toast from "../Components/Shared/Toast";
 import DashboardSideBar from "../Components/Customs/dashboard-side-bar";
 import useAuth from "../Hooks/useAuth";
-
-
 
 const mobileBreakPoint = 768;
 
@@ -48,8 +46,8 @@ export default function DashboardLayout() {
   );
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-  const { user } = useAuth(); 
-  const isAdmin = user?.role === "admin"; 
+  const { user } = useAuth();
+  const isAdmin = user?.role === "admin";
 
   useEffect(() => {
     const handleResize = () => {
@@ -82,6 +80,11 @@ export default function DashboardLayout() {
         path: "/dashboard/user/subscription",
         title: "Subscriptions",
         icon: IoPricetagsOutline,
+      },
+      {
+        to: "/dashboard/user/add-article",
+        title: "Add Article",
+        icon: IoAddCircleOutline,
       },
     ],
     admin: [

@@ -29,11 +29,6 @@ const Navbar = () => {
       icon: <IoNewspaperOutline size={18} />,
     },
     {
-      to: "/add-article",
-      text: "Add Article",
-      icon: <IoAddCircleOutline size={18} />,
-    },
-    {
       to: "/about-us",
       text: "About Us",
       icon: <IoInformationCircleOutline size={18} />,

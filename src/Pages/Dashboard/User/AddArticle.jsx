@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Swal from "sweetalert2";
 
-// আইকনগুলো
 import {
   FaRegNewspaper,
   FaThLarge,
@@ -14,9 +13,9 @@ import {
 } from "react-icons/fa";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
-import LoadSpinner from "../Components/Ui/LoadSpinner";
-import useAxios from "../Hooks/useAxios";
-import useAuth from "../Hooks/useAuth";
+import useAxios from "../../../Hooks/useAxios";
+import useAuth from "../../../Hooks/useAuth";
+
 
 const categoryOptions = [
     { value: "Politics", label: "Politics" },
