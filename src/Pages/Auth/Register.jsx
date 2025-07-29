@@ -3,13 +3,14 @@ import { useForm } from "react-hook-form";
 import { FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
-import sideImage from "../../assets/newspaper-background-concept.jpg";
 import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { FcGoogle } from "react-icons/fc";
 import AuthButton from "../../Components/Ui/auth-button";
 import useAxios from "../../Hooks/useAxios";
 import useAuth from "../../Hooks/useAuth";
+import sideImage from "../../assets/newspaper-background-concept.jpg";
 
 const Register = () => {
   const {
@@ -18,9 +19,8 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const { createUser, updateUserProfile } = useAuth();
+  const { createUser, updateUserProfile, googleLogin } = useAuth();
   const axiosInstance = useAxios();
-
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || "/";
@@ -28,7 +28,6 @@ const Register = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [profilePicture, setProfilePicture] = useState("");
   const [uploading, setUploading] = useState(false);
-
   const [showPassword, setShowPassword] = useState(false);
 
   const cloud_name = import.meta.env.VITE_CLOUD_NAME;
@@ -65,9 +64,8 @@ const Register = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     if (!profilePicture) {
-      toast.warn("Please upload a image");
+      toast.warn("Please upload a profile image.");
       return;
     }
 
@@ -82,18 +80,42 @@ const Register = () => {
         created_at: new Date().toISOString(),
         last_login: new Date().toISOString(),
       };
-      console.log(userInfo);
-      const userRes = await axiosInstance.post("/users", userInfo);
-      console.log(userRes);
 
+      await axiosInstance.post("/users", userInfo);
       await updateUserProfile({
         displayName: data.name,
         photoURL: profilePicture,
       });
-      toast.success("Profile updated successfully!");
+
+      toast.success("Account created successfully!");
       navigate(from);
     } catch (error) {
       toast.error(`Registration failed: ${error.message}`);
+    }
+  };
+
+  const handleGoogleRegister = async () => {
+    try {
+      const result = await googleLogin();
+      const loggedUser = result.user;
+
+      const userCheck = await axiosInstance.get(`/users/${loggedUser.email}`);
+      if (!userCheck?.data?._id) {
+        const userInfo = {
+          email: loggedUser.email,
+          role: "user",
+          photoURL: loggedUser.photoURL,
+          isPremium: false,
+          created_at: new Date().toISOString(),
+          last_login: new Date().toISOString(),
+        };
+        await axiosInstance.post("/users", userInfo);
+      }
+
+      toast.success("Successfully signed in with Google");
+      navigate(from);
+    } catch (error) {
+      toast.error(`Google Sign-in failed: ${error.message}`);
     }
   };
 
@@ -102,15 +124,13 @@ const Register = () => {
       data-aos="zoom-in"
       className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl my-10 bg-white/90 dark:bg-gray-800/90 hover:shadow-xl backdrop-blur-md transition-all duration-300"
     >
-      {/* Left Side Image */}
+
       <div
         className="hidden bg-cover lg:block lg:w-1/2"
-        style={{
-          backgroundImage: `url(${sideImage})`,
-        }}
+        style={{ backgroundImage: `url(${sideImage})` }}
       ></div>
 
-      {/* Right Side Form */}
+
       <form
         data-aos="zoom-in"
         onSubmit={handleSubmit(onSubmit)}
@@ -128,7 +148,7 @@ const Register = () => {
           !
         </h2>
 
-        {/* Profile Image Upload */}
+        
         <div className="flex justify-center my-5">
           <label htmlFor="image-upload" className="cursor-pointer">
             <img
@@ -149,12 +169,11 @@ const Register = () => {
           />
         </div>
 
-        {/* Username */}
         <div className="mb-4 relative">
           <input
-            {...register("name", { required: "name is required" })}
+            {...register("name", { required: "Name is required" })}
             type="text"
-            placeholder="name"
+            placeholder="Name"
             className="w-full py-3 px-4 pl-11 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 border rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <span className="absolute top-4 left-3 text-gray-400">
@@ -165,7 +184,6 @@ const Register = () => {
           )}
         </div>
 
-        {/* Email */}
         <div className="mb-4 relative">
           <input
             {...register("email", {
@@ -187,7 +205,6 @@ const Register = () => {
           )}
         </div>
 
-        {/* Password */}
         <div className="mb-4 relative">
           <input
             {...register("password", {
@@ -201,20 +218,15 @@ const Register = () => {
             placeholder="Password"
             className="w-full py-3 px-4 pl-11 pr-11 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 border rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-
-          {/* Lock Icon on Left */}
           <span className="absolute top-3 left-3 text-gray-400">
             <RiLockPasswordFill />
           </span>
-
-          {/* Eye Toggle Icon on Right */}
           <span
             className="absolute top-3 right-3 text-gray-400 cursor-pointer"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? <FiEyeOff /> : <FiEye />}
           </span>
-
           {errors.password && (
             <p className="text-red-500 text-sm mt-1">
               {errors.password.message}
@@ -222,7 +234,6 @@ const Register = () => {
           )}
         </div>
 
-        {/* Submit Button */}
         <AuthButton
           text={uploading ? "Uploading..." : "Register"}
           disabled={uploading}
@@ -230,7 +241,22 @@ const Register = () => {
           className="w-full"
         />
 
-        {/* Login Redirect */}
+        <div className="flex items-center my-4">
+          <div className="flex-grow h-px bg-gray-300 dark:bg-gray-600"></div>
+          <span className="px-4 text-sm text-gray-500 dark:text-gray-400">or</span>
+          <div className="flex-grow h-px bg-gray-300 dark:bg-gray-600"></div>
+        </div>
+
+        <button
+  onClick={handleGoogleRegister}
+  type="button"
+  className="w-full flex items-center justify-center gap-3 py-2 px-5 border border-indigo-300 dark:border-gray-600 bg-white dark:bg-gray-900 hover:shadow-md dark:hover:shadow-lg transition-all duration-200 rounded-full text-gray-700 dark:text-gray-200 font-semibold"
+>
+  <FcGoogle className="text-2xl" />
+  <span>Sign up with Google</span>
+</button>
+
+
         <p className="mt-4 text-center text-sm">
           Already have an account?{" "}
           <Link to="/login" className="underline font-bold text-blue-600">

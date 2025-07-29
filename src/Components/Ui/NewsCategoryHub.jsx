@@ -5,6 +5,7 @@ import { BsNewspaper } from "react-icons/bs";
 import { FaLandmark, FaMoneyBillWave } from "react-icons/fa";
 import { IoGlobeOutline, IoGameControllerOutline } from "react-icons/io5";
 import { MdOutlineSportsCricket, MdOutlineScience } from "react-icons/md";
+import { Link } from "react-router";
 
 const IconWrapper = ({
   children,
@@ -246,7 +247,9 @@ export default function NewsCategoryHub() {
           </div>
 
           <div className="w-full md:w-1/2 flex justify-center">
+            <Link to="/all-article">
             <IconGrid />
+            </Link>
           </div>
         </div>
       </div>

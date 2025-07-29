@@ -13,9 +13,10 @@ const Home = () => {
     <>
       <Headline/>
       <HomeBannerSlider />
-      <ArticleCardSlider/>
-      <Plan />
+      <ArticleCardSlider />
       <NewsCategoryHub/>
+      <Plan />
+      
       <TopJournalists />
      
     

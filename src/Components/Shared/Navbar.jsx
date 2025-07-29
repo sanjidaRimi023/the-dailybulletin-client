@@ -36,6 +36,7 @@ const Navbar = () => {
   ];
 
   const closeMenu = () => setIsOpen(false);
+  
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70 shadow-sm px-4 py-4 lg:px-20 flex items-center justify-between">

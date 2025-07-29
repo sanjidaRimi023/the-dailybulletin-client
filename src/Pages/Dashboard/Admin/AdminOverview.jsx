@@ -59,12 +59,12 @@ const AdminOverView = () => {
 
   const { data: publishersData = [], isLoading: isPublishersLoading, refetch: refetchPublishers } = useQuery({
     queryKey: ["admin-publishers"],
-    queryFn: async () => (await axiosSecure.get("/admin/publisher-distribution")).data,
+    queryFn: async () => (await axiosSecure.get("/publishers")).data,
   });
 
   const { data: recentArticlesData = [], isLoading: isArticlesLoading, refetch: refetchArticles } = useQuery({
     queryKey: ["admin-recent-articles"],
-    queryFn: async () => (await axiosSecure.get("/admin/recent-articles")).data,
+    queryFn: async () => (await axiosSecure.get("/article")).data,
   });
 
   useEffect(() => {

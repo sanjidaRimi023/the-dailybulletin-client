@@ -12,9 +12,9 @@ import {
   FaBookOpen,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
-import axios from "axios";
-import axiosInstance from "../../../Hooks/useAxios";
 import useAuth from "../../../Hooks/useAuth";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAxios from "../../../Hooks/useAxios";
 
 const TabButton = ({ active, onClick, children }) => (
   <button
@@ -36,6 +36,8 @@ const UserProfile = () => {
   const [previewImage, setPreviewImage] = useState(user?.photoURL);
   const cloud_name = import.meta.env.VITE_CLOUD_NAME;
   const upload_preset = import.meta.env.VITE_CLOUD_PRESET;
+  const axiosSecure = useAxiosSecure();
+  const axiosInstance = useAxios();
 
   const [readingHistory, setReadingHistory] = useState([]);
   const [historyLoading, setHistoryLoading] = useState(true);
@@ -103,13 +105,13 @@ const UserProfile = () => {
         formData.append("file", data.photo[0]);
         formData.append("upload_preset", upload_preset);
         formData.append("cloud_name", cloud_name);
-        const cloudRes = await axios.post(
+        const cloudRes = await axiosInstance.post(
           `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
           formData
         );
         photoURL = cloudRes.data.secure_url;
       }
-      const res = await axiosInstance.patch(`/users/${user.uid}`, {
+      const res = await axiosSecure.patch(`/user/${user.email}`, {
         displayName: data.displayName,
         photoURL,
       });

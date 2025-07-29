@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import useAxios from "../../../Hooks/useAxios";
 import { toast } from "react-toastify";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const AddPublisher = () => {
   const { register, handleSubmit, reset } = useForm();
   const [loading, setLoading] = useState(false);
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
   const [imagePreview, setImagePreview] = useState(null);
   const cloud_name = import.meta.env.VITE_CLOUD_NAME;
   const upload_preset = import.meta.env.VITE_CLOUD_PRESET;
@@ -45,7 +45,7 @@ const AddPublisher = () => {
       image: imageUrl,
     };
 
-    const res = await axiosInstance.post("/publishers", publisherInfo);
+    const res = await axiosSecure.post("/publishers", publisherInfo);
     if (res?.data?.insertedId) {
       toast.success("Publisher added successfully!");
       reset();

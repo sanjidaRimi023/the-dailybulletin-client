@@ -37,7 +37,7 @@ const ManageUsers = () => {
 
     if (result.isConfirmed) {
       try {
-        const res = await axiosSecure.delete(`/users/${id}`);
+        const res = await axiosSecure.delete(`/user/${id}`);
         if (res.data.deletedCount > 0) {
           Swal.fire("Deleted!", "User has been deleted.", "success");
           refetch();

@@ -7,7 +7,7 @@ import { MdDashboard } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { VscSignOut } from "react-icons/vsc";
 import useAuth from "../../Hooks/useAuth";
-
+import useUserRole from "../../Hooks/useUserRole";
 export default function NavUserDropdown({ user }) {
   const [isOpen, setIsOpen] = useState(false);
   const { logOutUser } = useAuth();
@@ -27,13 +27,14 @@ export default function NavUserDropdown({ user }) {
 
   const handleLogout = () => {
     logOutUser(auth).then(() => {
-       localStorage.removeItem("promptShown"); 
+      localStorage.removeItem("promptShown");
       toast.success("Logout successful!");
       setIsOpen(false);
     });
   };
 
   const closeDropdown = () => setIsOpen(false);
+  const role = useUserRole();
 
   const fallbackAvatar = "https://i.ibb.co/6RJ4Mh5/avatar.png";
   const userAvatar = user?.photoURL || fallbackAvatar;
@@ -83,15 +84,7 @@ export default function NavUserDropdown({ user }) {
 
         <div className="py-1">
           <Link
-            to="/profile"
-            onClick={closeDropdown}
-            className="flex items-center gap-3 p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            <FaUser className="text-gray-500" size={16} />
-            <span>View Profile</span>
-          </Link>
-          <Link
-            to="/dashboard"
+            to={`/dashboard/${role?.role}`}
             onClick={closeDropdown}
             className="flex items-center gap-3 p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
           >

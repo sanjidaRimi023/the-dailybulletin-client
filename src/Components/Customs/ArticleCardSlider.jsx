@@ -9,6 +9,7 @@ import "swiper/css/navigation";
 
 import useAxios from "../../Hooks/useAxios";
 import LoadSpinner from "../Ui/LoadSpinner";
+import { Link } from "react-router";
 
 const ArticleCardSlider = () => {
   const axiosInstance = useAxios();
@@ -16,7 +17,7 @@ const ArticleCardSlider = () => {
   const { data: articles = [], isLoading } = useQuery({
     queryKey: ["approvedArticles"],
     queryFn: async () => {
-      const res = await axiosInstance.get("/article");
+      const res = await axiosInstance.get("/article/approved");
       return res.data;
     },
   });
@@ -82,12 +83,11 @@ const ArticleCardSlider = () => {
                   </div>
 
                   <div className="mt-4 border-t border-gray-100 pt-4 dark:border-gray-700">
-                    <a
-                      href="#"
+                    <Link to={`/article-detail/${article._id}`}
                       className="font-semibold text-indigo-600 transition-colors duration-300 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300"
                     >
                       Read More &rarr;
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
