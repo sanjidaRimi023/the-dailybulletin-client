@@ -150,7 +150,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 min-h-screen p-6">
+    <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 min-h-screen p-6">
       <div className="max-w-4xl mx-auto shadow-xl rounded-3xl overflow-hidden bg-white dark:bg-gray-900">
         <div className="p-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
@@ -204,7 +204,7 @@ const UserProfile = () => {
                       render={({ field }) => (
                         <label
                           htmlFor="photo-upload"
-                          className="absolute -bottom-3 -right-3 bg-blue-600 p-3 rounded-full cursor-pointer hover:bg-blue-700 transition shadow-lg"
+                          className="absolute -bottom-3 -right-3 bg-indigo-600 p-3 rounded-full cursor-pointer hover:bg-indigo-700 transition shadow-lg"
                         >
                           <FaCamera className="text-white h-5 w-5" />
                           <input
@@ -266,7 +266,7 @@ const UserProfile = () => {
                 {!isEditing ? (
                   <button
                     onClick={() => setIsEditing(true)}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-md"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all shadow-md"
                   >
                     <FaPen /> Edit Profile
                   </button>
@@ -348,7 +348,7 @@ const UserProfile = () => {
                 <button
                   type="submit"
                   disabled={isPasswordSubmitting}
-                  className="w-full px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full px-5 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   {isPasswordSubmitting ? (
                     <FaSpinner className="animate-spin" />
@@ -424,7 +424,7 @@ const InputGroup = ({
         className={`w-full pl-10 pr-4 py-2 border rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 transition-all ${
           errors[name]
             ? "border-red-500 focus:ring-red-500"
-            : "border-gray-300 dark:border-gray-600 focus:ring-blue-500"
+            : "border-gray-300 dark:border-gray-600 focus:ring-indigo-500"
         }`}
       />
     </div>

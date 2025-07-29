@@ -6,6 +6,11 @@ const ErrorPage = () => {
     <>
       <style>
         {`
+          .glitch-text {
+            /* This container holds the main text and its pseudo-elements */
+            position: relative;
+          }
+
           .glitch-text::before,
           .glitch-text::after {
             content: '404';
@@ -15,38 +20,51 @@ const ErrorPage = () => {
             width: 100%;
             height: 100%;
             background: #111827; /* dark:bg-gray-900 */
+            color: transparent; /* Hide the text of pseudo-elements, we only want their shadow */
+            overflow: hidden;
           }
+
           .dark .glitch-text::before,
           .dark .glitch-text::after {
             background: #F9FAFB; /* dark:bg-gray-50 */
           }
+
+          /* Red channel ghost */
           .glitch-text::before {
-            left: 2px;
-            text-shadow: -2px 0 #ef4444; /* red-500 */
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim 5s infinite linear alternate-reverse;
+            text-shadow: -3px 0 #ef4444; /* red-500 */
+            /* New holographic drift animation */
+            animation: holographic-drift 6s infinite linear alternate;
           }
+
+          /* Blue channel ghost */
           .glitch-text::after {
-            left: -2px;
-            text-shadow: -2px 0 #3b82f6, 2px 2px #ef4444; /* indigo-500, red-500 */
-            clip: rect(86px, 450px, 140px, 0);
-            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+            text-shadow: 3px 0 #3b82f6; /* blue-500 */
+             /* New holographic drift animation with different timing for a unique effect */
+            animation: holographic-drift 8s infinite linear alternate-reverse;
           }
-          @keyframes glitch-anim {
-            0% { clip: rect(42px, 450px, 92px, 0); }
-            20% { clip: rect(12px, 450px, 78px, 0); }
-            40% { clip: rect(40px, 450px, 62px, 0); }
-            60% { clip: rect(25px, 450px, 100px, 0); }
-            80% { clip: rect(80px, 450px, 52px, 0); }
-            100% { clip: rect(35px, 450px, 95px, 0); }
-          }
-          @keyframes glitch-anim-2 {
-            0% { clip: rect(80px, 450px, 115px, 0); }
-            20% { clip: rect(95px, 450px, 70px, 0); }
-            40% { clip: rect(30px, 450px, 120px, 0); }
-            60% { clip: rect(55px, 450px, 85px, 0); }
-            80% { clip: rect(45px, 450px, 105px, 0); }
-            100% { clip: rect(75px, 450px, 130px, 0); }
+
+          /* New Keyframes for the holographic drift effect */
+          @keyframes holographic-drift {
+            0% {
+              transform: translate(0, 0);
+              opacity: 0.9;
+            }
+            25% {
+              transform: translate(4px, -2px);
+              opacity: 0.4;
+            }
+            50% {
+              transform: translate(-3px, 3px);
+              opacity: 0.8;
+            }
+            75% {
+              transform: translate(2px, -4px);
+              opacity: 0.5;
+            }
+            100% {
+              transform: translate(0, 0);
+              opacity: 0.9;
+            }
           }
         `}
       </style>
@@ -54,9 +72,12 @@ const ErrorPage = () => {
       <section className="bg-white dark:bg-gray-900">
         <div className="container flex items-center justify-center min-h-screen px-6 py-12 mx-auto">
           <div className="flex flex-col items-center max-w-sm mx-auto text-center">
-            <p className="relative inline-block p-3 text-sm font-medium text-indigo-500 rounded-full bg-indigo-50 dark:bg-gray-800 glitch-text">
-              <span className="relative text-9xl font-black text-indigo-800 dark:text-gray-50">404</span>
-            </p>
+            <div className="p-3 text-sm font-medium text-indigo-500 rounded-full bg-indigo-50 dark:bg-gray-800">
+                <span className="relative text-9xl font-black text-indigo-800 dark:text-gray-50 glitch-text">
+                  404
+                </span>
+            </div>
+            
             <h1 className="mt-6 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
               Something's missing.
             </h1>
@@ -73,7 +94,6 @@ const ErrorPage = () => {
               </Link>
             </div>
             
-          
           </div>
         </div>
       </section>

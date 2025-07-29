@@ -182,9 +182,10 @@ const AdminOverView = () => {
             change={`+${todayData?.newViews || 0} today`}
             changeType="increase"
           />
+         
           <StatCard
             title="Premium Users"
-            value={overviewData?.premiumUsers}
+            value={overviewData?.premiumUsers} 
             icon={FaStar}
             change={`${(
               (overviewData?.premiumUsers / overviewData?.users) * 100 || 0
@@ -207,7 +208,7 @@ const AdminOverView = () => {
                       type="monotone"
                       dataKey="users"
                       name="New Users"
-                      stroke="#34D399" // green
+                      stroke="#34D399"
                       strokeWidth={3}
                       dot={{ r: 5 }}
                       activeDot={{ r: 8 }}
@@ -216,7 +217,7 @@ const AdminOverView = () => {
                       type="monotone"
                       dataKey="articles"
                       name="New Articles"
-                      stroke="#6366F1" // indigo
+                      stroke="#6366F1" 
                       strokeWidth={3}
                       dot={{ r: 5 }}
                       activeDot={{ r: 8 }}
@@ -225,7 +226,7 @@ const AdminOverView = () => {
                       type="monotone"
                       dataKey="views"
                       name="Views"
-                      stroke="#F59E0B" // amber
+                      stroke="#F59E0B"
                       strokeWidth={3}
                       dot={{ r: 5 }}
                       activeDot={{ r: 8 }}

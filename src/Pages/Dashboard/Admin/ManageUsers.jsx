@@ -17,12 +17,38 @@ const ManageUsers = () => {
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
-      // Premium users first
-      return res.data.sort(
-        (a, b) => (b.role === "premium") - (a.role === "premium")
-      );
+      return res.data.sort((a, b) => {
+        if (a.isPremium && !b.isPremium) return -1;
+        if (!a.isPremium && b.isPremium) return 1;
+        if (a.role === 'admin' && b.role !== 'admin') return -1;
+        if (a.role !== 'admin' && b.role === 'admin') return 1;
+        return 0;
+      });
     },
   });
+
+  const handlePreview = (user) => {
+    Swal.fire({
+      title: `<strong class="text-2xl">${user.displayName || user.name || "User Details"}</strong>`,
+      html: `
+        <div class="text-left p-4 space-y-3">
+          <img 
+            src="${user.photoURL || 'https://i.ibb.co/4pDNDk1/avatar-placeholder.png'}" 
+            alt="User photo" 
+            class="w-24 h-24 rounded-full mx-auto border-4 border-indigo-200 object-cover"
+          />
+          <p><strong>Email:</strong> ${user.email}</p>
+          <p><strong>Role:</strong> <span class="capitalize font-semibold text-indigo-600">${user.role}</span></p>
+          <p><strong>Premium Member:</strong> ${user.isPremium ? '<span class="text-green-600 font-bold">Yes</span>' : 'No'}</p>
+          <p><strong>Joined:</strong> ${new Date(user.created_at).toLocaleDateString()}</p>
+          <p><strong>Last Login:</strong> ${new Date(user.last_login).toLocaleString()}</p>
+        </div>
+      `,
+      showCloseButton: true,
+      showConfirmButton: false,
+      focusConfirm: false,
+    });
+  };
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
@@ -50,7 +76,6 @@ const ManageUsers = () => {
   };
 
   if (isLoading) return <LoadSpinner />;
-
   if (isError) {
     return (
       <div className="text-red-500 text-center mt-4">
@@ -76,7 +101,7 @@ const ManageUsers = () => {
               <th className="py-3 px-4">Image</th>
               <th className="py-3 px-4">Name</th>
               <th className="py-3 px-4">Email</th>
-              <th className="py-3 px-4">Role</th>
+              <th className="py-3 px-4">Status</th>
               <th className="py-3 px-4 text-center">Actions</th>
             </tr>
           </thead>
@@ -85,47 +110,43 @@ const ManageUsers = () => {
               users.map((user, index) => (
                 <tr
                   key={user._id}
-                  className="border-b hover:bg-blue-50 transition duration-200"
+                  className="border-b hover:bg-indigo-50 transition duration-200"
                 >
-                  <td className="py-3 px-4">{index + 1}</td>
-
-                  {/* ✅ USER IMAGE */}
+                  <td className="py-3 px-4 font-medium">{index + 1}</td>
                   <td className="py-3 px-4">
-                    <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-300">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200">
                       <img
-                        src={
-                          user.photoURL ||
-                          "https://i.ibb.co/4pDNDk1/avatar-placeholder.png"
-                        }
-                        alt={user.name || "User"}
+                        src={user.photoURL || "https://i.ibb.co/4pDNDk1/avatar-placeholder.png"}
+                        alt={user.displayName || "User"}
                         className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.target.src =
-                            "https://i.ibb.co/4pDNDk1/avatar-placeholder.png";
-                        }}
                       />
                     </div>
                   </td>
-
-                  <td className="py-3 px-4">{user.name || "N/A"}</td>
+                  <td className="py-3 px-4 font-medium text-gray-800">{user.displayName || user.name || "N/A"}</td>
                   <td className="py-3 px-4">{user.email}</td>
                   <td className="py-3 px-4 capitalize">
-                    <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-700">
-                      {user.role || "user"}
-                    </span>
+                    {user.isPremium ? (
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-500">
+                        Premium
+                      </span>
+                    ) : (
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700">
+                        {user.role}
+                      </span>
+                    )}
                   </td>
-
                   <td className="py-3 px-4 flex justify-center items-center gap-2">
+                 
                     <button
-                      className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded flex items-center gap-1"
-                      title="View User"
+                      onClick={() => handlePreview(user)}
+                      className="bg-indigo-500 hover:bg-indigo-600 text-white p-2 rounded-full flex items-center transition-transform transform hover:scale-110"
+                      title="View User Details"
                     >
                       <FaEye />
                     </button>
-
                     <button
                       onClick={() => handleDelete(user._id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded flex items-center gap-1"
+                      className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full flex items-center transition-transform transform hover:scale-110"
                       title="Delete User"
                     >
                       <FaTrash />

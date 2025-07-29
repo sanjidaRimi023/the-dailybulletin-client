@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import { FaUserCircle } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { SiBlogger } from "react-icons/si";
@@ -12,10 +12,11 @@ import { RxCross1 } from "react-icons/rx";
 import Toast from "../Components/Shared/Toast";
 import DashboardSideBar from "../Components/Customs/dashboard-side-bar";
 import useAuth from "../Hooks/useAuth";
+import { toast } from "react-toastify";
 
 const mobileBreakPoint = 768;
 
-const SidebarContent = ({ navItems }) => (
+const SidebarContent = ({ navItems, user, handleLogout }) => (
   <div className="flex flex-col justify-between h-full">
     <div>
       <Link to="/" className="inline-block">
@@ -28,14 +29,30 @@ const SidebarContent = ({ navItems }) => (
       </div>
     </div>
     <div>
-      <a href="#" className="flex items-center p-2 -mx-2">
+      <Link
+        to="/dashboard/user/profile"
+        className="flex items-center p-2 -mx-2"
+      >
         <img
           className="object-cover mx-2 rounded-full h-9 w-9"
-          src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+          src={
+            user?.photoURL ||
+            "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+          }
           alt="avatar"
         />
-        <span className="mx-2 font-medium text-gray-800">John Doe</span>
-      </a>
+        <span className="mx-2 font-medium text-gray-800 dark:text-gray-200">
+          {user?.displayName}
+        </span>
+      </Link>
+
+    
+      <button
+        onClick={handleLogout}
+        className="mt-4 px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition"
+      >
+        Logout
+      </button>
     </div>
   </div>
 );
@@ -46,14 +63,24 @@ export default function DashboardLayout() {
   );
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-  const { user } = useAuth();
+  const { user, logOutUser } = useAuth();
   const isAdmin = user?.role === "admin";
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logOutUser();
+      toast.success("logout successfully")
+       navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < mobileBreakPoint;
       setIsMobile(mobile);
-
       if (!mobile) {
         setSidebarOpen(false);
       }
@@ -71,18 +98,14 @@ export default function DashboardLayout() {
         title: "My Article",
         icon: SiBlogger,
       },
-      {
-        path: "/dashboard/user/profile",
-        title: "Profile",
-        icon: FaUserCircle,
-      },
+      { path: "/dashboard/user/profile", title: "Profile", icon: FaUserCircle },
       {
         path: "/dashboard/user/subscription",
         title: "Subscriptions",
         icon: IoPricetagsOutline,
       },
       {
-        to: "/dashboard/user/add-article",
+        path: "/dashboard/user/add-article",
         title: "Add Article",
         icon: IoAddCircleOutline,
       },
@@ -119,15 +142,20 @@ export default function DashboardLayout() {
   return (
     <>
       <Toast />
-      <div className="relative flex min-h-screen bg-gray-50">
+      <div className="relative flex min-h-screen bg-gray-50 dark:bg-gray-900">
+        {/* Sidebar for Mobile */}
         {isMobile ? (
           <>
             <aside
-              className={`fixed inset-y-0 left-0 z-50 w-64 px-4 py-8 bg-white border-r transform transition-transform duration-300 ease-in-out ${
+              className={`fixed inset-y-0 left-0 z-50 w-64 px-4 py-8 bg-white dark:bg-gray-800 border-r dark:border-gray-700 transform transition-transform duration-300 ease-in-out ${
                 isSidebarOpen ? "translate-x-0" : "-translate-x-full"
               }`}
             >
-              <SidebarContent navItems={navItems} />
+              <SidebarContent
+                navItems={navItems}
+                user={user}
+                handleLogout={handleLogout}
+              />
             </aside>
 
             {isSidebarOpen && (
@@ -138,17 +166,25 @@ export default function DashboardLayout() {
             )}
           </>
         ) : (
-          <aside className="w-64 px-4 py-8 bg-white border-r">
+          <aside className="w-64 px-4 py-8 bg-white dark:bg-gray-800 border-r dark:border-gray-700">
             <div className="fixed w-64 h-[95vh]">
-              <SidebarContent navItems={navItems} />
+              <SidebarContent
+                navItems={navItems}
+                user={user}
+                handleLogout={handleLogout}
+              />
             </div>
           </aside>
         )}
 
+        {/* Main Content */}
         <main className="flex-1">
           {isMobile && (
-            <header className="p-4 bg-white shadow-md">
-              <button onClick={toggleSidebar} className="text-2xl">
+            <header className="p-4 bg-white dark:bg-gray-800 shadow-md">
+              <button
+                onClick={toggleSidebar}
+                className="text-2xl text-gray-800 dark:text-white"
+              >
                 {isSidebarOpen ? <RxCross1 /> : <FaBars />}
               </button>
             </header>
