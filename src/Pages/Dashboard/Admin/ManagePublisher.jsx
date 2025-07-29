@@ -92,7 +92,7 @@ const ManagePublisher = () => {
   return (
     <div className="p-6">
       <div className="flex items-center gap-3 mb-6">
-        {/* Vertical line */}
+      
         <div className="w-1 h-10 bg-indigo-600 rounded-sm"></div>
 
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
@@ -182,7 +182,7 @@ const ManagePublisher = () => {
         </table>
       </div>
 
-      {/* View Modal */}
+
       {selectedPublisher && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <div className="relative w-full max-w-md mx-4 rounded-2xl bg-white shadow-2xl p-6 sm:p-8 transition-all duration-300 animate-fade-in">
@@ -211,7 +211,6 @@ const ManagePublisher = () => {
         </div>
       )}
 
-      {/* Edit Modal */}
       {editingPublisher && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <form

@@ -222,7 +222,7 @@ export default function NewsCategoryHub() {
       </div>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-12 my-10">
           <div className="text-left w-full md:w-1/2">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-1 h-12 bg-indigo-600 rounded-sm"></div>
