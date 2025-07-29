@@ -82,23 +82,23 @@ const AuthProvider = ({ children }) => {
         }
 
         try {
-          const { data: dbUser } = await axiosInstance.get(
-            `/users/${currentUser.email}`
+          // const { data: dbUser } = await axiosInstance.get(
+          //   `/users/${currentUser.email}`
+          // );
+
+          // let isUserPremium = false;
+          // if (dbUser && dbUser.premiumExpiresAt) {
+          //   const expiryDate = new Date(dbUser.premiumExpiresAt);
+          //   if (expiryDate > new Date()) {
+          //     isUserPremium = true;
+          //   }
+          // }
+
+          setUser(
+            currentUser,
+            // ...dbUser,
+            // isPremium: isUserPremium,
           );
-
-          let isUserPremium = false;
-          if (dbUser && dbUser.premiumExpiresAt) {
-            const expiryDate = new Date(dbUser.premiumExpiresAt);
-            if (expiryDate > new Date()) {
-              isUserPremium = true;
-            }
-          }
-
-          setUser({
-            ...currentUser,
-            ...dbUser,
-            isPremium: isUserPremium,
-          });
         } catch (error) {
           console.error("DB user data fetch error:", error);
           setUser({ ...currentUser, isPremium: false });

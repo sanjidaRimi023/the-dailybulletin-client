@@ -13,6 +13,7 @@ import Toast from "../Components/Shared/Toast";
 import DashboardSideBar from "../Components/Customs/dashboard-side-bar";
 import useAuth from "../Hooks/useAuth";
 import { toast } from "react-toastify";
+import useUserRole from "../Hooks/useUserRole";
 
 const mobileBreakPoint = 768;
 
@@ -46,7 +47,6 @@ const SidebarContent = ({ navItems, user, handleLogout }) => (
         </span>
       </Link>
 
-    
       <button
         onClick={handleLogout}
         className="mt-4 px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition"
@@ -64,14 +64,17 @@ export default function DashboardLayout() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const { user, logOutUser } = useAuth();
-  const isAdmin = user?.role === "admin";
+  const userRole = useUserRole();
+
+  const isAdmin = userRole?.role === "admin";
+
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await logOutUser();
-      toast.success("logout successfully")
-       navigate("/login");
+      toast.success("logout successfully");
+      navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -135,7 +138,7 @@ export default function DashboardLayout() {
     ],
   };
 
-  const navItems = isAdmin ? dashboardItems.admin : dashboardItems.user;
+  const navItems = isAdmin ? dashboardItems?.admin : dashboardItems?.user;
 
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
@@ -143,7 +146,6 @@ export default function DashboardLayout() {
     <>
       <Toast />
       <div className="relative flex min-h-screen bg-gray-50 dark:bg-gray-900">
-        {/* Sidebar for Mobile */}
         {isMobile ? (
           <>
             <aside

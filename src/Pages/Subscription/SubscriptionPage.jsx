@@ -52,6 +52,7 @@ const SubscriptionPage = () => {
       return res.data;
     },
     });
+  
   const userType = userData?.isPremium  === true;
 
 
