@@ -6,7 +6,7 @@ The Daily Bulletin is a modern, full-stack newspaper platform built with the MER
 
 ### Official
 - 🚀 [Live Demo](https://daily-bulletin-96f27.web.app)
-- 🐙 [GitHub Repository](https://github.com/sanjidaRimi023/the-dailybulletin-client)
+
 ## Features
 
 - **Fully Responsive Design:** - Suitable for all devices, including mobile, tablet, and desktop.
@@ -78,21 +78,6 @@ Now, you can visit http://localhost:5173 (the default port) in your browser to s
 ## License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-### MIT License Summary
-
-- ✅ Commercial use
-- ✅ Modification
-- ✅ Distribution
-- ✅ Private use
-- ❌ Liability
-- ❌ Warranty
-
-### Other Licenses
-
-Some dependencies may be under different licenses:
-- [Dependency 1](https://github.com/author/dep1) - Apache 2.0
-- [Dependency 2](https://github.com/author/dep2) - BSD 3-Clause
 
 ---
 
