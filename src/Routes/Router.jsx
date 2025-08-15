@@ -22,6 +22,7 @@ import ForbiddenPage from "../Pages/ForbiddenPage";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 import AddArticle from "../Pages/Dashboard/User/AddArticle";
+import TermsCondition from "../Components/Ui/TermsCondition";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/about-us",
         element: <AboutUs />,
+      },
+      {
+        path: "/terms-condition",
+        element: <TermsCondition/>,
       },
       {
         path: "/all-article",
