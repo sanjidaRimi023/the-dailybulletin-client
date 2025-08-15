@@ -27,13 +27,16 @@ const MainLayout = () => {
   }
   return (
     <>
-      <Toast></Toast>
+   
+         <Toast></Toast>
+     
       <Navbar />
       <div className="min-h-[calc(100vh-345px)]">
         <PremiumPrompt/>
         <Outlet />
       </div>
       <Footer />
+  
     </>
   );
 };

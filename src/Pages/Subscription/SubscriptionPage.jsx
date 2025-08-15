@@ -44,17 +44,16 @@ const SubscriptionPage = () => {
 
   const axiosSecure = useAxiosSecure();
 
-    const { data: userData } = useQuery({
+  const { data: userData } = useQuery({
     queryKey: ["user-role", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/${user.email}`);
       return res.data;
     },
-    });
-  
-  const userType = userData?.isPremium  === true;
+  });
 
+  const userType = userData?.isPremium === true;
 
   const [selectedPlan, setSelectedPlan] = useState(
     plans.find((p) => p.recommended) || plans[1]
@@ -71,9 +70,6 @@ const SubscriptionPage = () => {
       document.body.style.overflow = "auto";
     };
   }, [showPaymentModal]);
-
-  
-  
 
   if (userType) {
     return (

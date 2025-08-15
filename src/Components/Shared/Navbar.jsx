@@ -15,6 +15,7 @@ import logo from "../../assets/nav-logo.png";
 
 import NavUserDropdown from "../Customs/nav-user-dropdown";
 import useAuth from "../../Hooks/useAuth";
+import ThemeToggle from "../Customs/ThemeToggle";
 
 const Navbar = () => {
   const { pathname } = useLocation();
@@ -96,6 +97,7 @@ const Navbar = () => {
               <span>{link.text}</span>
             </Link>
           ))}
+           <ThemeToggle/>
         </div>
 
         <hr className="my-4 border-gray-200 dark:border-gray-700 lg:hidden" />

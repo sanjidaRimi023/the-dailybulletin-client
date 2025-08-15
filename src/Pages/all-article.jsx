@@ -27,7 +27,11 @@ const AllArticle = () => {
     },
   });
 
-  const { data: userData, isLoading: userLoading } = useQuery({
+  const {
+    data: userData,
+    isLoading: userLoading,
+   
+  } = useQuery({
     queryKey: ["user-role", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -38,11 +42,12 @@ const AllArticle = () => {
 
   const isPremiumValid = new Date(userData?.premiumExpiresAt) > new Date();
   const userType = userData?.isPremium && isPremiumValid ? "premium" : "normal";
+
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedCategory, searchTitle]);
-  if (articlesLoading || userLoading || authLoading) return <LoadSpinner />;
 
+  if (articlesLoading || userLoading || authLoading) return <LoadSpinner />;
 
   const filteredArticles = articles.filter((article) => {
     const matchCategory = selectedCategory
@@ -62,8 +67,6 @@ const AllArticle = () => {
   );
   const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
 
-
-
   return (
     <div className="min-h-screen py-10 px-4">
       <div className="text-center space-y-3 mb-10">
@@ -78,9 +81,7 @@ const AllArticle = () => {
         </p>
       </div>
 
-
       <div className="container mx-auto flex flex-wrap justify-center gap-4 mb-6 items-end">
-       
         <div className="w-full sm:w-1/3">
           <label
             htmlFor="category"
@@ -105,7 +106,6 @@ const AllArticle = () => {
           </select>
         </div>
 
-        {/* 🔎 Title Search */}
         <div className="w-full sm:w-1/2">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Search by Title
@@ -119,7 +119,6 @@ const AllArticle = () => {
           />
         </div>
 
-        {/* 🪄 Layout Switcher */}
         <div className="flex items-center gap-2 mt-2 sm:mt-0 ml-auto">
           <span className="text-lg font-semibold">View</span>
           <button
@@ -135,7 +134,6 @@ const AllArticle = () => {
         </div>
       </div>
 
-
       {layout === "card" ? (
         <div className="container mx-auto grid gap-6 lg:grid-cols-3 md:grid-cols-2">
           {currentArticles.map((article, index) => (
@@ -143,7 +141,7 @@ const AllArticle = () => {
               key={article._id}
               article={article}
               index={index}
-              userType={userType}
+              userType={userType} // ✅ Send premium info
             />
           ))}
         </div>
@@ -192,7 +190,7 @@ const AllArticle = () => {
                   </td>
                   <td className="px-4 py-2 text-center">
                     <Link
-                        to={`/article-detail/${article._id}`} 
+                      to={`/article-detail/${article._id}`}
                       className="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-5 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition"
                     >
                       View
@@ -205,7 +203,6 @@ const AllArticle = () => {
         </div>
       )}
 
-    
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

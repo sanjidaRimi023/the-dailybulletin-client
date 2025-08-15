@@ -89,6 +89,7 @@ function Gallery({ items, setIndex, index }) {
         <div className="flex justify-center lg:justify-start">
           <Sharebtn text="Read Latest News" />
         </div>
+        
       </div>
 
       {/* Right Image Gallery Section */}
