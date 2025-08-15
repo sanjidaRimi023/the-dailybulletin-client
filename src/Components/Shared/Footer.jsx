@@ -55,12 +55,12 @@ const Footer = () => {
     { to: "/all-article", label: "All Articles" },
     { to: "/terms-condition", label: "Terms & Condition" },
     { to: "/contact-us", label: "Contact Us" },
-    { to: "/privacy-policy", label: "Privacy Policy" },
+ 
   ];
 
   return (
     <>
-      <footer className="bg-gray-700 text-gray-300">
+      <footer className="bg-gray-800 text-gray-300">
         <div className="container px-6 py-12 mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2 lg:col-span-1">
@@ -124,8 +124,7 @@ const Footer = () => {
               </form>
             </div>
           </div>
-
-          <hr className="my-8 border-gray-700" />
+          <hr className="my-4 border-gray-700 dark:border-gray-300" />
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-sm text-gray-400">

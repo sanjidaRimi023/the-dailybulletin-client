@@ -30,11 +30,11 @@ const ArticleCardSlider = () => {
 
   return (
     <>
-      <div className="container mx-auto dark:bg-gray-900 py-10">
+      <section className="container mx-auto">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-1 h-10 bg-indigo-600 rounded-sm"></div>
 
-          <h2 className="text-2xl md:text-4xl font-bold text-gray-800">
+          <h2 className="text-2xl md:text-4xl font-bold text-gray-800 dark:text-white">
             Latest News
           </h2>
         </div>
@@ -94,7 +94,7 @@ const ArticleCardSlider = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+      </section>
     </>
   );
 };

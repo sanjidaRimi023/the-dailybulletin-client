@@ -19,15 +19,13 @@
   font-style: normal;
 }
 
-/* Apply default font to body */
 body {
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
 
-/* Apply Playfair only to h2 */
-h2 {
+h1, h2 , h3, h4{
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
   font-style: normal;
@@ -40,10 +38,6 @@ h2 {
   height: auto; 
 }
 
-:root {
-  --swiper-navigation-color: #ffffff; 
-  --swiper-navigation-size: 22px; 
-}
 
 .swiper-button-next::after,
 .swiper-button-prev::after {

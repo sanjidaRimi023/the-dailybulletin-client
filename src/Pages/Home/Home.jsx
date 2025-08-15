@@ -5,18 +5,22 @@ import { TopJournalists } from "../../Components/Ui/TopJournalists";
 import ArticleCardSlider from "../../Components/Customs/ArticleCardSlider";
 import Headline from "../../Components/Ui/Headline";
 import NewsCategoryHub from "../../Components/Ui/NewsCategoryHub";
+import KnowUS from "../../Components/Customs/KnowUS";
+import Partner from "../../Components/Customs/Partner";
 
 
 
 const Home = () => {
   return (
     <>
-      <Headline/>
+      <Headline />
+      
       <HomeBannerSlider />
+      <KnowUS/>
       <ArticleCardSlider />
       <NewsCategoryHub/>
       <Plan />
-      
+      <Partner/>
       <TopJournalists />
      
     

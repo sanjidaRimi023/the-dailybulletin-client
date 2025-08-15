@@ -98,7 +98,7 @@ const IconGrid = () => {
   ];
 
   return (
-    <div className="relative flex flex-col items-center justify-center">
+    <section className="relative flex flex-col items-center justify-center">
       <div
         className="relative"
         style={{ width: `${svgSize}px`, height: `${svgSize}px` }}
@@ -186,7 +186,7 @@ const IconGrid = () => {
           );
         })}
       </div>
-    </div>
+    </section>
   );
 };
 
