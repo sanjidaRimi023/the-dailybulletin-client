@@ -11,32 +11,30 @@ import LoadSpinner from "../Components/Ui/LoadSpinner";
 import PremiumPrompt from "../Components/Customs/PremiumPrompt";
 
 const MainLayout = () => {
-
   const { loading } = useAuth();
 
   useEffect(() => {
     AOS.init({
-        duration: 1000,
-        mirror: true,	
+      duration: 1000,
+      mirror: true,
     });
   }, []);
 
   if (loading) {
-    return <LoadSpinner />
-    
+    return <LoadSpinner />;
   }
   return (
     <>
-   
-         <Toast></Toast>
-     
-      <Navbar />
-      <div className="min-h-[calc(100vh-345px)]">
-        <PremiumPrompt/>
-        <Outlet />
+      <Toast></Toast>
+
+      <div className="dark:bg-gray-900">
+        <Navbar />
+        <div className="min-h-[calc(100vh-345px)]">
+          <PremiumPrompt />
+          <Outlet />
+        </div>
+        <Footer />
       </div>
-      <Footer />
-  
     </>
   );
 };

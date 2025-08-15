@@ -23,6 +23,7 @@ import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 import AddArticle from "../Pages/Dashboard/User/AddArticle";
 import TermsCondition from "../Components/Ui/TermsCondition";
+import ContactUs from "../Components/Ui/ContactUs";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/about-us",
         element: <AboutUs />,
+      },
+      {
+        path: "/contact-us",
+        element: <ContactUs/>,
       },
       {
         path: "/terms-condition",
