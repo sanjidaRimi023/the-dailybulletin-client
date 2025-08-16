@@ -67,11 +67,11 @@ const article = {
 
 function Gallery({ items, setIndex, index }) {
   return (
-    <div className="flex flex-col lg:flex-row gap-10 max-w-screen-xl mx-auto px-4 sm:px-6 py-16">
+    <div className="container mx-auto flex flex-col lg:flex-row gap-6 py-10">
       
       {/* Left Text Section */}
       <div className="w-full lg:w-1/2 space-y-6 text-center lg:text-left">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
           Your Source for Reliable,
           <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
             {" "}Real-Time News
@@ -82,7 +82,7 @@ function Gallery({ items, setIndex, index }) {
           Truth. Integrity. Journalism.
         </h2>
 
-        <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300">
+        <p className="text-base sm:text-lg">
           Get the latest headlines, politics, sports, tech and culture — in one trusted source.
         </p>
 
@@ -144,7 +144,7 @@ export default function HeroBannerSlider() {
   const [index, setIndex] = useState(0);
 
   return (
-    <section className="overflow-hidden dark:bg-gray-900">
+    <section className="overflow-hidden">
       <Gallery items={banners} index={index} setIndex={setIndex} />
     </section>
   );

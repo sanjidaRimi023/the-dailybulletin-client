@@ -22,6 +22,8 @@ const Navbar = () => {
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
+  
+
   const navLinks = [
     { to: "/", text: "Home", icon: <IoHomeOutline size={18} /> },
     {

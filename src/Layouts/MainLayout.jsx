@@ -27,7 +27,7 @@ const MainLayout = () => {
     <>
       <Toast></Toast>
 
-      <div className="dark:bg-gray-900">
+      <div>
         <Navbar />
         <div className="min-h-[calc(100vh-345px)]">
           <PremiumPrompt />

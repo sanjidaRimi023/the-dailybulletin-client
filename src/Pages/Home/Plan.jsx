@@ -52,21 +52,21 @@ export default function Plan() {
   const [billingCycle, setBillingCycle] = useState("monthly"); 
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="max-w-5xl mx-auto">
+    <section className="px-4 sm:px-6 lg:px-8 overflow-hidden pb-10">
+      <div className="container mx-auto">
       
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
+          <h2 className="text-3xl md:text-4xl font-extrabold sm:text-4xl">
             Flexible Plans for Every Reader
           </h2>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
+          <p className="mt-4 text-lg text-gray-500">
             Choose a plan that fits your curiosity. Get more with a yearly subscription.
           </p>
         </div>
 
     
         <div className="flex justify-center items-center mb-12">
-          <span className={`mr-3 font-medium ${billingCycle === 'monthly' ? 'text-purple-600 dark:text-purple-400' : 'text-gray-500'}`}>
+          <span className={`mr-3 font-medium ${billingCycle === 'monthly' ? 'text-purple-400' : 'text-gray-500'}`}>
             Monthly
           </span>
           <button
@@ -89,7 +89,7 @@ export default function Plan() {
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`relative rounded-2xl p-8 shadow-lg transition-transform duration-300 ${plan.highlighted ? "bg-white dark:bg-gray-800 scale-105" : "bg-gray-100 dark:bg-gray-800/50"}`}
+              className={`relative rounded-2xl p-8 shadow-lg transition-transform duration-300 ${plan.highlighted ? "bg-gray-900 scale-105" : "bg-gray-700"}`}
             >
               {plan.highlighted && (
                 <div className="absolute top-0 -translate-y-1/2 w-full flex justify-center">
@@ -100,7 +100,7 @@ export default function Plan() {
                 </div>
               )}
 
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{plan.name}</h3>
+              <h3 className="text-xl font-semibold text-white">{plan.name}</h3>
               <p className="mt-4 text-gray-600 dark:text-gray-400">{plan.description}</p>
               
               <div className="mt-6">

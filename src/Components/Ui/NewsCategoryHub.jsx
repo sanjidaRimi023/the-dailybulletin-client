@@ -127,7 +127,7 @@ const IconGrid = () => {
                   y2={endY}
                   stroke={hoveredId === icon.id ? "#3B82F6" : "currentColor"}
                   strokeWidth="1"
-                  className="text-gray-300 dark:text-gray-600 transition-all duration-300"
+                  className="transition-all duration-300"
                   style={{ opacity: hoveredId === icon.id ? 1 : 0.4 }}
                 />
               );
@@ -142,7 +142,7 @@ const IconGrid = () => {
           >
             <BsNewspaper
               size="40%"
-              className="text-blue-600 dark:text-blue-400"
+              className="text-indigo-600"
             />
           </IconWrapper>
         </div>
@@ -174,8 +174,8 @@ const IconGrid = () => {
                     text-xs md:text-sm font-semibold transition-all duration-300
                     ${
                       hoveredId === icon.id
-                        ? "text-blue-600 dark:text-blue-400"
-                        : "text-gray-600 dark:text-gray-300"
+                        ? "text-indigo-600"
+                        : "text-gray-600"
                     }
                   `}
                 >
@@ -226,20 +226,20 @@ export default function NewsCategoryHub() {
           <div className="text-left w-full md:w-1/2">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-1 h-12 bg-indigo-600 rounded-sm"></div>
-              <h2 className="text-3xl md:text-5xl font-bold text-gray-800 dark:text-white">
+              <h2 className="text-3xl md:text-5xl font-bold">
                 Category-Based News
               </h2>
             </div>
-            <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-4 max-w-xl">
+            <p className="text-base md:text-lg mb-4 max-w-xl">
               Choose your preferred category to read the latest news about it.
             </p>
-            <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-4 max-w-xl">
+            <p className="text-base md:text-lg mb-4 max-w-xl">
               Stay informed with our curated categories covering politics,
               sports, international affairs, science, and more. Whether you're a
               tech enthusiast or a sports fan, we bring you real-time updates
               tailored to your interests.
             </p>
-            <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-xl">
+            <p className="text-base md:text-lg max-w-xl">
               Our smart categorization ensures you never miss out on the stories
               that matter most. Tap on a category icon to explore the latest
               headlines now.

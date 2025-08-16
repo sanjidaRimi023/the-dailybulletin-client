@@ -34,7 +34,7 @@ const ArticleCardSlider = () => {
         <div className="flex items-center gap-3 mb-6">
           <div className="w-1 h-10 bg-indigo-600 rounded-sm"></div>
 
-          <h2 className="text-2xl md:text-4xl font-bold text-gray-800 dark:text-white">
+          <h2 className="text-2xl md:text-4xl font-bold">
             Latest News
           </h2>
         </div>
@@ -58,7 +58,7 @@ const ArticleCardSlider = () => {
         >
           {limitedArticles.map((article) => (
             <SwiperSlide key={article._id}>
-              <div className="group flex h-full flex-col overflow-hidden rounded-lg border border-indigo-200 shadow-sm transition-all duration-300 hover:shadow-xl hover:shadow-indigo-600 dark:border-gray-700 dark:bg-gray-800">
+              <div className="group flex h-full flex-col overflow-hidden rounded-lg border border-indigo-200 shadow-sm transition-all duration-300 hover:shadow-xl hover:shadow-indigo-600">
                 <div className="overflow-hidden">
                   <img
                     src={article.image}
@@ -69,15 +69,15 @@ const ArticleCardSlider = () => {
 
                 <div className="flex flex-1 flex-col p-6">
                   <div className="flex-1">
-                    <p className="mb-2 inline-block text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400">
+                    <p className="mb-2 inline-block text-xs font-semibold uppercase tracking-wide text-indigo-600 ">
                       {article.publisher || "NewsHub"}
                     </p>
 
-                    <h2 className="mb-3 text-xl font-bold leading-snug text-gray-800 line-clamp-2 dark:text-gray-100">
+                    <h2 className="mb-3 text-xl font-bold leading-snug line-clamp-2">
                       {article.title}
                     </h2>
 
-                    <p className="text-gray-600 line-clamp-3 dark:text-gray-400">
+                    <p className="text-gray-500 line-clamp-3">
                       {article.description}
                     </p>
                   </div>

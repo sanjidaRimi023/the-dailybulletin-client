@@ -69,7 +69,7 @@ const itemVariants = {
 
 const KnowUS = () => {
   return (
-    <section className="py-20 sm:py-28 dark:text-white">
+    <section className="py-20 sm:py-28">
       <motion.div
         className="container mx-auto px-6 text-center"
         initial="hidden"
@@ -88,7 +88,7 @@ const KnowUS = () => {
           </span>
         </motion.h1>
         <motion.p
-          className="text-lg md:text-xl dark:text-gray-300 max-w-3xl mx-auto mb-12"
+          className="text-lg md:text-xl max-w-3xl mx-auto mb-12"
           variants={itemVariants}
         >
           Your trusted source for breaking news, in-depth analysis, and exclusive reports from around the world. We cut through the noise to bring you clarity.
@@ -99,7 +99,7 @@ const KnowUS = () => {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              className="dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-indigo-700 flex flex-col items-center"
+              className="p-8 rounded-xl shadow-lg border border-indigo-700 flex flex-col items-center"
               variants={itemVariants}
             >
               <div className="mb-5">{feature.icon}</div>

@@ -9,23 +9,18 @@ import KnowUS from "../../Components/Customs/KnowUS";
 import Partner from "../../Components/Customs/Partner";
 import Testimotials from "../../Components/Ui/Testimonials";
 
-
-
 const Home = () => {
   return (
     <>
       <Headline />
-      
       <HomeBannerSlider />
-      <KnowUS/>
+      <KnowUS />
       <ArticleCardSlider />
-      <NewsCategoryHub/>
+      <NewsCategoryHub />
       <Plan />
+      <Testimotials />
       <Partner />
-      <Testimotials/>
-      {/* <TopJournalists /> */}
-     
-    
+
      
     </>
   );
