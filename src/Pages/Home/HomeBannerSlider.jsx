@@ -144,7 +144,7 @@ export default function HeroBannerSlider() {
   const [index, setIndex] = useState(0);
 
   return (
-    <section className="bg-white dark:bg-gray-900">
+    <section className="overflow-hidden dark:bg-gray-900">
       <Gallery items={banners} index={index} setIndex={setIndex} />
     </section>
   );

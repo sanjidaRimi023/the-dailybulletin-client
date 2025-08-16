@@ -38,7 +38,7 @@ const cardData = [
     name: "Farhana Akter",
     position: "Frequent Reader",
     review:
-      "This newspaper has become my daily companion. From politics and business to lifestyle and entertainment, the content is engaging and trustworthy. It feels like reading here is not just about news, but about learning and staying connected.",
+      "This newspaper has become my daily companion. From politics and business to lifestyle and entertainment, the content is engaging and trustworthy",
     image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
@@ -181,7 +181,7 @@ function Card({ card, index, activeIndex, totalCards }) {
           <img
             src={card.image}
             alt={card.name}
-            className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+            className="w-full hidden md:block h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = "https://placehold.co/400x400/1e1e1e/ffffff?text=Image+Missing";

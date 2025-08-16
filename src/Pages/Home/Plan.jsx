@@ -52,7 +52,7 @@ export default function Plan() {
   const [billingCycle, setBillingCycle] = useState("monthly"); 
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 py-16 px-4 sm:px-6 lg:px-8">
+    <section className="bg-gray-50 dark:bg-gray-900 py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="max-w-5xl mx-auto">
       
         <div className="text-center mb-12">

@@ -30,7 +30,7 @@ const ArticleCardSlider = () => {
 
   return (
     <>
-      <section className="container mx-auto">
+      <section className="container mx-auto px-4 py-2">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-1 h-10 bg-indigo-600 rounded-sm"></div>
 
