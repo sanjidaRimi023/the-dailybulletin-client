@@ -73,12 +73,12 @@ const SubscriptionPage = () => {
 
   if (userType) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)] px-6 py-20 text-center bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-xl p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)] px-6 py-20 text-center">
+        <div className="max-w-xl p-8 rounded-xl shadow-lg">
           <h1 className="text-3xl font-bold text-green-600 dark:text-green-400 mb-4">
             You're Already a Premium Member!
           </h1>
-          <p className="text-gray-700 dark:text-gray-300 mb-6">
+          <p className=" mb-6">
             Thank you for your support. Enjoy unlimited access to all our
             premium articles and features.
           </p>
@@ -98,7 +98,7 @@ const SubscriptionPage = () => {
             <h1 className="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">
               Pricing
             </h1>
-            <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+            <p className="mt-2 text-4xl font-bold tracking-tight  sm:text-5xl">
               <Typewriter
                 words={[
                   "Unlock Premium Access",
@@ -114,7 +114,7 @@ const SubscriptionPage = () => {
               />
             </p>
           </div>
-          <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600 dark:text-gray-300">
+          <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 ">
             Choose the plan that's right for you and gain instant access to
             exclusive articles, in-depth analysis, and more.
           </p>
@@ -126,11 +126,11 @@ const SubscriptionPage = () => {
                 onClick={() => setSelectedPlan(plan)}
                 className={`rounded-3xl p-8 ring-1 transition-all duration-300 cursor-pointer hover:shadow-2xl  hover:shadow-indigo-700 hover:-translate-y-1 ${
                   selectedPlan.name === plan.name
-                    ? "ring-2 ring-indigo-600 bg-indigo-50 dark:bg-indigo-900/10"
-                    : "ring-gray-200 dark:ring-gray-700 bg-white dark:bg-gray-800/50"
+                    ? "ring-2 ring-indigo-600"
+                    : "ring-gray-200"
                 }`}
               >
-                <h3 className="text-lg font-semibold leading-8 text-gray-900 dark:text-white">
+                <h3 className="text-lg font-semibold leading-8">
                   {plan.name}
                   {plan.recommended && (
                     <span className="ml-2 inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 dark:bg-indigo-900 dark:text-indigo-300 dark:ring-indigo-700">
@@ -138,14 +138,14 @@ const SubscriptionPage = () => {
                     </span>
                   )}
                 </h3>
-                <p className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                <p className="mt-4 text-sm leading-6 ">
                   {plan.description}
                 </p>
                 <p className="mt-6 flex items-baseline gap-x-1">
-                  <span className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  <span className="text-4xl font-bold tracking-tight ">
                     ${plan.price}
                   </span>
-                  <span className="text-sm font-semibold leading-6 text-gray-600 dark:text-gray-400">
+                  <span className="text-sm font-semibold leading-6">
                     for {plan.durationLabel}
                   </span>
                 </p>
@@ -156,7 +156,7 @@ const SubscriptionPage = () => {
           <div className="mt-12 flex justify-center">
             <button
               onClick={() => setShowPaymentModal(true)}
-              className="rounded-md bg-indigo-600 px-4 md:px-8 py-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors"
+              className="rounded-md bg-indigo-600 px-4 md:px-8 py-3 text-center text-sm font-semibold shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors"
             >
               Subscribe to "{selectedPlan.name}" plan
             </button>
@@ -166,13 +166,13 @@ const SubscriptionPage = () => {
 
       {showPaymentModal && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm "
           aria-labelledby="payment-modal-title"
           role="dialog"
           aria-modal="true"
         >
-          <div className="w-full max-w-md transform rounded-2xl bg-white dark:bg-gray-800 text-left align-middle shadow-xl transition-all">
-            <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+          <div className="w-full max-w-md transform rounded-2xl text-left align-middle shadow-xl transition-all">
+            <div className="flex items-center justify-between border-b px-6 py-4">
               <div className="flex items-center gap-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +189,7 @@ const SubscriptionPage = () => {
                   />
                 </svg>
                 <h3
-                  className="text-lg font-bold text-gray-900 dark:text-white"
+                  className="text-lg font-bold"
                   id="payment-modal-title"
                 >
                   Secure Payment
@@ -197,7 +197,7 @@ const SubscriptionPage = () => {
               </div>
               <button
                 onClick={() => setShowPaymentModal(false)}
-                className="rounded-full p-1 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-800 dark:hover:text-white transition-colors"
+                className="rounded-full p-1  transition-colors"
                 aria-label="Close payment form"
               >
                 <svg
@@ -218,24 +218,24 @@ const SubscriptionPage = () => {
             </div>
 
             <div className="px-6 py-5">
-              <div className="mb-6 rounded-lg bg-slate-50 dark:bg-slate-700/50 p-4">
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-3">
+              <div className="mb-6 rounded-lg p-4">
+                <p className="text-sm font-medium mb-3">
                   Order Summary
                 </p>
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500 dark:text-gray-400">
+                    <span className="">
                       Plan:
                     </span>
-                    <span className="font-semibold text-gray-800 dark:text-white">
+                    <span className="font-semibold">
                       {selectedPlan.name} ({selectedPlan.durationLabel})
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500 dark:text-gray-400">
+                    <span className="">
                       Price:
                     </span>
-                    <span className="font-semibold text-gray-800 dark:text-white">
+                    <span className="font-semibold ">
                       ${selectedPlan.price}
                     </span>
                   </div>

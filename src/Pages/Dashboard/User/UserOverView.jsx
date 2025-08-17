@@ -35,13 +35,13 @@ const UserOverView = () => {
   ];
 
   const StatCard = ({ icon, label, value, colorClass }) => (
-    <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 flex items-center gap-6 transform hover:scale-105 transition-transform duration-300 ease-in-out">
+    <div className="shadow-lg rounded-xl p-6 flex items-center gap-6 transform hover:scale-105 transition-transform duration-300 ease-in-out border">
       <div className={`p-3 rounded-full ${colorClass.bg}`}>{icon}</div>
       <div>
-        <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">
+        <p className="text-sm font-medium">
           {label}
         </p>
-        <p className="text-2xl font-bold text-gray-900 dark:text-white">
+        <p className="text-2xl font-bold">
           {value}
         </p>
       </div>
@@ -49,14 +49,14 @@ const UserOverView = () => {
   );
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   
         <div className="mb-10">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-3xl font-bold">
             Welcome back, {user?.displayName}!
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 mt-1">
+          <p className="mt-1">
             Here's a summary of your activity.
           </p>
         </div>
@@ -66,20 +66,20 @@ const UserOverView = () => {
    
           <div className="lg:col-span-1 space-y-8">
 
-            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 text-center">
+            <div className="shadow-lg rounded-xl p-6 text-center">
               <img
                 src={user?.photoURL}
                 alt="User"
-                className="w-28 h-28 rounded-full object-cover mx-auto ring-4 ring-offset-2 ring-indigo-500 dark:ring-offset-gray-800"
+                className="w-28 h-28 rounded-full object-cover mx-auto ring-4 ring-offset-2 ring-indigo-500"
               />
               <div className="mt-4">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                <h2 className="text-xl font-bold">
                   {user?.displayName}
                 </h2>
-                <p className="text-gray-500 dark:text-gray-300 text-sm">
+                <p className="text-sm">
                   {user?.email}
                 </p>
-                <p className="mt-2 text-sm font-semibold text-white px-3 py-1 bg-indigo-500 rounded-full inline-block">
+                <p className="mt-2 text-sm font-semibold  px-3 py-1 bg-indigo-500 rounded-full inline-block">
                   {user?.role || "Reader"}
                 </p>
               </div>
@@ -105,8 +105,8 @@ const UserOverView = () => {
 
           <div className="lg:col-span-2 space-y-8">
     
-            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6">
-              <h3 className="text-lg font-bold mb-6 text-gray-800 dark:text-white">
+            <div className=" shadow-lg rounded-xl p-6 border">
+              <h3 className="text-lg font-bold mb-6">
                 Article Status Overview
               </h3>
               <div style={{ height: "350px" }}>

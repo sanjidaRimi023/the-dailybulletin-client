@@ -20,7 +20,7 @@ const getStatusBadge = (status) => {
 
 const UserArticleCard = ({ article, onEdit, onDelete }) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+    <div className="border rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
       <img
         src={article.image}
         alt={article.title}
@@ -33,10 +33,10 @@ const UserArticleCard = ({ article, onEdit, onDelete }) => {
           </span>
           {getStatusBadge(article.status)}
         </div>
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
+        <h3 className="text-xl font-bold mb-2 line-clamp-2">
           {article.title}
         </h3>
-        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow line-clamp-3">
+        <p className=" text-sm mb-4 flex-grow line-clamp-3">
           {article.description}
         </p>
 
@@ -44,15 +44,15 @@ const UserArticleCard = ({ article, onEdit, onDelete }) => {
           {article.tags?.map((tag, idx) => (
             <span
               key={idx}
-              className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full"
+              className="text-xs px-2 py-1 rounded-full"
             >
               #{tag}
             </span>
           ))}
         </div>
 
-        <div className="mt-auto border-t border-gray-200 dark:border-gray-700 pt-4">
-            <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
+        <div className="mt-auto border-t pt-4">
+            <div className="flex justify-between items-center text-sm">
                 <div className="flex items-center gap-2">
                     <FaEye />
                     <span>{article.viewCount || 0} views</span>
@@ -62,7 +62,7 @@ const UserArticleCard = ({ article, onEdit, onDelete }) => {
             <div className="mt-4 flex gap-3">
                 <button
                     onClick={onEdit}
-                    className="flex-1 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all"
+                    className="flex-1 inline-flex items-center justify-center px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all"
                 >
                     <FaEdit className="mr-2"/> Edit
                 </button>
