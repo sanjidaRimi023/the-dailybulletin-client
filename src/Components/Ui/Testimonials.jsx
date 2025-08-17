@@ -179,7 +179,7 @@ function Card({ card, index, activeIndex, totalCards }) {
       initial={false}
       whileHover={{ scale: 1.05, rotateY: 0 }}
     >
-      <div className="w-full h-full rounded-3xl bg-gray-100 flex flex-col overflow-hidden border border-gray-500 transition-transform duration-500">
+      <div className="w-full h-full rounded-2xl bg-gray-100 flex flex-col overflow-hidden transition-transform duration-500">
         {/* Image */}
         <div className="w-full h-[55%] overflow-hidden relative group">
           <img

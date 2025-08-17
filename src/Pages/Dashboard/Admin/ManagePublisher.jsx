@@ -92,23 +92,16 @@ const ManagePublisher = () => {
   return (
     <div className="p-6">
       <div className="flex items-center gap-3 mb-6">
-      
         <div className="w-1 h-10 bg-indigo-600 rounded-sm"></div>
-
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-          Publisher list
-        </h2>
+        <h2 className="text-2xl md:text-3xl font-bold">Publisher list</h2>
       </div>
 
       <div className="mb-4">
-        <label
-          for="default-search"
-          className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-        >
+        <label htmlFor="default-search" className="sr-only">
           Search
         </label>
-        <div class="relative">
-          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+        <div className="relative">
+          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <CiSearch />
           </div>
           <input
@@ -116,14 +109,14 @@ const ManagePublisher = () => {
             placeholder="Search by name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            class="block p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+            className="block p-4 ps-10 text-sm border rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
             required
           />
         </div>
       </div>
 
       <div className="overflow-x-auto rounded-lg shadow">
-        <table className="min-w-full bg-white border border-gray-200 text-sm">
+        <table className="min-w-full text-sm border">
           <thead className="bg-indigo-100 text-indigo-700 uppercase text-xs">
             <tr>
               <th className="px-4 py-3 text-left">#</th>
@@ -135,10 +128,7 @@ const ManagePublisher = () => {
           </thead>
           <tbody>
             {filteredPublishers.map((publisher, index) => (
-              <tr
-                key={publisher._id}
-                className="hover:bg-gray-50 transition-colors border-b border-gray-100"
-              >
+              <tr key={publisher._id} className="border">
                 <td className="px-4 py-3">{index + 1}</td>
                 <td className="px-4 py-3">
                   <img
@@ -147,10 +137,8 @@ const ManagePublisher = () => {
                     className="w-10 h-10 rounded-full object-cover border"
                   />
                 </td>
-                <td className="px-4 py-3 font-medium text-gray-800">
-                  {publisher.name}
-                </td>
-                <td className="px-4 py-3 text-gray-600">
+                <td className="px-4 py-3 font-medium">{publisher.name}</td>
+                <td className="px-4 py-3">
                   {new Date(publisher.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-4 py-3 flex items-center justify-center gap-2">
@@ -182,12 +170,11 @@ const ManagePublisher = () => {
         </table>
       </div>
 
-
       {selectedPublisher && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="relative w-full max-w-md mx-4 rounded-2xl bg-white shadow-2xl p-6 sm:p-8 transition-all duration-300 animate-fade-in">
+          <div className="relative w-full max-w-md mx-4 rounded-2xl p-6 sm:p-8 shadow-2xl">
             <button
-              className="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-xl"
+              className="absolute top-3 right-3 hover:text-red-500 text-xl"
               onClick={() => setSelectedPublisher(null)}
               aria-label="Close modal"
             >
@@ -197,14 +184,13 @@ const ManagePublisher = () => {
               <img
                 src={selectedPublisher.image}
                 alt={selectedPublisher.name}
-                className="w-28 h-28 rounded-full object-cover border-4 border-gray-200 shadow-md mb-4"
+                className="w-28 h-28 rounded-full object-cover mb-4"
               />
-              <h2 className="text-2xl font-semibold text-gray-800 mb-2 text-center">
+              <h2 className="text-2xl font-semibold mb-2 text-center">
                 {selectedPublisher.name}
               </h2>
-              <p className="text-sm text-gray-600 bg-gray-100 px-4 py-1 rounded-full">
-                Created on:{" "}
-                {new Date(selectedPublisher.createdAt).toLocaleDateString()}
+              <p className="text-sm px-4 py-1 rounded-full">
+                Created on: {new Date(selectedPublisher.createdAt).toLocaleDateString()}
               </p>
             </div>
           </div>
@@ -215,7 +201,7 @@ const ManagePublisher = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <form
             onSubmit={handleSubmit(handleEditSubmit)}
-            className="relative w-full max-w-md mx-4 rounded-2xl bg-white shadow-2xl p-6 sm:p-8 transition-all duration-300 animate-fade-in"
+            className="relative w-full max-w-md mx-4 rounded-2xl p-6 sm:p-8 shadow-2xl"
           >
             <button
               type="button"
@@ -223,37 +209,32 @@ const ManagePublisher = () => {
                 setEditingPublisher(null);
                 reset();
               }}
-              className="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-xl"
+              className="absolute top-3 right-3 hover:text-red-500 text-xl"
               aria-label="Close modal"
             >
               <RxCross1 />
             </button>
-            <h3 className="text-center text-2xl font-semibold text-gray-800 mb-4">
+            <h3 className="text-center text-2xl font-semibold mb-4">
               Edit Publisher
             </h3>
             <div className="flex justify-center mb-4">
               <img
                 src={imageURL || editingPublisher.image}
                 alt="Preview"
-                className="w-24 h-24 object-cover border rounded-full shadow"
+                className="w-24 h-24 object-cover rounded-full shadow"
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Name
-              </label>
+              <label className="block text-sm font-medium mb-1">Name</label>
               <input
                 type="text"
                 {...register("name", { required: true })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
 
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Image URL
-              </label>
-
+              <label className="block text-sm font-medium mb-1">Image URL</label>
               <input
                 type="file"
                 accept="image/*"
@@ -286,7 +267,7 @@ const ManagePublisher = () => {
                     );
                   }
                 }}
-                className="file-input file-input-bordered w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
 

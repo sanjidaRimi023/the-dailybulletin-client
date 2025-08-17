@@ -15,7 +15,7 @@ import useAuth from "../Hooks/useAuth";
 import { toast } from "react-toastify";
 import useUserRole from "../Hooks/useUserRole";
 
-const mobileBreakPoint = 768;
+const laptopBreakPoint = 1024; // 1024px = lg
 
 const SidebarContent = ({ navItems, user, handleLogout }) => (
   <div className="flex flex-col justify-between h-full">
@@ -42,9 +42,7 @@ const SidebarContent = ({ navItems, user, handleLogout }) => (
           }
           alt="avatar"
         />
-        <span className="mx-2 font-medium text-gray-800 dark:text-gray-200">
-          {user?.displayName}
-        </span>
+        <span className="mx-2 font-medium">{user?.displayName}</span>
       </Link>
 
       <button
@@ -58,10 +56,10 @@ const SidebarContent = ({ navItems, user, handleLogout }) => (
 );
 
 export default function DashboardLayout() {
-  const [isMobile, setIsMobile] = useState(
-    window.innerWidth < mobileBreakPoint
+  const [isLaptopOrUp, setIsLaptopOrUp] = useState(
+    window.innerWidth >= laptopBreakPoint
   );
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(window.innerWidth >= laptopBreakPoint);
 
   const { user, logOutUser } = useAuth();
   const userRole = useUserRole();
@@ -82,9 +80,13 @@ export default function DashboardLayout() {
 
   useEffect(() => {
     const handleResize = () => {
-      const mobile = window.innerWidth < mobileBreakPoint;
-      setIsMobile(mobile);
-      if (!mobile) {
+      const laptopOrUp = window.innerWidth >= laptopBreakPoint;
+      setIsLaptopOrUp(laptopOrUp);
+
+      // laptop+ হলে সবসময় open, ছোট হলে default বন্ধ
+      if (laptopOrUp) {
+        setSidebarOpen(true);
+      } else {
         setSidebarOpen(false);
       }
     };
@@ -145,48 +147,33 @@ export default function DashboardLayout() {
   return (
     <>
       <Toast />
-      <div className="relative flex min-h-screen bg-gray-50 dark:bg-gray-900">
-        {isMobile ? (
-          <>
-            <aside
-              className={`fixed inset-y-0 left-0 z-50 w-64 px-4 py-8 bg-white dark:bg-gray-800 border-r dark:border-gray-700 transform transition-transform duration-300 ease-in-out ${
-                isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-              }`}
-            >
-              <SidebarContent
-                navItems={navItems}
-                user={user}
-                handleLogout={handleLogout}
-              />
-            </aside>
+      <div className="relative flex min-h-screen">
+        {/* Sidebar */}
+        <aside
+          className={`fixed lg:static inset-y-0 left-0 z-50 w-64 px-4 py-8 border-r border-gray-700 transform transition-transform duration-300 ease-in-out
+          ${isSidebarOpen ? "translate-x-0 bg-indigo-300" : "-translate-x-full"} 
+          lg:translate-x-0`}
+        >
+          <SidebarContent
+            navItems={navItems}
+            user={user}
+            handleLogout={handleLogout}
+          />
+        </aside>
 
-            {isSidebarOpen && (
-              <div
-                className="fixed inset-0 z-40 bg-black opacity-50"
-                onClick={toggleSidebar}
-              ></div>
-            )}
-          </>
-        ) : (
-          <aside className="w-64 px-4 py-8 bg-white dark:bg-gray-800 border-r dark:border-gray-700">
-            <div className="fixed w-64 h-[95vh]">
-              <SidebarContent
-                navItems={navItems}
-                user={user}
-                handleLogout={handleLogout}
-              />
-            </div>
-          </aside>
+        {/* Overlay (only mobile/tablet এ) */}
+        {!isLaptopOrUp && isSidebarOpen && (
+          <div
+            className="fixed inset-0 z-40 bg-black opacity-50"
+            onClick={toggleSidebar}
+          ></div>
         )}
 
         {/* Main Content */}
         <main className="flex-1">
-          {isMobile && (
-            <header className="p-4 bg-white dark:bg-gray-800 shadow-md">
-              <button
-                onClick={toggleSidebar}
-                className="text-2xl text-gray-800 dark:text-white"
-              >
+          {!isLaptopOrUp && (
+            <header className="p-4 shadow-md">
+              <button onClick={toggleSidebar} className="text-2xl">
                 {isSidebarOpen ? <RxCross1 /> : <FaBars />}
               </button>
             </header>

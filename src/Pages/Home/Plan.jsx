@@ -85,11 +85,11 @@ export default function Plan() {
         </div>
 
 
-        <div className="grid gap-8 lg:grid-cols-3 lg:items-center">
+        <div className="grid gap-8 lg:grid-cols-3 lg:items-center lg:px-20">
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`relative rounded-2xl p-8 shadow-lg transition-transform duration-300 ${plan.highlighted ? "bg-gray-900 scale-105" : "bg-gray-700"}`}
+              className={`relative rounded-2xl p-8 shadow-lg transition-transform duration-300 ${plan.highlighted ? "bg-indigo-700/50 hover:scale-105" : "bg-purple-600/50"}`}
             >
               {plan.highlighted && (
                 <div className="absolute top-0 -translate-y-1/2 w-full flex justify-center">
@@ -100,14 +100,14 @@ export default function Plan() {
                 </div>
               )}
 
-              <h3 className="text-xl font-semibold text-white">{plan.name}</h3>
-              <p className="mt-4 text-gray-600 dark:text-gray-400">{plan.description}</p>
+              <h3 className="text-xl font-semibold">{plan.name}</h3>
+              <p className="mt-4">{plan.description}</p>
               
               <div className="mt-6">
-                <span className="text-4xl font-extrabold text-gray-900 dark:text-white">
+                <span className="text-4xl font-extrabold">
                   ${plan.price[billingCycle]}
                 </span>
-                <span className="text-base font-medium text-gray-500 dark:text-gray-400">
+                <span className="text-base font-medium">
                   /{billingCycle === 'monthly' ? 'mo' : 'yr'}
                 </span>
               </div>
@@ -118,14 +118,14 @@ export default function Plan() {
                     <div className="flex-shrink-0">
                       <FaCheckDouble className="h-6 w-6 text-green-500" aria-hidden="true" />
                     </div>
-                    <p className="ml-3 text-base text-gray-700 dark:text-gray-300">{feature}</p>
+                    <p className="ml-3 text-base ">{feature}</p>
                   </li>
                 ))}
               </ul>
 
               <Link to="/dashboard/user/subscription" className="mt-10 block">
                 <button
-                  className={`w-full py-2 px-4 text-base font-semibold rounded-full transition-colors duration-300 ${plan.highlighted ? "bg-purple-600 text-white hover:bg-purple-700" : "bg-white text-purple-600 border border-purple-300 hover:bg-purple-300 dark:bg-gray-700 dark:text-purple-300 dark:hover:bg-gray-600"}`}
+                  className={`w-full py-2 px-4 text-base font-semibold rounded-full transition-colors duration-300 ${plan.highlighted ? "bg-purple-600 text-white hover:bg-purple-700" : "bg-white text-purple-600 border border-purple-300 hover:bg-purple-300"}`}
                 >
                   Choose Plan
                 </button>

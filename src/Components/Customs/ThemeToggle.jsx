@@ -36,7 +36,7 @@ const ThemeToggle = () => {
                  hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300"
         title={currentTheme === "dark" ? "Switch to Light" : "Switch to Dark"}
       >
-        {currentTheme === "dark" ? <ImSun /> : <BsMoonStarsFill />}
+        {currentTheme === "dark" ? <BsMoonStarsFill /> :<ImSun /> }
       </button>
     </>
   );

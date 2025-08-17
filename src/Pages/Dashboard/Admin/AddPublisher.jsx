@@ -63,7 +63,7 @@ const AddPublisher = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <div className="min-h-screen flex items-center justify-center px-4">
       <div className="max-w-xl w-full p-8 shadow-2xl rounded-2xl shadow-indigo-600 transition duration-300">
         <h2 className="text-xl md:text-3xl font-semibold mb-6 text-center text-indigo-700">
           Add New Publisher
@@ -72,7 +72,7 @@ const AddPublisher = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {imagePreview && (
             <div className="mt-4 flex flex-col items-center justify-center">
-              <p className="text-sm text-gray-500 mb-1">Image Preview:</p>
+              <p className="text-sm mb-1">Image Preview:</p>
               <img
                 src={
                   imagePreview ||
@@ -84,7 +84,7 @@ const AddPublisher = () => {
             </div>
           )}
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
+            <label className="block mb-1 text-sm font-medium">
               Publisher Name
             </label>
             <input
@@ -96,7 +96,7 @@ const AddPublisher = () => {
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
+            <label className="block mb-1 text-sm font-medium">
               Upload Logo/Image
             </label>
             <input
@@ -104,7 +104,7 @@ const AddPublisher = () => {
               accept="image/*"
               {...register("image", { required: true })}
               onChange={handleImageChange}
-              className="w-full px-4 py-2 border rounded-lg bg-gray-50 cursor-pointer"
+              className="w-full px-4 py-2 border rounded-lg cursor-pointer"
             />
           </div>
 

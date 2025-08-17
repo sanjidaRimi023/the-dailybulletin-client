@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { FaTrash, FaEye } from "react-icons/fa";
 import LoadSpinner from "../../../Components/Ui/LoadSpinner";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -78,24 +79,30 @@ const ManageUsers = () => {
   if (isLoading) return <LoadSpinner />;
   if (isError) {
     return (
-      <div className="text-red-500 text-center mt-4">
+      <div className="text-center mt-4">
         Failed to load users: {error.message}
       </div>
     );
   }
 
   return (
+    <>
+      <Helmet>
+        <title>
+          Admin | Manage user
+        </title>
+      </Helmet>
     <div className="p-4 md:p-8">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-1 h-10 bg-indigo-600 rounded-sm"></div>
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+        <h2 className="text-2xl md:text-3xl font-bold">
           Users List
         </h2>
       </div>
 
-      <div className="overflow-x-auto rounded-xl shadow-sm bg-white">
-        <table className="min-w-full text-sm text-left text-gray-700">
-          <thead className="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white uppercase">
+      <div className="overflow-x-auto rounded-xl shadow-sm">
+        <table className="min-w-full text-sm text-left">
+          <thead className="bg-gradient-to-r from-indigo-600 to-indigo-700 uppercase">
             <tr>
               <th className="py-3 px-4">#</th>
               <th className="py-3 px-4">Image</th>
@@ -114,7 +121,7 @@ const ManageUsers = () => {
                 >
                   <td className="py-3 px-4 font-medium">{index + 1}</td>
                   <td className="py-3 px-4">
-                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border-2">
                       <img
                         src={user.photoURL || "https://i.ibb.co/4pDNDk1/avatar-placeholder.png"}
                         alt={user.displayName || "User"}
@@ -122,7 +129,7 @@ const ManageUsers = () => {
                       />
                     </div>
                   </td>
-                  <td className="py-3 px-4 font-medium text-gray-800">{user.displayName || user.name || "N/A"}</td>
+                  <td className="py-3 px-4 font-medium">{user.displayName || user.name || "N/A"}</td>
                   <td className="py-3 px-4">{user.email}</td>
                   <td className="py-3 px-4 capitalize">
                     {user.isPremium ? (
@@ -130,23 +137,22 @@ const ManageUsers = () => {
                         Premium
                       </span>
                     ) : (
-                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold">
                         {user.role}
                       </span>
                     )}
                   </td>
                   <td className="py-3 px-4 flex justify-center items-center gap-2">
-                 
                     <button
                       onClick={() => handlePreview(user)}
-                      className="bg-indigo-500 hover:bg-indigo-600 text-white p-2 rounded-full flex items-center transition-transform transform hover:scale-110"
+                      className="bg-indigo-500 hover:bg-indigo-600 p-2 rounded-full flex items-center transition-transform transform hover:scale-110"
                       title="View User Details"
                     >
                       <FaEye />
                     </button>
                     <button
                       onClick={() => handleDelete(user._id)}
-                      className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full flex items-center transition-transform transform hover:scale-110"
+                      className="bg-red-500 hover:bg-red-600 p-2 rounded-full flex items-center transition-transform transform hover:scale-110"
                       title="Delete User"
                     >
                       <FaTrash />
@@ -156,7 +162,7 @@ const ManageUsers = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="text-center py-4 text-gray-500">
+                <td colSpan="6" className="text-center py-4">
                   No users found.
                 </td>
               </tr>
@@ -165,6 +171,7 @@ const ManageUsers = () => {
         </table>
       </div>
     </div>
+    </>
   );
 };
 

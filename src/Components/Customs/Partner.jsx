@@ -58,7 +58,7 @@ const Partner = () => {
       <section className="py-16 sm:py-24">
         <div className="container mx-auto px-6">
           
-          <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-12">
+          <h2 className="text-3xl font-bold text-center mb-12">
             Our Partners
           </h2>
 

@@ -60,7 +60,7 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="bg-gray-800 text-gray-300">
+      <footer className="bg-gray-700 text-white">
         <div className="container px-6 py-12 mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2 lg:col-span-1">
@@ -70,14 +70,14 @@ const Footer = () => {
                   The_DailyBulletin
                 </span>
               </div>
-              <p className="text-sm text-gray-400">
+              <p className="text-sm">
                 Bringing you the latest news, every day, every hour. Stay
                 informed. Stay ahead.
               </p>
             </div>
 
             <div>
-              <h3 className="text-white text-lg font-semibold mb-4">
+              <h3 className="text-lg font-semibold mb-4">
                 Quick Links
               </h3>
               <ul className="space-y-3">
@@ -85,7 +85,7 @@ const Footer = () => {
                   <li key={link.to}>
                     <Link
                       to={link.to}
-                      className={`relative text-gray-300 hover:text-white transition-all duration-300 group ${
+                      className={`relative transition-all duration-300 group ${
                         path === link.to ? "text-indigo-400 font-semibold" : ""
                       }`}
                     >
@@ -98,10 +98,10 @@ const Footer = () => {
             </div>
 
             <div className="col-span-1 md:col-span-2 lg:col-span-2">
-              <h3 className="text-white text-lg font-semibold mb-4">
+              <h3 className="text-lg font-semibold mb-4">
                 Subscribe to Our Newsletter
               </h3>
-              <p className="text-sm text-gray-400 mb-4">
+              <p className="text-sm mb-4">
                 Get the latest news and updates delivered straight to your
                 inbox.
               </p>
@@ -113,25 +113,25 @@ const Footer = () => {
                   type="email"
                   placeholder="Enter your email"
                   required
-                  className="w-full px-4 py-2 text-gray-200 bg-gray-800 border border-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                  className="w-full px-4 py-2 border border-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                 />
                 <button
                   type="submit"
-                  className="px-6 py-2 font-semibold text-white bg-indigo-600 rounded-full hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-colors duration-300"
+                  className="px-6 py-2 font-semibold bg-indigo-600 rounded-full hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-colors duration-300"
                 >
                   Subscribe
                 </button>
               </form>
             </div>
           </div>
-          <hr className="my-4 border-gray-700 dark:border-gray-300" />
+          <hr className="my-4 border-gray-100" />
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-gray-400">
+            <p className="text-sm">
               © {new Date().getFullYear()} The Daily Bulletin. All Rights
               Reserved.
             </p>
-            <div className="flex gap-4 text-xl text-gray-400">
+            <div className="flex gap-4 text-xl">
               <Link
                 to="#"
                 className="hover:text-indigo-600 transition-transform duration-300 hover:scale-125"

@@ -18,25 +18,25 @@ import { FaUsers, FaNewspaper, FaEye, FaStar } from "react-icons/fa";
 
 // eslint-disable-next-line no-unused-vars
 const StatCard = ({ title, value, icon: Icon, change, changeType }) => (
-  <div className="bg-white p-5 md:p-6 rounded-2xl shadow-sm hover:shadow-md border border-gray-200 transition-all duration-300 flex flex-col justify-between">
+  <div className="p-5 md:p-6 rounded-2xl shadow-sm hover:shadow-md border transition-all duration-300 flex flex-col justify-between">
     <div className="flex justify-between items-center mb-3">
       <div>
-        <h3 className="text-base text-gray-500 font-medium">{title}</h3>
-        <p className="text-3xl font-bold text-gray-800 mt-1">
+        <h3 className="text-base font-medium">{title}</h3>
+        <p className="text-3xl font-bold mt-1">
           {(value || 0).toLocaleString()}
         </p>
         {change && (
           <p
             className={`text-sm mt-1 ${
-              changeType === "increase" ? "text-green-600" : "text-red-600"
+              changeType === "increase" ? "text-emerald-600" : "text-rose-600"
             }`}
           >
             {change}
           </p>
         )}
       </div>
-      <div className="p-3 rounded-full bg-gray-100">
-        <Icon className="text-xl text-gray-600" />
+      <div className="p-3 rounded-full bg-indigo-300">
+        <Icon className="text-xl" />
       </div>
     </div>
   </div>
@@ -44,8 +44,8 @@ const StatCard = ({ title, value, icon: Icon, change, changeType }) => (
 
 // Dashboard Card
 const DashboardCard = ({ title, children }) => (
-  <div className="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-gray-200">
-    <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-4">
+  <div className="p-5 md:p-6 rounded-2xl shadow-sm border">
+    <h2 className="text-lg md:text-xl font-semibold mb-4">
       {title}
     </h2>
     {children}
@@ -126,8 +126,8 @@ const AdminOverView = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-50">
-        <div className="text-xl font-semibold text-gray-500">
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-xl font-semibold text-indigo-600">
           Loading dashboard...
         </div>
       </div>
@@ -139,22 +139,22 @@ const AdminOverView = () => {
       case "Approved":
         return "bg-green-100 text-green-700";
       case "Pending":
-        return "bg-yellow-100 text-yellow-700";
+        return "bg-amber-100 text-amber-700";
       case "Declined":
-        return "bg-red-100 text-red-700";
+        return "bg-rose-100 text-rose-700";
       default:
         return "bg-gray-100 text-gray-700";
     }
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen px-4 py-6 sm:px-6 lg:px-8 font-sans">
+    <div className="min-h-screen px-4 py-6 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-7xl mx-auto space-y-10">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
+          <h1 className="text-3xl sm:text-4xl font-bold">
             Admin Dashboard
           </h1>
-          <p className="text-sm sm:text-base text-gray-500 mt-1">
+          <p className="text-sm sm:text-base mt-1">
             Welcome back! Here’s a summary of today’s insights.
           </p>
         </div>
@@ -208,7 +208,7 @@ const AdminOverView = () => {
                       type="monotone"
                       dataKey="users"
                       name="New Users"
-                      stroke="#34D399"
+                      stroke="#10B981"
                       strokeWidth={3}
                       dot={{ r: 5 }}
                       activeDot={{ r: 8 }}
@@ -217,7 +217,7 @@ const AdminOverView = () => {
                       type="monotone"
                       dataKey="articles"
                       name="New Articles"
-                      stroke="#6366F1" 
+                      stroke="#4F46E5" 
                       strokeWidth={3}
                       dot={{ r: 5 }}
                       activeDot={{ r: 8 }}
@@ -247,7 +247,7 @@ const AdminOverView = () => {
                       cx="50%"
                       cy="50%"
                       outerRadius={100}
-                      fill="#6366F1"
+                      fill="#4F46E5"
                       dataKey="value"
                       nameKey="name"
                       label
@@ -255,7 +255,7 @@ const AdminOverView = () => {
                       {publishersData.map((entry, index) => (
                         <Cell
                           key={`cell-${index}`}
-                          fill={entry.color || "#6366F1"}
+                          fill={entry.color || "#4F46E5"}
                         />
                       ))}
                     </Pie>
@@ -276,7 +276,7 @@ const AdminOverView = () => {
           <div className="overflow-x-auto">
             <table className="w-full table-auto text-sm md:text-base">
               <thead>
-                <tr className="bg-gray-100 text-gray-600">
+                <tr>
                   <th className="p-4 text-left font-medium">Title</th>
                   <th className="p-4 text-left font-medium">Publisher</th>
                   <th className="p-4 text-left font-medium">Views</th>
@@ -285,12 +285,12 @@ const AdminOverView = () => {
               </thead>
               <tbody>
                 {recentArticlesData.map((article) => (
-                  <tr key={article.id} className="border-b hover:bg-gray-50">
-                    <td className="p-4 font-medium text-gray-800">
+                  <tr key={article.id} className="border-b hover:bg-indigo-300">
+                    <td className="p-4 font-medium">
                       {article.title}
                     </td>
-                    <td className="p-4 text-gray-600">{article.publisher}</td>
-                    <td className="p-4 text-gray-600">
+                    <td className="p-4">{article.publisher}</td>
+                    <td className="p-4">
                       {(article.viewCount || 0).toLocaleString()}
                     </td>
                     <td className="p-4">

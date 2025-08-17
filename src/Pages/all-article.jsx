@@ -85,7 +85,7 @@ const AllArticle = () => {
         <div className="w-full sm:w-1/3">
           <label
             htmlFor="category"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium"
           >
             Filter by Category
           </label>
@@ -107,7 +107,7 @@ const AllArticle = () => {
         </div>
 
         <div className="w-full sm:w-1/2">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label className="block mb-2 text-sm font-medium">
             Search by Title
           </label>
           <input
@@ -115,7 +115,7 @@ const AllArticle = () => {
             value={searchTitle}
             onChange={(e) => setSearchTitle(e.target.value)}
             placeholder="Type a title to search..."
-            className="block w-full px-5 py-3 text-sm border border-gray-300 rounded-2xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:text-white"
+            className="block w-full px-5 py-3 text-sm border border-gray-300 rounded-2xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
 
@@ -123,7 +123,7 @@ const AllArticle = () => {
           <span className="text-lg font-semibold">View</span>
           <button
             onClick={() => setLayout(layout === "card" ? "table" : "card")}
-            className="p-2 border rounded hover:bg-gray-100 transition dark:border-gray-600 dark:text-white"
+            className="p-2 border rounded hover:bg-indigo-100 transition"
           >
             {layout === "card" ? (
               <FaTable className="w-5 h-5" />
@@ -141,14 +141,14 @@ const AllArticle = () => {
               key={article._id}
               article={article}
               index={index}
-              userType={userType} // ✅ Send premium info
+              userType={userType} 
             />
           ))}
         </div>
       ) : (
-        <div className="w-full overflow-x-auto bg-white rounded-lg shadow-md">
+        <div className="w-full overflow-x-auto rounded-lg shadow-md">
           <table className="min-w-full table-auto text-sm text-left">
-            <thead className="bg-gray-50 text-gray-600 font-medium border-b">
+            <thead className="font-medium border-b">
               <tr>
                 <th className="px-6 py-4">Image</th>
                 <th className="px-6 py-4">Title</th>
@@ -158,11 +158,11 @@ const AllArticle = () => {
                 <th className="px-6 py-4 text-center">Action</th>
               </tr>
             </thead>
-            <tbody className="text-gray-700">
+            <tbody className="">
               {currentArticles.map((article) => (
                 <tr
                   key={article._id}
-                  className="border-b hover:bg-gray-50 transition"
+                  className="border-b hover:bg-gray-400 transition"
                 >
                   <td className="px-6 py-4">
                     <img

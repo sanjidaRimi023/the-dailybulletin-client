@@ -5,13 +5,13 @@ import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 import {
   IoHomeOutline,
   IoNewspaperOutline,
-  IoAddCircleOutline,
   IoInformationCircleOutline,
   IoLogInOutline,
   IoPersonAddOutline,
+  IoCall,
 } from "react-icons/io5";
 
-import logo from "../../assets/nav-logo.png";
+import logo from "../../assets/newlogo.png";
 
 import NavUserDropdown from "../Customs/nav-user-dropdown";
 import useAuth from "../../Hooks/useAuth";
@@ -22,13 +22,11 @@ const Navbar = () => {
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
-  
-
   const navLinks = [
     { to: "/", text: "Home", icon: <IoHomeOutline size={18} /> },
     {
       to: "/all-article",
-      text: "All Articles",
+      text: "Articles",
       icon: <IoNewspaperOutline size={18} />,
     },
     {
@@ -36,29 +34,20 @@ const Navbar = () => {
       text: "About Us",
       icon: <IoInformationCircleOutline size={18} />,
     },
+    {
+      to: "/contact-us",
+      text: "Contact",
+      icon: <IoCall size={18} />,
+    },
   ];
 
   const closeMenu = () => setIsOpen(false);
-  
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70 shadow-sm px-4 py-4 lg:px-20 flex items-center justify-between">
+    <nav className="sticky top-0 z-50 backdrop-blur shadow-sm px-4 py-4 lg:px-20 flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <img src={logo} alt="Logo" className="w-10" />
-        <Link
-          to="/"
-          onClick={closeMenu}
-          className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent"
-        >
-          <Typewriter
-            words={["The_Daily_Bulletin"]}
-            loop={5}
-            cursor
-            cursorStyle="_"
-            typeSpeed={70}
-            deleteSpeed={50}
-            delaySpeed={1000}
-          />
+        <Link to="/">
+          <img src={logo} alt="Logo" className="w-30" />
         </Link>
       </div>
 
@@ -71,19 +60,20 @@ const Navbar = () => {
 
       <div
         className={`
-          absolute lg:static top-full left-0 w-full lg:w-auto
-          lg:flex lg:items-center lg:gap-4
-          bg-white dark:bg-gray-900 lg:bg-transparent lg:dark:bg-transparent
-          p-4 lg:p-0 shadow-lg lg:shadow-none rounded-b-lg lg:rounded-none
-          transition-all duration-300 ease-in-out
-          ${
-            isOpen
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-5 invisible lg:visible lg:opacity-100 lg:translate-y-0"
-          }
-        `}
+    absolute lg:static top-full right-0 
+    w-1/2 lg:w-auto   // mobile এ ৫০% width
+    lg:flex lg:items-center lg:gap-4
+    lg:bg-transparent
+    p-4 lg:p-0 shadow-lg lg:shadow-none rounded-b-lg lg:rounded-none
+    transition-all duration-300 ease-in-out
+    ${
+      isOpen
+        ? "opacity-100 translate-y-0 bg-indigo-300"
+        : "opacity-0 -translate-y-5 invisible lg:visible lg:opacity-100 lg:translate-y-0"
+    }
+  `}
       >
-        <div className="flex flex-col lg:flex-row lg:items-center lg:gap-2 w-full">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:gap-2 w-fit">
           {navLinks.map((link) => (
             <Link
               key={link.to}
@@ -91,22 +81,22 @@ const Navbar = () => {
               onClick={closeMenu}
               className={`flex items-center gap-2 w-full lg:w-auto px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
                 pathname === link.to
-                  ? "bg-blue-100 text-indigo-600 dark:bg-gray-700 dark:text-white"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-blue-100 hover:text-indigo-700 dark:hover:bg-gray-800"
+                  ? "bg-blue-100 text-indigo-600"
+                  : "hover:bg-blue-100 hover:text-indigo-700"
               }`}
             >
               {link.icon}
               <span>{link.text}</span>
             </Link>
           ))}
-           <ThemeToggle/>
+          <ThemeToggle />
         </div>
 
-        <hr className="my-4 border-gray-200 dark:border-gray-700 lg:hidden" />
+        <hr className="my-4 border-gray-200 lg:hidden" />
 
         <div className="flex items-center">
           {user?.email ? (
-            <div className="w-full flex justify-end">
+            <div className="">
               <NavUserDropdown user={user} />
             </div>
           ) : (
@@ -114,7 +104,7 @@ const Navbar = () => {
               <Link
                 to="/login"
                 onClick={closeMenu}
-                className="flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2 text-sm font-semibold rounded-full text-indigo-600 hover:bg-blue-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-all duration-300 border border-indigo-200 dark:border-gray-700"
+                className="flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2 text-sm font-semibold rounded-full text-indigo-600 hover:bg-blue-100 transition-all duration-300 border border-indigo-200"
               >
                 <IoLogInOutline size={18} />
                 <span>Login</span>

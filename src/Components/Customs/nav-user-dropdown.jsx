@@ -55,7 +55,7 @@ export default function NavUserDropdown({ user }) {
       <div
         className={`
           absolute right-0 z-20 w-64 py-2 mt-2 overflow-hidden origin-top-right
-          bg-white dark:bg-gray-800 rounded-md shadow-xl
+          bg-indigo-300 rounded-md shadow-xl
           transition-all duration-200 ease-out
           ${
             isOpen
@@ -71,22 +71,22 @@ export default function NavUserDropdown({ user }) {
             alt="User avatar"
           />
           <div className="mx-1 overflow-hidden">
-            <h1 className="text-sm font-semibold text-gray-700 dark:text-gray-200 truncate">
+            <h1 className="text-sm font-semibold truncate text-black">
               {user?.displayName || "User"}
             </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+            <p className="text-sm truncate text-black">
               {user?.email}
             </p>
           </div>
         </div>
 
-        <hr className="border-gray-200 dark:border-gray-700" />
+        <hr className="border-gray-200" />
 
         <div className="py-1">
           <Link
             to={`/dashboard/${role?.role}`}
             onClick={closeDropdown}
-            className="flex items-center gap-3 p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+            className="flex items-center gap-3 p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform hover:bg-gray-100"
           >
             <MdDashboard className="text-gray-500" size={18} />
             <span>Dashboard</span>

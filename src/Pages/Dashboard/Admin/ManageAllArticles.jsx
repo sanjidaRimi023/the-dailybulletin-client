@@ -87,7 +87,7 @@ const ManageAllArticles = () => {
 
   return (
     <div className="p-4 md:p-6 lg:p-10 dark:bg-gray-900 min-h-screen">
-      <h2 className="text-3xl font-bold mb-6 text-center text-indigo-600 dark:text-white">
+      <h2 className="text-3xl font-bold mb-6 text-center text-indigo-600">
         Manage All Pending Articles
       </h2>
 
@@ -95,27 +95,27 @@ const ManageAllArticles = () => {
         <div className="flex gap-4">
           <select
             onChange={(e) => setSortField(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+            className="border border-gray-300 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
             value={sortField}
           >
-            <option value="createdAt">Date</option>
-            <option value="viewCount">Views</option>
+            <option className="bg-indigo-400" value="createdAt">Date</option>
+            <option className="bg-indigo-400" value="viewCount">Views</option>
           </select>
 
           <select
             onChange={(e) => setSortOrder(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+            className="border border-indigo-300 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
             value={sortOrder}
           >
-            <option value="desc">Descending</option>
-            <option value="asc">Ascending</option>
+            <option className="bg-indigo-400" value="desc">Descending</option>
+            <option className="bg-indigo-400" value="asc">Ascending</option>
           </select>
         </div>
       </div>
 
       <div className="overflow-x-auto rounded-lg shadow-lg border dark:border-gray-700">
-        <table className="min-w-full bg-white dark:bg-gray-800 text-sm">
-          <thead className="bg-indigo-200 text-indigo-800 dark:bg-indigo-700 dark:text-white uppercase text-xs">
+        <table className="min-w-full text-sm">
+          <thead className="bg-indigo-200 text-indigo-800 dark:bg-indigo-700 uppercase text-xs">
             <tr>
               <th className="px-4 py-3 text-left font-semibold">Title</th>
               <th className="px-4 py-3 text-left font-semibold">Author</th>
@@ -124,12 +124,12 @@ const ManageAllArticles = () => {
               <th className="px-4 py-3 text-center font-semibold">Actions</th>
             </tr>
           </thead>
-          <tbody className="border-t dark:border-gray-600">
+          <tbody className="border-t border-indigo-600">
             {paginatedArticles.length > 0 ? (
               paginatedArticles.map((article) => (
                 <tr
                   key={article._id}
-                  className="border-b hover:bg-gray-100 dark:hover:bg-gray-700 dark:border-gray-700"
+                  className="border-b hover:bg-indigo-300"
                 >
                   <td className="px-4 py-3">{article.title}</td>
                   <td className="px-4 py-3">{article.authorEmail}</td>

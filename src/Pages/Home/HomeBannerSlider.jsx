@@ -3,6 +3,7 @@ import React, { useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "framer-motion";
 import Sharebtn from "../../Components/Ui/Sharebtn";
+import { Link } from "react-router";
 
 const banners = [
   {
@@ -86,9 +87,9 @@ function Gallery({ items, setIndex, index }) {
           Get the latest headlines, politics, sports, tech and culture — in one trusted source.
         </p>
 
-        <div className="flex justify-center lg:justify-start">
+        <Link to='/all-article' className="flex justify-center lg:justify-start">
           <Sharebtn text="Read Latest News" />
-        </div>
+        </Link>
         
       </div>
 
