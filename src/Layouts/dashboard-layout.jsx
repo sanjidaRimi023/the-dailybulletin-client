@@ -161,7 +161,7 @@ export default function DashboardLayout() {
           />
         </aside>
 
-        {/* Overlay (only mobile/tablet এ) */}
+   
         {!isLaptopOrUp && isSidebarOpen && (
           <div
             className="fixed inset-0 z-40 bg-black opacity-50"

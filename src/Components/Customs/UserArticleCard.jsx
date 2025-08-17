@@ -14,7 +14,7 @@ const UserArticleCard = ({ article, index, userType }) => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.4, delay: index * 0.05 }}
-        className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between hover:shadow-indigo-400"
+        className=" border rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between hover:shadow-indigo-400 border-indigo-500"
       >
         <div className="relative group">
           <img
@@ -22,7 +22,7 @@ const UserArticleCard = ({ article, index, userType }) => {
             alt={article.title}
             className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105"
           />
-          <span className="absolute top-3 left-3 bg-purple-600 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase shadow-md">
+          <span className="absolute top-3 left-3 bg-purple-600 text-xs font-semibold px-3 py-1 rounded-full uppercase shadow-md">
             {article.category || "News"}
           </span>
         </div>
@@ -30,12 +30,12 @@ const UserArticleCard = ({ article, index, userType }) => {
         <div className="p-5 flex flex-col gap-3">
           <Link
             to={`/articles/${article._id}`}
-            className="text-2xl font-semibold leading-tight text-gray-900 dark:text-white hover:text-indigo-600 transition-colors duration-200"
+            className="text-2xl font-semibold leading-tight hover:text-indigo-600 transition-colors duration-200"
           >
             {article.title}
           </Link>
 
-          <p className="text-sm text-gray-700 dark:text-gray-400 leading-relaxed">
+          <p className="text-sm leading-relaxed">
             {article.description?.slice(0, 150)}...
           </p>
 
@@ -49,10 +49,10 @@ const UserArticleCard = ({ article, index, userType }) => {
               alt={article.authorName}
             />
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-gray-800 dark:text-gray-200">
+              <span className="text-sm font-medium">
                 {article.authorName}
               </span>
-              <span className="text-xs text-gray-500 dark:text-gray-400">
+              <span className="text-xs">
                 {new Date(article.createdAt).toLocaleDateString("en-GB", {
                   day: "2-digit",
                   month: "short",
@@ -64,7 +64,7 @@ const UserArticleCard = ({ article, index, userType }) => {
 
           <Link
             to={`/article-detail/${article._id}`}
-            className="group inline-flex items-center gap-2 mt-4 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-fit transition-transform duration-300 hover:scale-105"
+            className="group inline-flex items-center gap-2 mt-4 px-4 py-2 text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-fit transition-transform duration-300 hover:scale-105"
           >
             Read more
             <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />

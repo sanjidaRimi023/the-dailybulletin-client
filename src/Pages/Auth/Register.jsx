@@ -122,7 +122,7 @@ const Register = () => {
   return (
     <div
       data-aos="zoom-in"
-      className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl my-10 bg-white/90 dark:bg-gray-800/90 hover:shadow-xl backdrop-blur-md transition-all duration-300"
+      className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl my-10 hover:shadow-xl backdrop-blur-md transition-all duration-300"
     >
 
       <div

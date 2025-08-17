@@ -36,7 +36,7 @@ const PremiumPrompt = () => {
 
           localStorage.setItem("promptShown", "true");
         }
-      }, 1000);
+      }, 2000);
 
       return () => clearTimeout(timer);
     }

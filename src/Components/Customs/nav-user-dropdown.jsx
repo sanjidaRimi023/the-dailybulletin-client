@@ -34,7 +34,8 @@ export default function NavUserDropdown({ user }) {
   };
 
   const closeDropdown = () => setIsOpen(false);
-  const role = useUserRole();
+  const { role } = useUserRole(); 
+
 
   const fallbackAvatar = "https://i.ibb.co/6RJ4Mh5/avatar.png";
   const userAvatar = user?.photoURL || fallbackAvatar;
@@ -84,7 +85,7 @@ export default function NavUserDropdown({ user }) {
 
         <div className="py-1">
           <Link
-            to={`/dashboard/${role?.role}`}
+        to={`/dashboard/${role}`}
             onClick={closeDropdown}
             className="flex items-center gap-3 p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform hover:bg-gray-100"
           >

@@ -27,11 +27,7 @@ const AllArticle = () => {
     },
   });
 
-  const {
-    data: userData,
-    isLoading: userLoading,
-   
-  } = useQuery({
+  const { data: userData, isLoading: userLoading } = useQuery({
     queryKey: ["user-role", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -83,31 +79,28 @@ const AllArticle = () => {
 
       <div className="container mx-auto flex flex-wrap justify-center gap-4 mb-6 items-end">
         <div className="w-full sm:w-1/3">
-          <label
-            htmlFor="category"
-            className="block mb-2 text-sm font-medium"
-          >
+          <label htmlFor="category" className="block mb-2 text-sm font-medium text-indigo-500">
             Filter by Category
           </label>
           <select
             id="category"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="block w-full px-5 py-3 text-sm border border-gray-300 rounded-2xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:text-white"
+            className="block w-full px-5 py-3 text-sm border border-indigo-500 rounded-2xl shadow-md focus:ring-indigo-500 focus:border-indigo-700"
           >
-            <option value="">All Categories</option>
-            <option value="Politics & Governance">Politics</option>
-            <option value="Business & Economy">Business</option>
-            <option value="Sports">Sports</option>
-            <option value="Science & Research">Science</option>
-            <option value="Technology">Technology</option>
-            <option value="Health">Health</option>
-            <option value="Entertainment">Entertainment</option>
+            <option className="text-indigo-300 bg-indigo-500" value="">All Categories</option>
+            <option className="text-indigo-300 bg-indigo-500" value="Politics & Governance">Politics</option>
+            <option className="text-indigo-300 bg-indigo-500" value="Business & Economy">Business</option>
+            <option className="text-indigo-300 bg-indigo-500" value="Sports">Sports</option>
+            <option className="text-indigo-300 bg-indigo-500" value="Science & Research">Science</option>
+            <option className="text-indigo-300 bg-indigo-500" value="Technology">Technology</option>
+            <option className="text-indigo-300 bg-indigo-500" value="Health">Health</option>
+            <option className="text-indigo-300 bg-indigo-500" value="Entertainment">Entertainment</option>
           </select>
         </div>
 
         <div className="w-full sm:w-1/2">
-          <label className="block mb-2 text-sm font-medium">
+          <label className="block mb-2 text-sm font-medium text-indigo-900">
             Search by Title
           </label>
           <input
@@ -115,7 +108,7 @@ const AllArticle = () => {
             value={searchTitle}
             onChange={(e) => setSearchTitle(e.target.value)}
             placeholder="Type a title to search..."
-            className="block w-full px-5 py-3 text-sm border border-gray-300 rounded-2xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="block w-full px-5 py-3 text-sm border border-indigo-500 rounded-2xl shadow-md focus:ring-indigo-500 focus:border-indigo-700"
           />
         </div>
 
@@ -123,13 +116,9 @@ const AllArticle = () => {
           <span className="text-lg font-semibold">View</span>
           <button
             onClick={() => setLayout(layout === "card" ? "table" : "card")}
-            className="p-2 border rounded hover:bg-indigo-100 transition"
+            className="p-2 border rounded hover:bg-indigo-300 transition"
           >
-            {layout === "card" ? (
-              <FaTable className="w-5 h-5" />
-            ) : (
-              <IoGrid className="w-5 h-5" />
-            )}
+            {layout === "card" ? <FaTable className="w-5 h-5" /> : <IoGrid className="w-5 h-5" />}
           </button>
         </div>
       </div>
@@ -137,18 +126,13 @@ const AllArticle = () => {
       {layout === "card" ? (
         <div className="container mx-auto grid gap-6 lg:grid-cols-3 md:grid-cols-2">
           {currentArticles.map((article, index) => (
-            <UserArticleCard
-              key={article._id}
-              article={article}
-              index={index}
-              userType={userType} 
-            />
+            <UserArticleCard key={article._id} article={article} index={index} userType={userType} />
           ))}
         </div>
       ) : (
-        <div className="w-full overflow-x-auto rounded-lg shadow-md">
-          <table className="min-w-full table-auto text-sm text-left">
-            <thead className="font-medium border-b">
+        <div className="w-full overflow-x-auto rounded-lg shadow-lg">
+          <table className="min-w-full table-auto text-sm text-left rounded-lg">
+            <thead className="font-medium border-b border-indigo-500">
               <tr>
                 <th className="px-6 py-4">Image</th>
                 <th className="px-6 py-4">Title</th>
@@ -158,12 +142,9 @@ const AllArticle = () => {
                 <th className="px-6 py-4 text-center">Action</th>
               </tr>
             </thead>
-            <tbody className="">
+            <tbody>
               {currentArticles.map((article) => (
-                <tr
-                  key={article._id}
-                  className="border-b hover:bg-gray-400 transition"
-                >
+                <tr key={article._id} className="border-b border-indigo-300 hover:bg-indigo-200 transition">
                   <td className="px-6 py-4">
                     <img
                       src={article.image}
@@ -173,15 +154,13 @@ const AllArticle = () => {
                   </td>
                   <td className="px-6 py-4 font-medium">{article.title}</td>
                   <td className="px-6 py-4">{article.authorName}</td>
-                  <td className="px-6 py-4 font-semibold text-yellow-500">
-                    {article.category}
-                  </td>
+                  <td className="px-6 py-4 font-semibold text-yellow-500">{article.category}</td>
                   <td className="px-6 py-4">
                     <div className="flex flex-wrap gap-2">
                       {article.tags?.map((tag, i) => (
                         <span
                           key={i}
-                          className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded-full"
+                          className="bg-green-200 text-green-900 text-xs font-medium px-2.5 py-1 rounded-full"
                         >
                           {tag}
                         </span>
@@ -191,7 +170,7 @@ const AllArticle = () => {
                   <td className="px-4 py-2 text-center">
                     <Link
                       to={`/article-detail/${article._id}`}
-                      className="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-5 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition"
+                      className="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-5 py-2 text-sm font-medium hover:bg-indigo-700 transition text-white"
                     >
                       View
                     </Link>
@@ -203,11 +182,7 @@ const AllArticle = () => {
         </div>
       )}
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setCurrentPage={setCurrentPage}
-      />
+      <Pagination currentPage={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage} />
     </div>
   );
 };
