@@ -192,7 +192,7 @@ const IconGrid = () => {
 
 export default function NewsCategoryHub() {
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center font-sans p-4 sm:p-8 overflow-hidden relative">
+    <div className="w-full flex flex-col items-center justify-center p-4 sm:p-8 overflow-hidden relative my-10">
       <style>
         {`
           @keyframes float {

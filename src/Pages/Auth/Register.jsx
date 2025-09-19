@@ -136,7 +136,7 @@ const Register = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="w-full px-6 py-8 md:px-8 lg:w-1/2"
       >
-        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
+        <h2 className="text-2xl font-bold text-center">
           Create{" "}
           <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
             Your Account
@@ -174,9 +174,9 @@ const Register = () => {
             {...register("name", { required: "Name is required" })}
             type="text"
             placeholder="Name"
-            className="w-full py-3 px-4 pl-11 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 border rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full py-3 px-4 pl-11 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-          <span className="absolute top-4 left-3 text-gray-400">
+          <span className="absolute top-4 left-3">
             <FaUser />
           </span>
           {errors.name && (
@@ -195,9 +195,9 @@ const Register = () => {
             })}
             type="email"
             placeholder="Email address"
-            className="w-full py-3 px-4 pl-11 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 border rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full py-3 px-4 pl-11 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 border"
           />
-          <span className="absolute top-4 left-3 text-gray-400">
+          <span className="absolute top-4 left-3">
             <MdEmail />
           </span>
           {errors.email && (
@@ -216,13 +216,13 @@ const Register = () => {
             })}
             type={showPassword ? "text" : "password"}
             placeholder="Password"
-            className="w-full py-3 px-4 pl-11 pr-11 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 border rounded-lg dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full py-3 px-4 pl-11 pr-11 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 border"
           />
-          <span className="absolute top-3 left-3 text-gray-400">
+          <span className="absolute top-3 left-3    ">
             <RiLockPasswordFill />
           </span>
           <span
-            className="absolute top-3 right-3 text-gray-400 cursor-pointer"
+            className="absolute top-3 right-3     cursor-pointer"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? <FiEyeOff /> : <FiEye />}
@@ -242,15 +242,15 @@ const Register = () => {
         />
 
         <div className="flex items-center my-4">
-          <div className="flex-grow h-px bg-gray-300 dark:bg-gray-600"></div>
-          <span className="px-4 text-sm text-gray-500 dark:text-gray-400">or</span>
-          <div className="flex-grow h-px bg-gray-300 dark:bg-gray-600"></div>
+          <div className="flex-grow h-px "></div>
+          <span className="px-4 text-sm">or</span>
+          <div className="flex-grow h-px"></div>
         </div>
 
         <button
   onClick={handleGoogleRegister}
   type="button"
-  className="w-full flex items-center justify-center gap-3 py-2 px-5 border border-indigo-300 dark:border-gray-600 bg-white dark:bg-gray-900 hover:shadow-md dark:hover:shadow-lg transition-all duration-200 rounded-full text-gray-700 dark:text-gray-200 font-semibold"
+  className="w-full flex items-center justify-center gap-3 py-2 px-5 border border-indigo-300 hover:shadow-md dark:hover:shadow-lg transition-all duration-200 rounded-full font-semibold"
 >
   <FcGoogle className="text-2xl" />
   <span>Sign up with Google</span>

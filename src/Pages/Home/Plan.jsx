@@ -66,19 +66,19 @@ export default function Plan() {
 
     
         <div className="flex justify-center items-center mb-12">
-          <span className={`mr-3 font-medium ${billingCycle === 'monthly' ? 'text-purple-400' : 'text-gray-500'}`}>
+          <span className={`mr-3 font-medium ${billingCycle === 'monthly' ? 'text-indigo-400' : 'text-gray-500'}`}>
             Monthly
           </span>
           <button
             onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'yearly' : 'monthly')}
-            className={`relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 ${billingCycle === 'yearly' ? 'bg-purple-600' : 'bg-gray-300'}`}
+            className={`relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${billingCycle === 'yearly' ? 'bg-indigo-700' : 'bg-gray-300'}`}
           >
             <span
               aria-hidden="true"
               className={`inline-block h-5 w-5 rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200 ${billingCycle === 'yearly' ? 'translate-x-5' : 'translate-x-0'}`}
             />
           </button>
-          <span className={`ml-3 font-medium ${billingCycle === 'yearly' ? 'text-purple-600 dark:text-purple-400' : 'text-gray-500'}`}>
+          <span className={`ml-3 font-medium ${billingCycle === 'yearly' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500'}`}>
             Yearly
             <span className="ml-2 text-xs bg-green-100 text-green-800 font-semibold px-2 py-0.5 rounded-full">SAVE 15%</span>
           </span>
@@ -89,11 +89,11 @@ export default function Plan() {
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`relative rounded-2xl p-8 shadow-lg transition-transform duration-300 ${plan.highlighted ? "bg-indigo-700/50 hover:scale-105" : "bg-purple-600/50"}`}
+              className={`relative rounded-2xl p-8 shadow-lg transition-transform duration-300 ${plan.highlighted ? "bg-indigo-700/50 hover:scale-105" : "bg-indigo-600/50"}`}
             >
               {plan.highlighted && (
                 <div className="absolute top-0 -translate-y-1/2 w-full flex justify-center">
-                  <span className="inline-flex items-center gap-x-1.5 rounded-full bg-purple-100 px-4 py-1.5 text-sm font-medium text-purple-700">
+                  <span className="inline-flex items-center gap-x-1.5 rounded-full bg-indigo-100 px-4 py-1.5 text-sm font-medium text-indigo-700">
                     <FaStar className="h-4 w-4" />
                     Most Popular
                   </span>
@@ -125,7 +125,7 @@ export default function Plan() {
 
               <Link to="/dashboard/user/subscription" className="mt-10 block">
                 <button
-                  className={`w-full py-2 px-4 text-base font-semibold rounded-full transition-colors duration-300 ${plan.highlighted ? "bg-purple-600 text-white hover:bg-purple-700" : "bg-white text-purple-600 border border-purple-300 hover:bg-purple-300"}`}
+                  className={`w-full py-2 px-4 text-base font-semibold rounded-full transition-colors duration-300 ${plan.highlighted ? "bg-indigo-600 text-white hover:bg-indigo-700" : "bg-white text-indigo-600 border border-indigo-300 hover:bg-indigo-300"}`}
                 >
                   Choose Plan
                 </button>

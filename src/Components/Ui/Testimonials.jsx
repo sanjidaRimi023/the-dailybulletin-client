@@ -1,39 +1,10 @@
-"use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+// eslint-disable-next-line no-unused-vars
+import { motion, AnimatePresence } from "framer-motion";
 
-// Icons
-const ChevronLeftIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="m15 18-6-6 6-6" />
-  </svg>
-);
-const ChevronRightIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="m9 18 6-6-6-6" />
-  </svg>
-);
 
-// Card data
+
 const cardData = [
   {
     id: 1,
@@ -58,7 +29,7 @@ const cardData = [
     name: "Farhana Akter",
     position: "Frequent Reader",
     review:
-      "This newspaper has become my daily companion. From politics and business to lifestyle and entertainment, the content is engaging and trustworthy",
+      "This newspaper has become my daily companion. From politics and business to lifestyle and entertainment, the content is engaging and trustworthy.",
     image:
       "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
@@ -83,14 +54,11 @@ const cardData = [
 ];
 
 export default function Testimonials() {
-  const [activeIndex, setActiveIndex] = useState(
-    Math.floor(cardData.length / 2)
-  );
+  const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const autoplayRef = useRef(null);
-  const autoplayDelay = 4000;
+  const autoplayDelay = 5000;
 
-  // Autoplay effect
   useEffect(() => {
     if (!isPaused) {
       autoplayRef.current = setInterval(
@@ -101,115 +69,99 @@ export default function Testimonials() {
     return () => clearInterval(autoplayRef.current);
   }, [isPaused]);
 
-  const changeSlide = (newIndex) => {
-    setActiveIndex((newIndex + cardData.length) % cardData.length);
+  const handleSelect = (index) => {
+    setActiveIndex(index);
+    setIsPaused(true); 
   };
 
-  const onDragEnd = (event, info) => {
-    const threshold = 80;
-    if (info.offset.x > threshold) changeSlide(activeIndex - 1);
-    else if (info.offset.x < -threshold) changeSlide(activeIndex + 1);
-  };
+  const activeCard = cardData[activeIndex];
 
   return (
-    <section className="w-full py-12 px-4 md:px-8">
-      <div className="container mx-auto flex flex-col md:flex-row items-start md:items-center gap-10">
-        <div className="md:w-1/3 text-left">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+    <section className="w-full py-12 px-4 md:px-8 bg-slate-50">
+      <div className="container mx-auto flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+        
+        <div className="lg:w-1/3 text-center lg:text-left">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-800">
             Trusted by Thousands of Readers
           </h2>
-          <p className="text-base md:text-lg">
+          <p className="text-base md:text-lg text-slate-600">
             Hear from our community of satisfied readers who love our content
             and keep coming back for more insights.
           </p>
         </div>
 
-        {/* Right Column: Carousel */}
+        
         <div
-          className="md:w-2/3 relative w-full flex flex-col"
+          className="lg:w-2/3 w-full max-w-2xl mx-auto"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <div className="relative w-full h-[300px] md:h-[400px] flex items-center justify-center overflow-hidden">
-            <motion.div
-              className="w-full h-full flex items-center justify-center"
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.2}
-              onDragEnd={onDragEnd}
-            >
-              {cardData.map((card, index) => (
-                <Card
-                  key={card.id}
-                  card={card}
-                  index={index}
-                  activeIndex={activeIndex}
-                  totalCards={cardData.length}
+          <div className="bg-white rounded-xl shadow-lg p-8 relative overflow-hidden min-h-[320px] flex flex-col justify-between">
+     
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="flex-grow"
+              >
+                <p className="text-slate-700 text-lg md:text-xl leading-relaxed relative z-10">
+                  "{activeCard.review}"
+                </p>
+              </motion.div>
+            </AnimatePresence>
+
+            <div className="flex items-center mt-6">
+              <div className="flex-shrink-0">
+                <img
+                  className="w-14 h-14 rounded-full object-cover"
+                  src={activeCard.image}
+                  alt={activeCard.name}
+                   onError={(e) => {
+                     e.target.onerror = null;
+                     e.target.src = "https://placehold.co/100x100/1e1e1e/ffffff?text=404";
+                   }}
                 />
-              ))}
-            </motion.div>
+              </div>
+              <div className="ml-4">
+                <h4 className="text-lg font-bold text-slate-900">
+                  {activeCard.name}
+                </h4>
+                <p className="text-indigo-600 font-medium">
+                  {activeCard.position}
+                </p>
+              </div>
+            </div>
+          </div>
+          
+ 
+          <div className="flex justify-center items-center gap-3 mt-8">
+            {cardData.map((card, index) => (
+              <button
+                key={card.id}
+                onClick={() => handleSelect(index)}
+                className={`w-12 h-12 rounded-full overflow-hidden transition-all duration-300 ease-in-out focus:outline-none ring-offset-2 ring-offset-slate-50 ${
+                  activeIndex === index
+                    ? "ring-2 ring-indigo-500 scale-110"
+                    : "opacity-60 hover:opacity-100 hover:scale-105"
+                }`}
+              >
+                <img
+                  src={card.image}
+                  alt={card.name}
+                  className="w-full h-full object-cover"
+                   onError={(e) => {
+                     e.target.onerror = null;
+                     e.target.src = "https://placehold.co/100x100/1e1e1e/ffffff?text=404";
+                   }}
+                />
+              </button>
+            ))}
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-// Card Component
-function Card({ card, index, activeIndex, totalCards }) {
-  let offset = index - activeIndex;
-  if (offset > totalCards / 2) offset -= totalCards;
-  else if (offset < -totalCards / 2) offset += totalCards;
-
-  const isVisible = Math.abs(offset) <= 2;
-  const animate = {
-    x: `${offset * 55}%`,
-    scale: offset === 0 ? 1 : 0.85,
-    rotateY: offset * 15,
-    zIndex: totalCards - Math.abs(offset),
-    opacity: isVisible ? 1 : 0,
-    transition: { type: "spring", stiffness: 260, damping: 30 },
-  };
-
-  return (
-    <motion.div
-      className="absolute w-[80%] sm:w-2/3 md:w-1/2 lg:w-[45%] h-full cursor-pointer"
-      style={{ transformStyle: "preserve-3d" }}
-      animate={animate}
-      initial={false}
-      whileHover={{ scale: 1.05, rotateY: 0 }}
-    >
-      <div className="w-full h-full rounded-2xl bg-gray-100 flex flex-col overflow-hidden transition-transform duration-500">
-        {/* Image */}
-        <div className="w-full h-[55%] overflow-hidden relative group">
-          <img
-            src={card.image}
-            alt={card.name}
-            className="w-full hidden md:block h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src =
-                "https://placehold.co/400x400/1e1e1e/ffffff?text=Image+Missing";
-            }}
-          />
-          <div className="absolute bottom-2 left-2 bg-indigo-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
-            {card.position}
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className="flex flex-col flex-grow p-5 text-left">
-          <h3 className="text-xl font-bold mb-2 text-black">{card.name}</h3>
-          <p className="text-sm flex-grow overflow-hidden leading-relaxed text-black">
-            "{card.review}"
-          </p>
-          <div className="mt-4 flex items-center gap-2">
-            <span className="w-3 h-3 bg-indigo-500 rounded-full animate-pulse"></span>
-            <span className="w-3 h-3 bg-indigo-500 rounded-full animate-pulse delay-100"></span>
-            <span className="w-3 h-3 bg-indigo-500 rounded-full animate-pulse delay-200"></span>
-          </div>
-        </div>
-      </div>
-    </motion.div>
   );
 }

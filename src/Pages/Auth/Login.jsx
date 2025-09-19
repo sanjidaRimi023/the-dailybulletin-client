@@ -69,7 +69,7 @@ const Login = () => {
   return (
     <div
       data-aos="zoom-in"
-      className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl my-10 bg-white/90 dark:bg-gray-800/90 hover:shadow-xl backdrop-blur-md transition-all duration-300"
+      className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl my-10 hover:shadow-xl backdrop-blur-md transition-all duration-300"
     >
       <div
         className="hidden bg-cover lg:block lg:w-1/2"
@@ -82,20 +82,20 @@ const Login = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <h2 className="text-3xl my-4 font-bold text-center text-gray-800 dark:text-white">
+          <h2 className="text-3xl my-4 font-bold text-center">
             <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
               Welcome
             </span>{" "}
             back
           </h2>
-          <p className="text-sm text-center my-2 text-gray-600 dark:text-gray-300">
+          <p className="text-sm text-center my-2">
             Glad to see you again. Let's get you back in!
           </p>
 
           <button
             onClick={handleGoogleBtn}
             disabled={loading}
-            className="flex items-center justify-center w-full px-4 py-2 mb-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-50"
+            className="flex items-center justify-center w-full px-4 py-2 mb-4 transition-colors duration-300 transform border rounded-lgdisabled:opacity-50"
           >
             <span className="mx-3 w-5">
               <FcGoogle />
@@ -104,18 +104,18 @@ const Login = () => {
           </button>
 
           <div className="flex items-center justify-between my-4">
-            <span className="w-1/5 border-b dark:border-gray-600 lg:w-1/4"></span>
-            <span className="text-xs text-center text-gray-500 uppercase dark:text-gray-400">
+            <span className="w-1/5 border lg:w-1/4"></span>
+            <span className="text-xs text-center uppercase">
               or login with email
             </span>
-            <span className="w-1/5 border-b dark:border-gray-600 lg:w-1/4"></span>
+            <span className="w-1/5 border-b lg:w-1/4"></span>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <label
                 htmlFor="email"
-                className="block mb-1 text-sm text-gray-600 dark:text-gray-200"
+                className="block mb-1 text-sm"
               >
                 Email Address
               </label>
@@ -129,7 +129,7 @@ const Login = () => {
                     message: "Invalid email address",
                   },
                 })}
-                className="w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:outline-none focus:ring focus:ring-blue-300"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 placeholder="example@email.com"
               />
               {errors.email && (
@@ -143,7 +143,7 @@ const Login = () => {
               <div className="flex justify-between">
                 <label
                   htmlFor="password"
-                  className="text-sm text-gray-600 dark:text-gray-200"
+                  className="text-sm "
                 >
                   Password
                 </label>
@@ -164,7 +164,7 @@ const Login = () => {
                     message: "Password must be at least 6 characters",
                   },
                 })}
-                className="w-full px-4 py-2 mt-1 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:outline-none focus:ring focus:ring-blue-300"
+                className="w-full px-4 py-2 mt-1 border rounded-lg  focus:outline-none focus:ring focus:ring-blue-300"
                 placeholder="••••••••"
               />
               {errors.password && (

@@ -2,7 +2,7 @@ import React from "react";
 
 const LoadSpinner = () => {
   return (
-    <div className="flex min-h-screen justify-center items-center bg-gray-50 px-4">
+    <div className="flex min-h-screen justify-center items-center px-4">
       <div className="flex flex-col items-center space-y-6 max-w-xs w-full">
         <div className="w-8 h-8 relative transform rotate-45">
           <div

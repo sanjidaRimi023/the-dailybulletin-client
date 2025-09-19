@@ -44,13 +44,14 @@ const Headline = () => {
 
   if (isLoading) {
     return (
-      <div className="bg-red-600 text-white p-2 text-sm">Loading breaking news...</div>
+      <div className="bg-indigo-600 text-white p-2 text-sm">Loading breaking news...</div>
     );
   }
 
   return (
-    <div className="bg-red-600 text-white py-2 px-4 flex items-center gap-4 overflow-hidden">
-       <div className="flex items-center gap-2 bg-white text-red-600 px-3 py-1 rounded-full text-sm font-bold shadow-sm">
+    <div className="bg-indigo-600 text-white py-2 px-4 overflow-hidden">
+      <div className="container mx-auto flex items-center gap-4">
+         <div className="flex items-center gap-2 bg-white text-indigo-600 px-3 py-1 rounded-full text-sm font-bold shadow-sm">
         <MdFlashOn className="text-xl animate-pulse" />
         <span>BREAKING</span>
       </div>
@@ -58,6 +59,7 @@ const Headline = () => {
         <p className="transition-all duration-500 ease-in-out text-sm md:text-base font-medium">
           {displayedWords.join(" ")}
         </p>
+      </div>
       </div>
     </div>
   );
