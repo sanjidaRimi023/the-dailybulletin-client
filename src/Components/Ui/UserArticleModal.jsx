@@ -37,8 +37,8 @@ const UserArticleModal = ({ article, onClose, onSuccess }) => {
     if (imageFile) {
       try {
         imageURL = await handleImageUpload(imageFile);
-      } catch (err) {
-        console.log(err);
+      } catch {
+       
         Swal.fire("Error", "Image upload failed!", "error");
         setIsUpdating(false);
         return;
@@ -66,8 +66,8 @@ const UserArticleModal = ({ article, onClose, onSuccess }) => {
         Swal.fire("No Changes", "No changes were made to the article.", "info");
         onClose();
       }
-    } catch (err) {
-      console.log(err);
+    } catch {
+
       Swal.fire("Error!", "Something went wrong.", "error");
     } finally {
       setIsUpdating(false);

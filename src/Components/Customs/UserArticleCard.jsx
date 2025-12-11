@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import { FaArrowRight } from "react-icons/fa";
 
 const UserArticleCard = ({ article, index, userType }) => {
-  console.log("Computed userType:", userType); 
+
 
   if (userType === "premium") {
     return (

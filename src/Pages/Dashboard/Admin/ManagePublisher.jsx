@@ -83,8 +83,8 @@ const ManagePublisher = () => {
         setEditingPublisher(null);
         reset();
       }
-    } catch (err) {
-      console.log(err);
+    } catch{
+
       Swal.fire("Error!", "Something went wrong.", "error");
     }
   };

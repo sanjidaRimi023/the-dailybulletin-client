@@ -58,9 +58,7 @@ const Register = () => {
       setSelectedImage(URL.createObjectURL(file));
       const url = await uploadImageToCloudinary(file);
       setProfilePicture(url);
-    } else {
-      console.log("Please upload a valid image file");
-    }
+    } 
   };
 
   const onSubmit = async (data) => {

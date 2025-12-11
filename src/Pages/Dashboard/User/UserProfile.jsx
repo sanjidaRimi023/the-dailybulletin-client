@@ -89,8 +89,8 @@ const UserProfile = () => {
       } else {
         toast.error("Failed to update profile.");
       }
-    } catch (err) {
-      console.log(err);
+    } catch{
+
       toast.error("Something went wrong.");
     }
   };

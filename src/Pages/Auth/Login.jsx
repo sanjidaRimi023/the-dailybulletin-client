@@ -29,13 +29,13 @@ const Login = () => {
     setLoading(true);
     try {
       const res = await loginUser(data?.email, data?.password);
-      console.log(res);
+      console.table(res);
 
       toast.success("Login successful!");
       navigate(from);
-    } catch (error) {
+    } catch  {
       toast.error("Invalid email or password!");
-      console.log(error);
+    
     } finally {
       setLoading(false);
     }
@@ -60,9 +60,9 @@ const Login = () => {
         navigate(from);
         toast.success("Signed in with Google!");
       })
-      .catch((error) => {
+      .catch(() => {
         toast.error("Google sign-in failed. Try again.");
-        console.log(error);
+        
       });
   };
 

@@ -45,18 +45,16 @@ const AuthProvider = ({ children }) => {
     setUser((prevUser) => ({ ...prevUser, ...updatedData }));
   };
 
-
   const updateUserPassword = async (currentPassword, newPassword) => {
     const currentUser = auth.currentUser;
     if (!currentUser) {
       throw new Error("No user is currently signed in.");
     }
-   
+
     const credential = EmailAuthProvider.credential(
       currentUser.email,
       currentPassword
     );
-
 
     await reauthenticateWithCredential(currentUser, credential);
 
@@ -77,6 +75,11 @@ const AuthProvider = ({ children }) => {
           if (res.data.token) {
             localStorage.setItem("token", res.data.token);
           }
+          setUser(
+            currentUser
+            // ...dbUser,
+            // isPremium: isUserPremium,
+          );
         } catch (error) {
           console.error("JWT Token fetch error:", error);
         }
@@ -85,7 +88,6 @@ const AuthProvider = ({ children }) => {
           // const { data: dbUser } = await axiosInstance.get(
           //   `/users/${currentUser.email}`
           // );
-
           // let isUserPremium = false;
           // if (dbUser && dbUser.premiumExpiresAt) {
           //   const expiryDate = new Date(dbUser.premiumExpiresAt);
@@ -93,12 +95,6 @@ const AuthProvider = ({ children }) => {
           //     isUserPremium = true;
           //   }
           // }
-
-          setUser(
-            currentUser,
-            // ...dbUser,
-            // isPremium: isUserPremium,
-          );
         } catch (error) {
           console.error("DB user data fetch error:", error);
           setUser({ ...currentUser, isPremium: false });

@@ -69,8 +69,8 @@ const ManageUsers = () => {
           Swal.fire("Deleted!", "User has been deleted.", "success");
           refetch();
         }
-      } catch (err) {
-        console.log(err);
+      } catch  {
+  
         Swal.fire("Error!", "Something went wrong.", "error");
       }
     }
