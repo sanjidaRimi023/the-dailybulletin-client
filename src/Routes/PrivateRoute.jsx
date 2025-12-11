@@ -7,6 +7,7 @@ import LoadSpinner from "../Components/Ui/LoadSpinner";
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
 
+
   if (loading) return <LoadSpinner/>;
 
   return user ? children : <Navigate to="/login" />;

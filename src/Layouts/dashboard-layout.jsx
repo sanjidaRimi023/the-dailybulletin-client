@@ -68,6 +68,7 @@ export default function DashboardLayout() {
 
   const navigate = useNavigate();
 
+
   const handleLogout = async () => {
     try {
       await logOutUser();
@@ -82,8 +83,6 @@ export default function DashboardLayout() {
     const handleResize = () => {
       const laptopOrUp = window.innerWidth >= laptopBreakPoint;
       setIsLaptopOrUp(laptopOrUp);
-
-      // laptop+ হলে সবসময় open, ছোট হলে default বন্ধ
       if (laptopOrUp) {
         setSidebarOpen(true);
       } else {

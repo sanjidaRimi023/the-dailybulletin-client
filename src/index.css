@@ -1,11 +1,15 @@
+/* font 2 */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+/* font 1 */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import "tailwindcss";
+
 
 :root{
   color-scheme: light;
 }
 
-/* font 1 */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 
 .playfair{
   font-family: "Playfair Display", serif;
@@ -13,8 +17,7 @@
   font-style: normal;
 }
 
-/* font 2 */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 
 .inter{
   font-family: "Inter", sans-serif;

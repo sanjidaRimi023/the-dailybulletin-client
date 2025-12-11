@@ -11,7 +11,7 @@ import {
   IoCall,
 } from "react-icons/io5";
 
-import logo from "../../assets/newlogo.png";
+import logo from "../../assets/newLogo.png";
 
 import NavUserDropdown from "../Customs/nav-user-dropdown";
 import useAuth from "../../Hooks/useAuth";
