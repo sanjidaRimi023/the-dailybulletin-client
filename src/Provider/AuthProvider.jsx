@@ -12,14 +12,15 @@ import {
 } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { auth } from "../Firebase/firebase.config";
-import useAxios from "../Hooks/useAxios";
 import { AuthContext } from "../Context/AuthContext";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const provider = new GoogleAuthProvider();
-  const axiosInstance = useAxios();
+
+  const axiosSecure = useAxiosSecure()
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -69,7 +70,7 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         try {
-          const res = await axiosInstance.post("/jwt", {
+          const res = await axiosSecure.post("/jwt", {
             email: currentUser.email,
           });
           if (res.data.token) {
@@ -77,27 +78,9 @@ const AuthProvider = ({ children }) => {
           }
           setUser(
             currentUser
-            // ...dbUser,
-            // isPremium: isUserPremium,
           );
         } catch (error) {
           console.error("JWT Token fetch error:", error);
-        }
-
-        try {
-          // const { data: dbUser } = await axiosInstance.get(
-          //   `/users/${currentUser.email}`
-          // );
-          // let isUserPremium = false;
-          // if (dbUser && dbUser.premiumExpiresAt) {
-          //   const expiryDate = new Date(dbUser.premiumExpiresAt);
-          //   if (expiryDate > new Date()) {
-          //     isUserPremium = true;
-          //   }
-          // }
-        } catch (error) {
-          console.error("DB user data fetch error:", error);
-          setUser({ ...currentUser, isPremium: false });
         }
       } else {
         localStorage.removeItem("token");
@@ -108,7 +91,7 @@ const AuthProvider = ({ children }) => {
     });
 
     return () => unsubscribe();
-  }, [axiosInstance]);
+  }, [axiosSecure]);
 
   const authInfo = {
     user,

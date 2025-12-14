@@ -69,7 +69,7 @@ const Register = () => {
 
     try {
       const res = await createUser(data.email, data.password);
-      console.log(res);
+      console.dir(res);
       const userInfo = {
         email: data.email,
         role: "user",
