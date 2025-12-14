@@ -70,11 +70,11 @@ const KnowUS = () => {
         </motion.p>
 
       
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-16">
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              className="p-8 rounded-xl shadow-lg border border-indigo-700 flex flex-col items-center"
+              className="p-8 shadow-lg bg-white/10 flex flex-col items-center hover:shadow-indigo-500"
        
             >
               <div className="mb-5">{feature.icon}</div>

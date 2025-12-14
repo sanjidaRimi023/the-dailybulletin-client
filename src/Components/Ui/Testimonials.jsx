@@ -77,14 +77,14 @@ export default function Testimonials() {
   const activeCard = cardData[activeIndex];
 
   return (
-    <section className="w-full py-12 px-4 md:px-8 bg-slate-50">
+    <section className="w-full py-12 px-4 md:px-8">
       <div className="container mx-auto flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
         
         <div className="lg:w-1/3 text-center lg:text-left">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-800">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 ">
             Trusted by Thousands of Readers
           </h2>
-          <p className="text-base md:text-lg text-slate-600">
+          <p className="text-base md:text-lg">
             Hear from our community of satisfied readers who love our content
             and keep coming back for more insights.
           </p>
@@ -96,7 +96,7 @@ export default function Testimonials() {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <div className="bg-white rounded-xl shadow-lg p-8 relative overflow-hidden min-h-[320px] flex flex-col justify-between">
+          <div className="rounded-xl shadow-lg p-8 relative overflow-hidden min-h-[320px] flex flex-col justify-between bg-white/10">
      
             <AnimatePresence mode="wait">
               <motion.div
@@ -107,7 +107,7 @@ export default function Testimonials() {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="flex-grow"
               >
-                <p className="text-slate-700 text-lg md:text-xl leading-relaxed relative z-10">
+                <p className="text-lg md:text-xl leading-relaxed relative z-10">
                   "{activeCard.review}"
                 </p>
               </motion.div>
@@ -126,7 +126,7 @@ export default function Testimonials() {
                 />
               </div>
               <div className="ml-4">
-                <h4 className="text-lg font-bold text-slate-900">
+                <h4 className="text-lg font-bold">
                   {activeCard.name}
                 </h4>
                 <p className="text-indigo-600 font-medium">

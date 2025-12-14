@@ -37,7 +37,7 @@ export const WeeklyTopTopics = () => {
   };
 
   return (
-    <section className="py-12 bg-white">
+    <section className="py-12 bg-white/10">
       <div className="max-w-4xl mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Weekly Top Topics</h2>
         <Bar data={data} options={options} />

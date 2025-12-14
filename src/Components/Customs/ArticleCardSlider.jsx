@@ -58,7 +58,7 @@ const ArticleCardSlider = () => {
         >
           {limitedArticles.map((article) => (
             <SwiperSlide key={article._id}>
-              <div className="group flex h-full flex-col overflow-hidden rounded-lg border border-indigo-200 shadow-sm transition-all duration-300 hover:shadow-xl hover:shadow-indigo-600">
+              <div className="group flex h-full flex-col overflow-hidden bg-white/10 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:shadow-indigo-600">
                 <div className="overflow-hidden">
                   <img
                     src={article.image}
@@ -77,7 +77,7 @@ const ArticleCardSlider = () => {
                       {article.title}
                     </h2>
 
-                    <p className="text-gray-500 line-clamp-3">
+                    <p className="line-clamp-3">
                       {article.description}
                     </p>
                   </div>
