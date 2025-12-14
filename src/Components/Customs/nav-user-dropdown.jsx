@@ -56,7 +56,7 @@ export default function NavUserDropdown({ user }) {
       <div
         className={`
           absolute right-0 z-20 w-64 py-2 mt-2 overflow-hidden origin-top-right
-          bg-indigo-300 rounded-md shadow-xl
+          bg-white/80 rounded-md shadow-xl
           transition-all duration-200 ease-out
           ${
             isOpen
@@ -87,18 +87,18 @@ export default function NavUserDropdown({ user }) {
           <Link
         to={`/dashboard/${role}`}
             onClick={closeDropdown}
-            className="flex items-center gap-3 p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform hover:bg-gray-100"
+            className="flex items-center text-gray-700 gap-3 p-3 text-sm capitalize transition-colors duration-300 transform hover:bg-gray-100"
           >
-            <MdDashboard className="text-gray-500" size={18} />
+            <MdDashboard className="" size={18} />
             <span>Dashboard</span>
           </Link>
         </div>
 
-        <hr className="border-gray-200 dark:border-gray-700" />
+        <hr className="border-gray-200" />
 
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 w-full p-3 text-sm text-red-500 capitalize transition-colors duration-300 transform hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-red-400"
+          className="flex items-center gap-3 w-full p-3 text-sm text-red-500 capitalize transition-colors duration-300 transform hover:bg-gray-100  dark:hover:text-red-400"
         >
           <VscSignOut size={18} />
           <span>Sign Out</span>
