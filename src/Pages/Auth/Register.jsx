@@ -58,7 +58,7 @@ const Register = () => {
       setSelectedImage(URL.createObjectURL(file));
       const url = await uploadImageToCloudinary(file);
       setProfilePicture(url);
-    } 
+    }
   };
 
   const onSubmit = async (data) => {
@@ -78,12 +78,12 @@ const Register = () => {
         created_at: new Date().toISOString(),
         last_login: new Date().toISOString(),
       };
-
-      await axiosInstance.post("/users", userInfo);
+      const dbdata = await axiosInstance.post("/users", userInfo);
       await updateUserProfile({
         displayName: data.name,
         photoURL: profilePicture,
       });
+      console.log(dbdata);
 
       toast.success("Account created successfully!");
       navigate(from);
@@ -96,9 +96,15 @@ const Register = () => {
     try {
       const result = await googleLogin();
       const loggedUser = result.user;
-
-      const userCheck = await axiosInstance.get(`/users/${loggedUser.email}`);
-      if (!userCheck?.data?._id) {
+      let userData = null;
+      try {
+        const response = await axiosInstance.get(`/users/${loggedUser.email}`);
+        userData = response.data;
+        console.log(userData);
+      } catch {
+        console.log("User doesn't exist yet, proceeding to create...");
+      }
+      if (!userData || userData._id) {
         const userInfo = {
           email: loggedUser.email,
           role: "user",
@@ -107,7 +113,8 @@ const Register = () => {
           created_at: new Date().toISOString(),
           last_login: new Date().toISOString(),
         };
-        await axiosInstance.post("/users", userInfo);
+        const postResponse = await axiosInstance.post("/users", userInfo);
+        console.log("user Created", postResponse);
       }
 
       toast.success("Successfully signed in with Google");
@@ -122,12 +129,10 @@ const Register = () => {
       data-aos="zoom-in"
       className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl my-10 hover:shadow-xl backdrop-blur-md transition-all duration-300"
     >
-
       <div
         className="hidden bg-cover lg:block lg:w-1/2"
         style={{ backgroundImage: `url(${sideImage})` }}
       ></div>
-
 
       <form
         data-aos="zoom-in"
@@ -146,7 +151,6 @@ const Register = () => {
           !
         </h2>
 
-        
         <div className="flex justify-center my-5">
           <label htmlFor="image-upload" className="cursor-pointer">
             <img
@@ -246,14 +250,13 @@ const Register = () => {
         </div>
 
         <button
-  onClick={handleGoogleRegister}
-  type="button"
-  className="w-full flex items-center justify-center gap-3 py-2 px-5 border border-indigo-300 hover:shadow-md dark:hover:shadow-lg transition-all duration-200 rounded-full font-semibold"
->
-  <FcGoogle className="text-2xl" />
-  <span>Sign up with Google</span>
-</button>
-
+          onClick={handleGoogleRegister}
+          type="button"
+          className="w-full flex items-center justify-center gap-3 py-2 px-5 border border-indigo-300 hover:shadow-md dark:hover:shadow-lg transition-all duration-200 rounded-full font-semibold"
+        >
+          <FcGoogle className="text-2xl" />
+          <span>Sign up with Google</span>
+        </button>
 
         <p className="mt-4 text-center text-sm">
           Already have an account?{" "}
